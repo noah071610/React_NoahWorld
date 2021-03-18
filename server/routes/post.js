@@ -97,7 +97,6 @@ router.get("/:postId", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const fullPosts = [];
     const techPosts = await Post.findAll({
       where: { category: 1 },
       order: [["createdAt", "DESC"]],
@@ -128,11 +127,20 @@ router.get("/", async (req, res) => {
         },
       ],
     });
+    const culturePosts = await Post.findAll({
+      where: { category: 4 },
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: Hashtag,
+          attributes: ["name"],
+        },
+      ],
+    });
     const hashtags = await Hashtag.findAll({
       attributes: ["name"],
     });
-    await fullPosts.push(techPosts, dailyPosts, classPosts, hashtags);
-    res.status(200).json({ fullPosts });
+    res.status(200).json({ techPosts, dailyPosts, classPosts, culturePosts, hashtags });
   } catch (error) {
     console.error(error);
   }
@@ -159,11 +167,18 @@ router.get("/hashtag/:hashtag", async (req, res, next) => {
 
 router.post("/", async (req, res) => {
   try {
+    if (parseInt(req.body.UserId, 10) !== 1) {
+      res.status(401).send("You are not a Admin! who are you!!");
+    }
+    if (req.body.password !== process.env.ADMIN_PASS) {
+      res.status(401).send("Wrong Password");
+    }
     const hashtags = req.body.content.match(/!tag![^\s#+^<]+/g);
     const post = await Post.create({
       thumbnail: req.body.thumbnail,
       title: req.body.title,
       content: req.body.content,
+      category: parseInt(req.body.category, 10),
       UserId: req.body.UserId,
     });
     if (hashtags) {
