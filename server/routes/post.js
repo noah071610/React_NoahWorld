@@ -159,7 +159,7 @@ router.get("/hashtag/:hashtag", async (req, res, next) => {
 
 router.post("/", async (req, res) => {
   try {
-    const hashtags = req.body.content.match(/#[^\s#+^<]+/g);
+    const hashtags = req.body.content.match(/!tag![^\s#+^<]+/g);
     const post = await Post.create({
       thumbnail: req.body.thumbnail,
       title: req.body.title,
