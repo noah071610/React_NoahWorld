@@ -61,10 +61,10 @@ router.post("/images", uploadThumbNail.array("image"), async (req, res, next) =>
   res.json(req.files.map((v) => v.filename));
 });
 
-router.get("/:category/:postId", async (req, res) => {
+router.get("/:postId", async (req, res) => {
   try {
     const post = await Post.findOne({
-      where: { id: req.params.postId, category: req.params.category },
+      where: { id: req.params.postId },
       include: [
         {
           model: User,
@@ -79,19 +79,28 @@ router.get("/:category/:postId", async (req, res) => {
         },
       ],
     });
-    const prevPost = await Post.findOne({
-      order: [["id", "DESC"]],
-      where: { id: { [Op.lt]: req.params.postId } },
-      attributes: ["id", "title"],
-    });
-    const nextPost = await Post.findOne({
-      where: { id: { [Op.gt]: req.params.postId } },
-      attributes: ["id", "title"],
-    });
     if (!post) {
       return res.status(404).send("Not Found, please check PostId TT");
     }
-    res.status(200).json({ post, prevPost, nextPost });
+    res.status(200).json({ post });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.get("/sidePosts/:category", async (req, res) => {
+  try {
+    const prevPost = await Post.findOne({
+      order: [["id", "DESC"]],
+      where: { id: { [Op.lt]: req.params.category } },
+      attributes: ["id", "title"],
+    });
+    const nextPost = await Post.findOne({
+      where: { id: { [Op.gt]: req.params.category } },
+      attributes: ["id", "title"],
+    });
+    res.status(200).json({ prevPost, nextPost });
   } catch (error) {
     console.error(error);
     next(error);
@@ -253,6 +262,25 @@ router.post("/delete", async (req, res, next) => {
   } catch (error) {
     console.error(error);
     next(error);
+  }
+});
+
+router.get("/category/:category", async (req, res) => {
+  try {
+    const posts = await Post.findAll({
+      where: { category: req.params.category },
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: Hashtag,
+          attributes: ["name"],
+        },
+      ],
+    });
+    const category = req.params.category;
+    res.status(200).json({ posts, category });
+  } catch (error) {
+    console.error(error);
   }
 });
 
