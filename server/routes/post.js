@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const app = express();
-const { Post, User, Image, Hashtag } = require("../models");
+const { Post, User, Image, Hashtag, Comment } = require("../models");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
@@ -61,10 +61,10 @@ router.post("/images", uploadThumbNail.array("image"), async (req, res, next) =>
   res.json(req.files.map((v) => v.filename));
 });
 
-router.get("/:postId", async (req, res) => {
+router.get("/:category/:postId", async (req, res) => {
   try {
     const post = await Post.findOne({
-      where: { id: req.params.postId },
+      where: { id: req.params.postId, category: req.params.category },
       include: [
         {
           model: User,
@@ -74,16 +74,19 @@ router.get("/:postId", async (req, res) => {
           model: Hashtag,
           attributes: ["name"],
         },
+        {
+          model: Comment,
+        },
       ],
     });
     const prevPost = await Post.findOne({
       order: [["id", "DESC"]],
       where: { id: { [Op.lt]: req.params.postId } },
-      attributes: ["id", "title", "thumbnail", "content"],
+      attributes: ["id", "title"],
     });
     const nextPost = await Post.findOne({
       where: { id: { [Op.gt]: req.params.postId } },
-      attributes: ["id", "title", "thumbnail", "content"],
+      attributes: ["id", "title"],
     });
     if (!post) {
       return res.status(404).send("Not Found, please check PostId TT");
@@ -98,7 +101,7 @@ router.get("/:postId", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const techPosts = await Post.findAll({
-      where: { category: 1 },
+      where: { category: "tech" },
       order: [["createdAt", "DESC"]],
       include: [
         {
@@ -108,7 +111,7 @@ router.get("/", async (req, res) => {
       ],
     });
     const dailyPosts = await Post.findAll({
-      where: { category: 2 },
+      where: { category: "daily" },
       order: [["createdAt", "DESC"]],
       include: [
         {
@@ -118,7 +121,7 @@ router.get("/", async (req, res) => {
       ],
     });
     const classPosts = await Post.findAll({
-      where: { category: 3 },
+      where: { category: "class" },
       order: [["createdAt", "DESC"]],
       include: [
         {
@@ -128,7 +131,7 @@ router.get("/", async (req, res) => {
       ],
     });
     const culturePosts = await Post.findAll({
-      where: { category: 4 },
+      where: { category: "culture" },
       order: [["createdAt", "DESC"]],
       include: [
         {
@@ -168,19 +171,20 @@ router.get("/hashtag/:hashtag", async (req, res, next) => {
 router.post("/", async (req, res) => {
   try {
     if (parseInt(req.body.UserId, 10) !== 1) {
-      res.status(401).send("You are not a Admin! who are you!!");
+      res.status(401).send("You are not a Admin");
     }
     if (req.body.password !== process.env.ADMIN_PASS) {
       res.status(401).send("Wrong Password");
     }
-    const hashtags = req.body.content.match(/!tag![^\s#+^<]+/g);
+    const hashtags = await req.body.content.match(/#[^\s#+^<]+/g);
     const post = await Post.create({
       thumbnail: req.body.thumbnail,
       title: req.body.title,
       content: req.body.content,
-      category: parseInt(req.body.category, 10),
+      category: req.body.category,
       UserId: req.body.UserId,
     });
+    console.log(hashtags);
     if (hashtags) {
       const result = await Promise.all(
         hashtags.map((tag) =>

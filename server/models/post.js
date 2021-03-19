@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     "Post",
     {
       category: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(10),
         allowNull: false,
       },
       thumbnail: {

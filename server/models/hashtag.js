@@ -2,10 +2,6 @@ module.exports = (sequelize, DataTypes) => {
   const Hashtag = sequelize.define(
     "Hashtag",
     {
-      category: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
       name: {
         type: DataTypes.STRING(20),
         allowNull: false,
