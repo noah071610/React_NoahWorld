@@ -63,6 +63,7 @@ router.post("/images", uploadThumbNail.array("image"), async (req, res, next) =>
 
 router.get("/:postId", async (req, res) => {
   try {
+    console.log(req.params.postId);
     const post = await Post.findOne({
       where: { id: req.params.postId },
       include: [
@@ -89,18 +90,47 @@ router.get("/:postId", async (req, res) => {
   }
 });
 
-router.get("/sidePosts/:category", async (req, res) => {
+router.get("/sidePosts/:id/:category", async (req, res) => {
   try {
     const prevPost = await Post.findOne({
       order: [["id", "DESC"]],
-      where: { id: { [Op.lt]: req.params.category } },
+      where: { id: { [Op.lt]: req.params.id }, category: req.params.category },
       attributes: ["id", "title"],
     });
     const nextPost = await Post.findOne({
-      where: { id: { [Op.gt]: req.params.category } },
+      where: { id: { [Op.gt]: req.params.id }, category: req.params.category },
       attributes: ["id", "title"],
     });
     res.status(200).json({ prevPost, nextPost });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.post("/:postId/comment", async (req, res, next) => {
+  try {
+    const post = await Post.findOne({
+      where: { id: req.params.postId },
+    });
+    if (!post) {
+      return res.status(403).send("no exist post");
+    }
+    const comment = await Comment.create({
+      content: req.body.content,
+      PostId: parseInt(req.params.postId),
+      UserId: req.body.userId,
+    });
+    const fullComment = await Comment.findOne({
+      where: { id: comment.id },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "name", "icon"],
+        },
+      ],
+    });
+    res.status(201).json(fullComment);
   } catch (error) {
     console.error(error);
     next(error);
