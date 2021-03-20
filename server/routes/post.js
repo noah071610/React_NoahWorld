@@ -193,7 +193,6 @@ router.post("/", async (req, res) => {
       category: req.body.category,
       UserId: req.body.UserId,
     });
-    console.log(hashtags);
     if (hashtags) {
       const result = await Promise.all(
         hashtags.map((tag) =>
