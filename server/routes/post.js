@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const app = express();
-const { Post, User, Image, Hashtag, Comment, Like } = require("../models");
+const { Post, User, Image, Hashtag, Comment, PostLike } = require("../models");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
@@ -73,7 +73,7 @@ router.get("/class", async (req, res) => {
         },
         {
           model: User,
-          as: "Likers",
+          as: "PostLikers",
           attributes: ["id"],
         },
       ],
@@ -88,7 +88,7 @@ router.get("/class", async (req, res) => {
         },
         {
           model: User,
-          as: "Likers",
+          as: "PostLikers",
           attributes: ["id"],
         },
       ],
@@ -123,7 +123,7 @@ router.get("/:postId", async (req, res) => {
         },
         {
           model: User,
-          as: "Likers",
+          as: "PostLikers",
           attributes: ["id"],
         },
       ],
@@ -191,7 +191,7 @@ router.patch("/like/:PostId/:UserId", async (req, res, next) => {
     if (!post) {
       return res.status(403).send("no post exist");
     }
-    await post.addLikers(req.params.UserId);
+    await post.addPostLikers(req.params.UserId);
     res.json({ PostId: post.id, UserId: req.params.UserId });
   } catch (error) {
     console.error(error);
@@ -205,7 +205,7 @@ router.delete("/like/:PostId/:UserId", async (req, res, next) => {
     if (!post) {
       return res.status(403).send("no post exist");
     }
-    await post.removeLikers(req.params.UserId);
+    await post.removePostLikers(req.params.UserId);
     res.json({ PostId: post.id, UserId: req.params.UserId });
   } catch (error) {
     console.error(error);
@@ -225,7 +225,7 @@ router.get("/", async (req, res) => {
         },
         {
           model: User,
-          as: "Likers",
+          as: "PostLikers",
           attributes: ["id"],
         },
       ],
@@ -240,7 +240,7 @@ router.get("/", async (req, res) => {
         },
         {
           model: User,
-          as: "Likers",
+          as: "PostLikers",
           attributes: ["id"],
         },
       ],
@@ -255,7 +255,7 @@ router.get("/", async (req, res) => {
     //     },
     //     {
     //       model: User,
-    //       as: "Likers",
+    //       as: "PostLikers",
     //       attributes: ["id"],
     //     },
     //   ],
@@ -270,7 +270,7 @@ router.get("/", async (req, res) => {
     //     },
     //     {
     //       model: User,
-    //       as: "Likers",
+    //       as: "PostLikers",
     //       attributes: ["id"],
     //     },
     //   ],
@@ -284,7 +284,7 @@ router.get("/", async (req, res) => {
         },
         {
           model: User,
-          as: "Likers",
+          as: "PostLikers",
           attributes: ["id"],
         },
       ],
@@ -295,7 +295,7 @@ router.get("/", async (req, res) => {
       include: [
         {
           model: User,
-          as: "Likers",
+          as: "PostLikers",
           attributes: ["id"],
         },
         {
@@ -310,7 +310,7 @@ router.get("/", async (req, res) => {
       ],
     }).then((result) =>
       result.map((v) => {
-        return [v.id, v.Likers.length, v.Comments.length];
+        return [v.id, v.PostLikers.length, v.Comments.length];
       })
     );
     const getLikes = await getAttributesFromPosts.map((v, i) => {
@@ -339,7 +339,7 @@ router.get("/", async (req, res) => {
         },
         {
           model: User,
-          as: "Likers",
+          as: "PostLikers",
           attributes: ["id"],
         },
       ],
@@ -355,7 +355,7 @@ router.get("/", async (req, res) => {
         },
         {
           model: User,
-          as: "Likers",
+          as: "PostLikers",
           attributes: ["id"],
         },
         {
@@ -411,9 +411,11 @@ router.post("/", async (req, res) => {
   try {
     if (parseInt(req.body.UserId, 10) !== 1) {
       res.status(401).send("You are not a Admin");
+      return;
     }
     if (req.body.password !== process.env.ADMIN_PASS) {
       res.status(401).send("Wrong Password");
+      return;
     }
     const hashtags = await req.body.content.match(/#[^\s#+^<]+/g);
     const post = await Post.create({
@@ -443,9 +445,11 @@ router.post("/edit", async (req, res) => {
   try {
     if (parseInt(req.body.UserId, 10) !== 1) {
       res.status(401).send("You are not a Admin");
+      return;
     }
     if (req.body.password !== process.env.ADMIN_PASS) {
       res.status(401).send("Wrong Password");
+      return;
     }
     req.body.tags &&
       req.body.tags.map((v) => {
@@ -486,6 +490,7 @@ router.post("/delete", async (req, res, next) => {
   try {
     if (req.body.password !== process.env.ADMIN_PASS) {
       res.status(401).send("Wrong Password");
+      return;
     }
     await Post.destroy({
       where: { id: req.body.PostId },
@@ -544,7 +549,7 @@ router.get("/category/:category", async (req, res) => {
         },
         {
           model: User,
-          as: "Likers",
+          as: "PostLikers",
           attributes: ["id"],
         },
       ],

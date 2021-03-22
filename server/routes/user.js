@@ -66,7 +66,7 @@ router.get("/", async (req, res, next) => {
           },
           {
             model: Post,
-            as: "Liked",
+            as: "PostLiked",
             attributes: ["id"],
           },
         ],
@@ -109,7 +109,7 @@ router.post("/logIn", (req, res, next) => {
           },
           {
             model: Post,
-            as: "Liked",
+            as: "PostLiked",
             attributes: ["id"],
           },
         ],
