@@ -441,10 +441,16 @@ router.post("/", async (req, res) => {
 
 router.post("/edit", async (req, res) => {
   try {
+    if (parseInt(req.body.UserId, 10) !== 1) {
+      res.status(401).send("You are not a Admin");
+    }
+    if (req.body.password !== process.env.ADMIN_PASS) {
+      res.status(401).send("Wrong Password");
+    }
     req.body.tags &&
       req.body.tags.map((v) => {
         Hashtag.destroy({
-          where: { name: v },
+          where: { name: v.name },
         });
       });
     const hashtags = req.body.content.match(/#[^\s#+^<]+/g);
@@ -455,7 +461,7 @@ router.post("/edit", async (req, res) => {
         content: req.body.content,
         UserId: req.body.UserId,
       },
-      { where: { id: req.body.PostId } }
+      { where: { id: parseInt(req.body.PostId, 10) } }
     );
     if (hashtags) {
       const result = await Promise.all(
@@ -484,10 +490,10 @@ router.post("/delete", async (req, res, next) => {
     await Post.destroy({
       where: { id: req.body.PostId },
     });
-    req.body.tag &&
-      req.body.tag.map((v) => {
+    req.body.tags &&
+      req.body.tags.map((v) => {
         Hashtag.destroy({
-          where: { name: v },
+          where: { name: v.name },
         });
       });
     res.status(200).send({ success: true });
@@ -517,7 +523,9 @@ router.post("/comment/edit/:CommentId", async (req, res) => {
       },
       { where: { id: req.params.CommentId } }
     );
-    res.status(201).json({ CommentId: req.params.CommentId, newComment });
+    res
+      .status(201)
+      .json({ CommentId: parseInt(req.params.CommentId, 10), newComment: req.body.content });
   } catch (error) {
     console.error(error);
   }
