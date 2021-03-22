@@ -245,36 +245,36 @@ router.get("/", async (req, res) => {
         },
       ],
     });
-    const classPosts = await Post.findAll({
-      where: { category: "class" },
-      order: [["createdAt", "DESC"]],
-      include: [
-        {
-          model: Hashtag,
-          attributes: ["name"],
-        },
-        {
-          model: User,
-          as: "Likers",
-          attributes: ["id"],
-        },
-      ],
-    });
-    const culturePosts = await Post.findAll({
-      where: { category: "culture" },
-      order: [["createdAt", "DESC"]],
-      include: [
-        {
-          model: Hashtag,
-          attributes: ["name"],
-        },
-        {
-          model: User,
-          as: "Likers",
-          attributes: ["id"],
-        },
-      ],
-    });
+    // const classPosts = await Post.findAll({
+    //   where: { category: "class" },
+    //   order: [["createdAt", "DESC"]],
+    //   include: [
+    //     {
+    //       model: Hashtag,
+    //       attributes: ["name"],
+    //     },
+    //     {
+    //       model: User,
+    //       as: "Likers",
+    //       attributes: ["id"],
+    //     },
+    //   ],
+    // });
+    // const culturePosts = await Post.findAll({
+    //   where: { category: "culture" },
+    //   order: [["createdAt", "DESC"]],
+    //   include: [
+    //     {
+    //       model: Hashtag,
+    //       attributes: ["name"],
+    //     },
+    //     {
+    //       model: User,
+    //       as: "Likers",
+    //       attributes: ["id"],
+    //     },
+    //   ],
+    // });
     const latestPost = await Post.findOne({
       order: [["createdAt", "DESC"]],
       include: [
@@ -289,34 +289,83 @@ router.get("/", async (req, res) => {
         },
       ],
     });
-    const getLikesFromPosts = await Post.findAll({
+    const getAttributesFromPosts = await Post.findAll({
       order: [["createdAt", "DESC"]],
+      attributes: ["id"],
       include: [
         {
           model: User,
           as: "Likers",
           attributes: ["id"],
         },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ["id"],
+            },
+          ],
+        },
       ],
-    }).then((resulte) =>
-      resulte.map((v) => {
-        return [v.id, v.Likers.length];
+    }).then((result) =>
+      result.map((v) => {
+        return [v.id, v.Likers.length, v.Comments.length];
       })
     );
-    const getLikes = getLikesFromPosts.map((v, i) => {
+    const getLikes = await getAttributesFromPosts.map((v, i) => {
       return v[1];
     });
-    const mostLike = Math.max.apply(null, getLikes);
-    const mostLikeId = getLikesFromPosts.filter((v) => {
-      return v[1] === mostLike;
+    const getComments = await getAttributesFromPosts.map((v, i) => {
+      return v[2];
     });
+
+    const mostCalculator = (arr, index) =>
+      getAttributesFromPosts.filter((v) => {
+        return v[index] === Math.max.apply(null, arr);
+      });
+
+    const mostLikedId = await mostCalculator(getLikes, 1)[0][0];
+    const mostCommentsId = await mostCalculator(getComments, 2)[0][0];
+
     const mostLikedPost = await Post.findOne({
-      where: { id: mostLikeId[0][0] },
+      where: {
+        id: mostLikedId,
+      },
       include: [
+        {
+          model: Hashtag,
+          attributes: ["name"],
+        },
         {
           model: User,
           as: "Likers",
           attributes: ["id"],
+        },
+      ],
+    });
+    const mostCommentedPost = await Post.findOne({
+      where: {
+        id: mostCommentsId,
+      },
+      include: [
+        {
+          model: Hashtag,
+          attributes: ["name"],
+        },
+        {
+          model: User,
+          as: "Likers",
+          attributes: ["id"],
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ["id"],
+            },
+          ],
         },
       ],
     });
@@ -327,10 +376,11 @@ router.get("/", async (req, res) => {
     res.status(200).json({
       techPosts,
       dailyPosts,
-      classPosts,
-      culturePosts,
+      // classPosts,
+      // culturePosts,
       latestPost,
       mostLikedPost,
+      mostCommentedPost,
       hashtags,
     });
   } catch (error) {
@@ -391,8 +441,8 @@ router.post("/", async (req, res) => {
 
 router.post("/edit", async (req, res) => {
   try {
-    req.body.tag &&
-      req.body.tag.map((v) => {
+    req.body.tags &&
+      req.body.tags.map((v) => {
         Hashtag.destroy({
           where: { name: v },
         });
@@ -405,7 +455,7 @@ router.post("/edit", async (req, res) => {
         content: req.body.content,
         UserId: req.body.UserId,
       },
-      { where: { id: req.body.postId } }
+      { where: { id: req.body.PostId } }
     );
     if (hashtags) {
       const result = await Promise.all(
@@ -416,7 +466,7 @@ router.post("/edit", async (req, res) => {
         )
       );
       const prevPost = await Post.findOne({
-        where: { id: req.body.postId },
+        where: { id: req.body.PostId },
       });
       await prevPost.addHashtags(result.map((v) => v[0]));
     }
@@ -428,8 +478,11 @@ router.post("/edit", async (req, res) => {
 
 router.post("/delete", async (req, res, next) => {
   try {
+    if (req.body.password !== process.env.ADMIN_PASS) {
+      res.status(401).send("Wrong Password");
+    }
     await Post.destroy({
-      where: { id: req.body.postId },
+      where: { id: req.body.PostId },
     });
     req.body.tag &&
       req.body.tag.map((v) => {
@@ -437,14 +490,14 @@ router.post("/delete", async (req, res, next) => {
           where: { name: v },
         });
       });
-    res.status(200).json({ PostId: parseInt(req.params.postId, 10) });
+    res.status(200).send({ success: true });
   } catch (error) {
     console.error(error);
     next(error);
   }
 });
 
-router.delete("/:CommentId", async (req, res, next) => {
+router.delete("/comment/:CommentId", async (req, res, next) => {
   try {
     await Comment.destroy({
       where: { id: req.params.CommentId },
@@ -456,7 +509,7 @@ router.delete("/:CommentId", async (req, res, next) => {
   }
 });
 
-router.post("/comment/:CommentId", async (req, res) => {
+router.post("/comment/edit/:CommentId", async (req, res) => {
   try {
     const newComment = await Comment.update(
       {
