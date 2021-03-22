@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const app = express();
-const { Post, User, Image, Hashtag, Comment } = require("../models");
+const { Post, User, Image, Hashtag, Comment, Like } = require("../models");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
@@ -61,9 +61,46 @@ router.post("/images", uploadThumbNail.array("image"), async (req, res, next) =>
   res.json(req.files.map((v) => v.filename));
 });
 
+router.get("/class", async (req, res) => {
+  try {
+    const classPosts_class = await Post.findAll({
+      where: { category: "class" },
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: Hashtag,
+          attributes: ["name"],
+        },
+        {
+          model: User,
+          as: "Likers",
+          attributes: ["id"],
+        },
+      ],
+    });
+    const culturePosts_class = await Post.findAll({
+      where: { category: "culture" },
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: Hashtag,
+          attributes: ["name"],
+        },
+        {
+          model: User,
+          as: "Likers",
+          attributes: ["id"],
+        },
+      ],
+    });
+    res.status(200).json({ classPosts_class, culturePosts_class });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 router.get("/:postId", async (req, res) => {
   try {
-    console.log(req.params.postId);
     const post = await Post.findOne({
       where: { id: req.params.postId },
       include: [
@@ -77,6 +114,17 @@ router.get("/:postId", async (req, res) => {
         },
         {
           model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ["id", "name", "icon"],
+            },
+          ],
+        },
+        {
+          model: User,
+          as: "Likers",
+          attributes: ["id"],
         },
       ],
     });
@@ -137,6 +185,34 @@ router.post("/:postId/comment", async (req, res, next) => {
   }
 });
 
+router.patch("/like/:PostId/:UserId", async (req, res, next) => {
+  try {
+    const post = await Post.findOne({ where: { id: req.params.PostId } });
+    if (!post) {
+      return res.status(403).send("no post exist");
+    }
+    await post.addLikers(req.params.UserId);
+    res.json({ PostId: post.id, UserId: req.params.UserId });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.delete("/like/:PostId/:UserId", async (req, res, next) => {
+  try {
+    const post = await Post.findOne({ where: { id: req.params.PostId } });
+    if (!post) {
+      return res.status(403).send("no post exist");
+    }
+    await post.removeLikers(req.params.UserId);
+    res.json({ PostId: post.id, UserId: req.params.UserId });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 router.get("/", async (req, res) => {
   try {
     const techPosts = await Post.findAll({
@@ -146,6 +222,11 @@ router.get("/", async (req, res) => {
         {
           model: Hashtag,
           attributes: ["name"],
+        },
+        {
+          model: User,
+          as: "Likers",
+          attributes: ["id"],
         },
       ],
     });
@@ -157,6 +238,11 @@ router.get("/", async (req, res) => {
           model: Hashtag,
           attributes: ["name"],
         },
+        {
+          model: User,
+          as: "Likers",
+          attributes: ["id"],
+        },
       ],
     });
     const classPosts = await Post.findAll({
@@ -166,6 +252,11 @@ router.get("/", async (req, res) => {
         {
           model: Hashtag,
           attributes: ["name"],
+        },
+        {
+          model: User,
+          as: "Likers",
+          attributes: ["id"],
         },
       ],
     });
@@ -177,12 +268,71 @@ router.get("/", async (req, res) => {
           model: Hashtag,
           attributes: ["name"],
         },
+        {
+          model: User,
+          as: "Likers",
+          attributes: ["id"],
+        },
       ],
     });
+    const latestPost = await Post.findOne({
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: Hashtag,
+          attributes: ["name"],
+        },
+        {
+          model: User,
+          as: "Likers",
+          attributes: ["id"],
+        },
+      ],
+    });
+    const getLikesFromPosts = await Post.findAll({
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: User,
+          as: "Likers",
+          attributes: ["id"],
+        },
+      ],
+    }).then((resulte) =>
+      resulte.map((v) => {
+        return [v.id, v.Likers.length];
+      })
+    );
+    const getLikes = getLikesFromPosts.map((v, i) => {
+      return v[1];
+    });
+    const mostLike = Math.max.apply(null, getLikes);
+    const mostLikeId = getLikesFromPosts.filter((v) => {
+      return v[1] === mostLike;
+    });
+    const mostLikedPost = await Post.findOne({
+      where: { id: mostLikeId[0][0] },
+      include: [
+        {
+          model: User,
+          as: "Likers",
+          attributes: ["id"],
+        },
+      ],
+    });
+
     const hashtags = await Hashtag.findAll({
       attributes: ["name"],
     });
-    res.status(200).json({ techPosts, dailyPosts, classPosts, culturePosts, hashtags });
+    res.status(200).json({
+      techPosts,
+      dailyPosts,
+      classPosts,
+      culturePosts,
+      latestPost,
+      mostLikedPost,
+      hashtags,
+    });
   } catch (error) {
     console.error(error);
   }
@@ -294,8 +444,35 @@ router.post("/delete", async (req, res, next) => {
   }
 });
 
+router.delete("/:CommentId", async (req, res, next) => {
+  try {
+    await Comment.destroy({
+      where: { id: req.params.CommentId },
+    });
+    res.status(200).json({ CommentId: parseInt(req.params.CommentId, 10) });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.post("/comment/:CommentId", async (req, res) => {
+  try {
+    const newComment = await Comment.update(
+      {
+        content: req.body.content,
+      },
+      { where: { id: req.params.CommentId } }
+    );
+    res.status(201).json({ CommentId: req.params.CommentId, newComment });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 router.get("/category/:category", async (req, res) => {
   try {
+    const category = req.params.category;
     const posts = await Post.findAll({
       where: { category: req.params.category },
       order: [["createdAt", "DESC"]],
@@ -304,9 +481,13 @@ router.get("/category/:category", async (req, res) => {
           model: Hashtag,
           attributes: ["name"],
         },
+        {
+          model: User,
+          as: "Likers",
+          attributes: ["id"],
+        },
       ],
     });
-    const category = req.params.category;
     res.status(200).json({ posts, category });
   } catch (error) {
     console.error(error);
