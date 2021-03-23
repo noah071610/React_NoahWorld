@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = (db) => {
     db.User.hasMany(db.Post);
     db.User.hasMany(db.Comment);
+    db.User.hasMany(db.SubComment);
     db.User.belongsToMany(db.Post, {
       through: "PostLike",
       as: "PostLiked",
@@ -40,10 +41,6 @@ module.exports = (sequelize, DataTypes) => {
     db.User.belongsToMany(db.Comment, {
       through: "CommentLike",
       as: "CommentLiked",
-    });
-    db.User.belongsToMany(db.Comment, {
-      through: "SubCommentLike",
-      as: "SubCommentLiked",
     });
   };
   return User;

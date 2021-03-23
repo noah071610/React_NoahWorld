@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     db.Comment.hasMany(db.SubComment);
     db.Comment.belongsToMany(db.User, {
       through: "CommentLike",
-      as: "Commentlikers",
+      as: "CommentLikers",
     });
   };
   return Comment;

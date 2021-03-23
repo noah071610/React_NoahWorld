@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const app = express();
-const { Post, User, Image, Hashtag, Comment, PostLike } = require("../models");
+const { Post, User, Image, Hashtag, Comment, PostLike, SubComment } = require("../models");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
@@ -119,6 +119,20 @@ router.get("/:postId", async (req, res) => {
               model: User,
               attributes: ["id", "name", "icon"],
             },
+            {
+              model: User,
+              as: "CommentLikers",
+              attributes: ["id"],
+            },
+            {
+              model: SubComment,
+              include: [
+                {
+                  model: User,
+                  attributes: ["id", "name", "icon"],
+                },
+              ],
+            },
           ],
         },
         {
@@ -150,35 +164,6 @@ router.get("/sidePosts/:id/:category", async (req, res) => {
       attributes: ["id", "title"],
     });
     res.status(200).json({ prevPost, nextPost });
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-
-router.post("/:postId/comment", async (req, res, next) => {
-  try {
-    const post = await Post.findOne({
-      where: { id: req.params.postId },
-    });
-    if (!post) {
-      return res.status(403).send("no exist post");
-    }
-    const comment = await Comment.create({
-      content: req.body.content,
-      PostId: parseInt(req.params.postId),
-      UserId: req.body.userId,
-    });
-    const fullComment = await Comment.findOne({
-      where: { id: comment.id },
-      include: [
-        {
-          model: User,
-          attributes: ["id", "name", "icon"],
-        },
-      ],
-    });
-    res.status(201).json(fullComment);
   } catch (error) {
     console.error(error);
     next(error);
@@ -508,40 +493,13 @@ router.post("/delete", async (req, res, next) => {
   }
 });
 
-router.delete("/comment/:CommentId", async (req, res, next) => {
-  try {
-    await Comment.destroy({
-      where: { id: req.params.CommentId },
-    });
-    res.status(200).json({ CommentId: parseInt(req.params.CommentId, 10) });
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-
-router.post("/comment/edit/:CommentId", async (req, res) => {
-  try {
-    const newComment = await Comment.update(
-      {
-        content: req.body.content,
-      },
-      { where: { id: req.params.CommentId } }
-    );
-    res
-      .status(201)
-      .json({ CommentId: parseInt(req.params.CommentId, 10), newComment: req.body.content });
-  } catch (error) {
-    console.error(error);
-  }
-});
-
 router.get("/category/:category", async (req, res) => {
   try {
     const category = req.params.category;
     const posts = await Post.findAll({
       where: { category: req.params.category },
       order: [["createdAt", "DESC"]],
+      limit: 7,
       include: [
         {
           model: Hashtag,
@@ -555,6 +513,36 @@ router.get("/category/:category", async (req, res) => {
       ],
     });
     res.status(200).json({ posts, category });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+router.get("/morepost/:category", async (req, res) => {
+  try {
+    const category = req.params.category;
+    let where = {};
+    where = {
+      id: { [Op.lt]: parseInt(req.query.lastId, 10) },
+      $and: [{ category: req.params.category }],
+    };
+    const morePosts = await Post.findAll({
+      where,
+      limit: 10,
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: Hashtag,
+          attributes: ["name"],
+        },
+        {
+          model: User,
+          as: "PostLikers",
+          attributes: ["id"],
+        },
+      ],
+    });
+    res.status(200).json({ morePosts, category });
   } catch (error) {
     console.error(error);
   }

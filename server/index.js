@@ -55,6 +55,7 @@ app.get("/api", (req, res) => {
 
 app.use("/api/post", require("./routes/post"));
 app.use("/api/user", require("./routes/user"));
+app.use("/api/comment", require("./routes/comment"));
 
 app.use("/", express.static(path.join(__dirname, "uploads")));
 
