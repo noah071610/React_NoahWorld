@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const app = express();
-const { Post, User, Image, Hashtag, Comment, PostLike, SubComment } = require("../models");
+const { Post, User, Image, Hashtag, Comment, PostLike, SubComment, Quiz } = require("../models");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
@@ -93,7 +93,15 @@ router.get("/class", async (req, res) => {
         },
       ],
     });
-    res.status(200).json({ classPosts_class, culturePosts_class });
+    const quizzes = await Quiz.findAll({
+      where: { type: "quiz" },
+      order: [["createdAt", "DESC"]],
+    });
+    const words = await Quiz.findAll({
+      where: { type: "word" },
+      order: [["createdAt", "DESC"]],
+    });
+    res.status(200).json({ classPosts_class, culturePosts_class, quizzes, words });
   } catch (error) {
     console.error(error);
   }
@@ -317,6 +325,9 @@ router.get("/", async (req, res) => {
       where: {
         id: mostLikedId,
       },
+      attributes: {
+        exclude: ["content"],
+      },
       include: [
         {
           model: Hashtag,
@@ -333,15 +344,13 @@ router.get("/", async (req, res) => {
       where: {
         id: mostCommentsId,
       },
+      attributes: {
+        exclude: ["content"],
+      },
       include: [
         {
           model: Hashtag,
           attributes: ["name"],
-        },
-        {
-          model: User,
-          as: "PostLikers",
-          attributes: ["id"],
         },
         {
           model: Comment,
