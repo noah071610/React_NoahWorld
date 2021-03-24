@@ -512,7 +512,11 @@ router.get("/category/:category", async (req, res) => {
         },
       ],
     });
-    res.status(200).json({ posts, category });
+    const countPosts = await Post.findAll({
+      where: { category: req.params.category },
+      attributes: [("COUNT", "id")],
+    });
+    res.status(200).json({ posts, category, countPosts });
   } catch (error) {
     console.error(error);
   }
@@ -521,14 +525,12 @@ router.get("/category/:category", async (req, res) => {
 router.get("/morepost/:category", async (req, res) => {
   try {
     const category = req.params.category;
-    let where = {};
-    where = {
-      id: { [Op.lt]: parseInt(req.query.lastId, 10) },
-      $and: [{ category: req.params.category }],
+    let where = {
+      [Op.and]: [{ id: { [Op.lt]: parseInt(req.query.lastId, 10) } }, { category }],
     };
     const morePosts = await Post.findAll({
       where,
-      limit: 10,
+      limit: 6,
       order: [["createdAt", "DESC"]],
       include: [
         {
