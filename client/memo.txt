@@ -1,0 +1,22 @@
+깨우친것 목록
+Saga 미들웨어 설치하는법 + provider store
+액션을 보낼땐 항상 dispatch
+useHistory, match.params.id
+렌더링 순서 문제일땐 존안 선생님에 말씀에 따라 {post && post.title}을 적극 따르자 제발
+display: inline-block; 텍스트요소로 만들기 (+ 상위 display 차단 특히 flex 같은거)
+파람스는 왠만하면 아래로 (backend)
+react slick css 추가해야함
+
+const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+boxShadow: "4px 8px 21px 1px rgba(0, 0, 0, 0.15)",
+
+설정 defalut formatter esbenp
+
+SET foreign_key_checks = 0;
+
+
+const post = {id:1,content:'ss',Comments:[{id:1,content:'sd',SubComments:[{id:1,content:'ds'},{id:2,content:'as'}]},{id:2,content:'sa',SubComments:[{id:1,content:'ds'},{id:2,content:'as'}]}]}
