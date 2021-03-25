@@ -20,29 +20,12 @@ const upload = multer({
       done(null, "server/uploads");
     },
     filename(req, file, done) {
-      // someImageName.png
-      const ext = path.extname(file.originalname); // 확장자 추출(.png)
-      done(null, "icon_" + new Date().getTime() + ext); // someImageName15184712891.png      image name 지정
+      const ext = path.extname(file.originalname);
+      done(null, "icon_" + new Date().getTime() + ext);
     },
   }),
-  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
+  limits: { fileSize: 20 * 1024 * 1024 },
 });
-
-// const upload = multer({ storage: storage }).single("file");
-
-// const uploadIcon = multer({
-//   storage: multer.diskStorage({
-//     destination(req, file, done) {
-//       done(null, "uploads");
-//     },
-//     filename(req, file, done) {
-//       var imageBuffer = req.file.buffer;
-//       var imageName = "uploads/map.png";
-//       fs.createWriteStream(imageName).write(imageBuffer);
-//     },
-//   }),
-//   limits: { fileSize: 20 * 200 * 200 },
-// });
 
 router.post("/icon", upload.single("image"), async (req, res, next) => {
   User.update({ icon: req.file.filename }, { where: { id: req.body.id } });

@@ -31,17 +31,14 @@ let storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage }).single("file");
-
 const uploadThumbNail = multer({
   storage: multer.diskStorage({
     destination(req, file, done) {
-      done(null, "uploads");
+      done(null, "server/uploads");
     },
     filename(req, file, done) {
       const ext = path.extname(file.originalname);
-      const basename = path.basename(file.originalname, ext);
-      done(null, basename + "_" + new Date().getTime() + ext);
+      done(null, "thumbnail_" + new Date().getTime() + ext);
     },
   }),
   limits: { fileSize: 20 * 1024 * 1024 },
@@ -56,9 +53,8 @@ router.post("/uploadfiles", (req, res) => {
   });
 });
 
-router.post("/images", uploadThumbNail.array("image"), async (req, res, next) => {
-  console.log(req.files);
-  res.json(req.files.map((v) => v.filename));
+router.post("/images", uploadThumbNail.single("image"), async (req, res, next) => {
+  res.json(req.file.filename);
 });
 
 router.get("/class", async (req, res) => {
@@ -414,6 +410,7 @@ router.post("/", async (req, res) => {
     const hashtags = await req.body.content.match(/#[^\s#+^<]+/g);
     const post = await Post.create({
       thumbnail: req.body.thumbnail,
+      imagePath: req.body.imagePath,
       title: req.body.title,
       content: req.body.content,
       category: req.body.category,
@@ -486,6 +483,12 @@ router.post("/delete", async (req, res, next) => {
       res.status(401).send("Wrong Password");
       return;
     }
+    await SubComment.destroy({
+      where: { PostId: req.body.PostId },
+    });
+    await Comment.destroy({
+      where: { PostId: req.body.PostId },
+    });
     await Post.destroy({
       where: { id: req.body.PostId },
     });

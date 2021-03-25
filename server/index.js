@@ -22,7 +22,17 @@ app.use(
 );
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(
+  express.json({
+    limit: "1mb",
+  })
+);
+app.use(
+  express.urlencoded({
+    limit: "1mb",
+    extended: false,
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
