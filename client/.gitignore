@@ -2,6 +2,8 @@
 /build
 /uploads
 .vscode
+memo.txt
+public/images/
 
 # Logs
 logs
