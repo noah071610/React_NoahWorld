@@ -29,7 +29,6 @@ app.use(
 );
 app.use(
   express.urlencoded({
-    limit: "1mb",
     extended: false,
   })
 );
