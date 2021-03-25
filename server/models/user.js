@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT("medium"),
         allowNull: true,
       },
+      recentView: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       password: {
         type: DataTypes.STRING(100),
         allowNull: false,

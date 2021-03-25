@@ -2,6 +2,10 @@ module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define(
     "Post",
     {
+      hit: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       category: {
         type: DataTypes.STRING(10),
         allowNull: false,

@@ -7,7 +7,6 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const { Op } = require("sequelize");
-
 try {
   fs.accessSync("uploads");
 } catch (error) {
@@ -61,7 +60,7 @@ router.get("/class", async (req, res) => {
   try {
     const classPosts_class = await Post.findAll({
       where: { category: "class" },
-      order: [["createdAt", "DESC"]],
+      order: [["createdAt", "ASC"]],
       include: [
         {
           model: Hashtag,
@@ -103,7 +102,62 @@ router.get("/class", async (req, res) => {
   }
 });
 
-router.get("/:postId", async (req, res) => {
+router.post("/recent", async (req, res) => {
+  try {
+    const recentViewPost = await Post.findOne({
+      where: { id: req.body.recentView },
+      attributes: ["id", "category", "title", "hit"],
+    });
+
+    const recentCommentPost = await Post.findAll({
+      attributes: ["id", "category", "title"],
+      limit: 1,
+      include: [
+        {
+          model: Comment,
+          order: [["createdAt", "DESC"]],
+          where: { UserId: req.body.id },
+          limit: 1,
+        },
+      ],
+    });
+    res.status(200).json({ recentViewPost, recentCommentPost: recentCommentPost[0] });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.get("/category/:category", async (req, res) => {
+  try {
+    const category = req.params.category;
+    const posts = await Post.findAll({
+      where: { category: req.params.category },
+      order: [["createdAt", "DESC"]],
+      limit: 7,
+      include: [
+        {
+          model: Hashtag,
+          attributes: ["name"],
+        },
+        {
+          model: User,
+          as: "PostLikers",
+          attributes: ["id"],
+        },
+      ],
+    });
+    const countPosts = await Post.findAll({
+      where: { category: req.params.category },
+      attributes: [("COUNT", "id")],
+    });
+    res.status(200).json({ posts, category, countPosts });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+router.get("/onePost/:postId/:UserId", async (req, res) => {
   try {
     const post = await Post.findOne({
       where: { id: req.params.postId },
@@ -146,6 +200,16 @@ router.get("/:postId", async (req, res) => {
         },
       ],
     });
+    await post.increment("hit", { by: 1 });
+    if (req.params.UserId) {
+      User.update(
+        {
+          recentView: parseInt(req.params.postId, 10),
+        },
+        { where: { id: parseInt(req.params.UserId, 10) } }
+      );
+    }
+
     if (!post) {
       return res.status(404).send("Not Found, please check PostId TT");
     }
@@ -264,23 +328,9 @@ router.get("/", async (req, res) => {
     //     },
     //   ],
     // });
-    const latestPost = await Post.findOne({
-      order: [["createdAt", "DESC"]],
-      include: [
-        {
-          model: Hashtag,
-          attributes: ["name"],
-        },
-        {
-          model: User,
-          as: "PostLikers",
-          attributes: ["id"],
-        },
-      ],
-    });
     const getAttributesFromPosts = await Post.findAll({
       order: [["createdAt", "DESC"]],
-      attributes: ["id"],
+      attributes: ["id", "hit"],
       include: [
         {
           model: User,
@@ -299,7 +349,7 @@ router.get("/", async (req, res) => {
       ],
     }).then((result) =>
       result.map((v) => {
-        return [v.id, v.PostLikers.length, v.Comments.length];
+        return [v.id, v.PostLikers.length, v.Comments.length, v.hit];
       })
     );
     const getLikes = await getAttributesFromPosts.map((v, i) => {
@@ -308,7 +358,9 @@ router.get("/", async (req, res) => {
     const getComments = await getAttributesFromPosts.map((v, i) => {
       return v[2];
     });
-
+    const getViews = await getAttributesFromPosts.map((v, i) => {
+      return v[3];
+    });
     const mostCalculator = (arr, index) =>
       getAttributesFromPosts.filter((v) => {
         return v[index] === Math.max.apply(null, arr);
@@ -316,7 +368,7 @@ router.get("/", async (req, res) => {
 
     const mostLikedId = await mostCalculator(getLikes, 1)[0][0];
     const mostCommentsId = await mostCalculator(getComments, 2)[0][0];
-
+    const mostViewedId = await mostCalculator(getViews, 3)[0][0];
     const mostLikedPost = await Post.findOne({
       where: {
         id: mostLikedId,
@@ -359,7 +411,25 @@ router.get("/", async (req, res) => {
         },
       ],
     });
-
+    const mostViewedPost = await Post.findOne({
+      where: {
+        id: mostViewedId,
+      },
+      attributes: {
+        exclude: ["content"],
+      },
+      include: [
+        {
+          model: Hashtag,
+          attributes: ["name"],
+        },
+        {
+          model: User,
+          as: "PostLikers",
+          attributes: ["id"],
+        },
+      ],
+    });
     const hashtags = await Hashtag.findAll({
       attributes: ["name"],
     });
@@ -368,7 +438,7 @@ router.get("/", async (req, res) => {
       dailyPosts,
       // classPosts,
       // culturePosts,
-      latestPost,
+      mostViewedPost,
       mostLikedPost,
       mostCommentedPost,
       hashtags,
@@ -409,6 +479,7 @@ router.post("/", async (req, res) => {
     }
     const hashtags = await req.body.content.match(/#[^\s#+^<]+/g);
     const post = await Post.create({
+      hit: 0,
       thumbnail: req.body.thumbnail,
       imagePath: req.body.imagePath,
       title: req.body.title,
@@ -452,6 +523,7 @@ router.post("/edit", async (req, res) => {
     const newPost = await Post.update(
       {
         thumbnail: req.body.thumbnail,
+        imagePath: req.body.imagePath,
         title: req.body.title,
         content: req.body.content,
         UserId: req.body.UserId,
@@ -502,35 +574,6 @@ router.post("/delete", async (req, res, next) => {
   } catch (error) {
     console.error(error);
     next(error);
-  }
-});
-
-router.get("/category/:category", async (req, res) => {
-  try {
-    const category = req.params.category;
-    const posts = await Post.findAll({
-      where: { category: req.params.category },
-      order: [["createdAt", "DESC"]],
-      limit: 7,
-      include: [
-        {
-          model: Hashtag,
-          attributes: ["name"],
-        },
-        {
-          model: User,
-          as: "PostLikers",
-          attributes: ["id"],
-        },
-      ],
-    });
-    const countPosts = await Post.findAll({
-      where: { category: req.params.category },
-      attributes: [("COUNT", "id")],
-    });
-    res.status(200).json({ posts, category, countPosts });
-  } catch (error) {
-    console.error(error);
   }
 });
 
