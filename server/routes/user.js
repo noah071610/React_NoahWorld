@@ -8,10 +8,10 @@ const path = require("path");
 const fs = require("fs");
 
 try {
-  fs.accessSync("uploads");
+  fs.accessSync("./server/uploads");
 } catch (error) {
   console.log("create new folder");
-  fs.mkdirSync("uploads");
+  fs.mkdirSync("./server/uploads");
 }
 
 const upload = multer({

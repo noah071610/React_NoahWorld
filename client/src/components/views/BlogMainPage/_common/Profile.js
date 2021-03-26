@@ -159,7 +159,7 @@ function HeaderProfile() {
       <RecentTable style={{ paddingLeft: "1rem" }} span={6}>
         <h2 style={{ textAlign: "center", margin: "1rem 0" }}>Recent Comment 📝</h2>
         <Divider />
-        {recentCommentPost ? (
+        {recentCommentPost?.Comments.length > 0 ? (
           <div
             onClick={() =>
               history.push(`/${recentCommentPost?.category}/post/${recentCommentPost?.id}`)

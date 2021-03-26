@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Divider } from "antd";
+import { Col, Divider, Row } from "antd";
 import React from "react";
 import ArticleAside from "./_common/ArticleAside";
 import ArticleColumn from "./_common/ArticleColumn";
@@ -13,6 +13,7 @@ import { CHAGE_HEADER } from "../../../_reducers/blog";
 import Profile from "./_common/Profile";
 import { LOAD_POSTS_REQUEST } from "../../../_reducers/post";
 import { LOAD_INFO_REQUEST } from "../../../_reducers/user";
+import ArticleSmallAside from "./_common/ArticleSmallAside";
 
 function BlogMainPage() {
   const history = useHistory();
@@ -56,13 +57,19 @@ function BlogMainPage() {
   return (
     <>
       {user && <Profile />}
-      <div style={{ marginTop: "2rem", display: "flex" }} className="main">
+      <div className="space" />
+      <div className="blog">
         {techPosts && dailyPosts && (
-          <section id="main_tech" style={{ width: "70%", marginRight: "2rem" }}>
+          <section className="blog_main">
             <Divider orientation="left">
               <Link to={"/tech"}>Information Technology</Link>
             </Divider>
-            <ArticleRow article={techPosts[0]} />
+            <div className="blog_category_big">
+              <ArticleRow article={techPosts[0]} />
+            </div>
+            <div className="blog_category_small">
+              <ArticleColumn article={techPosts[0]} />
+            </div>
             <Divider />
             <Slider style={{ marginBottom: "3rem" }} {...settings}>
               {techPosts.slice(1).map((v, i) => (
@@ -72,7 +79,12 @@ function BlogMainPage() {
             <Divider orientation="left">
               <Link to={"/daily"}>Daily</Link>
             </Divider>
-            <ArticleRow article={dailyPosts[0]} />
+            <div className="blog_category_big">
+              <ArticleRow article={dailyPosts[0]} />
+            </div>
+            <div className="blog_category_small">
+              <ArticleColumn article={dailyPosts[0]} />
+            </div>
             <Divider />
             <Slider style={{ marginBottom: "3rem" }} {...settings}>
               {dailyPosts.slice(1).map((v, i) => (
@@ -139,6 +151,63 @@ function BlogMainPage() {
           </div>
         </section>
       </div>
+      <div className="blog_md_aside">
+        <Divider />
+        <div>
+          <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
+            <img
+              alt="trophy"
+              className="icon"
+              src="https://img.icons8.com/doodle/96/000000/trophy--v1.png"
+            />
+            Most Liked
+          </h3>
+          <ArticleSmallAside type="like" article={mostLikedPost} />
+        </div>
+        <div>
+          <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
+            <img
+              alt="view_log"
+              className="icon"
+              src="https://img.icons8.com/doodle/96/000000/goal.png"
+            />
+            Most View
+          </h3>
+          <ArticleSmallAside type="view" article={mostViewedPost} />
+        </div>
+        <div>
+          <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
+            <img
+              alt="comment_log"
+              className="icon"
+              src="https://img.icons8.com/doodle/96/000000/speech-bubble-with-dots.png"
+            />
+            Most Commented
+          </h3>
+          <ArticleSmallAside type="comments" article={mostCommentedPost} />
+        </div>
+        <Divider />
+        <div style={{ marginBottom: "2rem" }}>
+          <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
+            <img
+              alt="view_log"
+              className="icon"
+              src="https://img.icons8.com/ios/100/000000/hashtag.png"
+            />
+            Hashtags
+          </h3>
+          <ul style={{ marginLeft: "0.5rem" }} className="blog_aside_tag">
+            {hashtags &&
+              hashtags.map((v, i) => {
+                return (
+                  <li key={i}>
+                    <Link to={`/hashtag/${v.name}`}>#{v.name}</Link>
+                  </li>
+                );
+              })}
+          </ul>
+        </div>
+      </div>
       <section style={{ width: "100%", marginRight: "2rem" }}>
         <Divider orientation="left">
           <Link to={"/class"}>
@@ -150,6 +219,7 @@ function BlogMainPage() {
             />
           </Link>
         </Divider>
+
         <div className="blog_bottom">
           <div className="blog_bottom_card" style={{ gridArea: "hd" }}>
             <h2 className="blog_bottom_card_title">韓国語基礎</h2>

@@ -78,11 +78,16 @@ function BlogCategoryPage() {
             </span>
           </h2>
           <Divider />
-          <ArticleRow article={dailyPosts[0] || techPosts[0]} />
+          <div className="blog_category_big">
+            <ArticleRow article={dailyPosts[0] || techPosts[0]} />
+          </div>
+          <div className="blog_category_small">
+            <ArticleColumn article={dailyPosts[0] || techPosts[0]} />
+          </div>
           <Divider />
           <Row>
             {(techPosts || dailyPosts).slice(1).map((v, i) => (
-              <Col key={i} sm={24} md={12} lg={8}>
+              <Col key={i} xs={24} sm={12} lg={8}>
                 <ArticleColumn article={v} />
               </Col>
             ))}

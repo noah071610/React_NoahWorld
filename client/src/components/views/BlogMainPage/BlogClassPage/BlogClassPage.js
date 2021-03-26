@@ -106,6 +106,15 @@ function BlogClassPage() {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 2,
+    responsive: [
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
   useEffect(() => {
     dispatch({
@@ -176,8 +185,8 @@ function BlogClassPage() {
         <img
           data-aos="fade-right"
           alt="class_poster_girl"
-          style={{ width: "500px" }}
           src="/images/blog/class_study.png"
+          className="blog_class_poster_girl"
         />
         <div
           style={{
@@ -202,7 +211,6 @@ function BlogClassPage() {
             data-aos-anchor-placement="top-bottom"
             data-aos-delay="500"
             alt="class_intro_cha"
-            style={{ width: "170px", position: "absolute", bottom: 0, right: 0 }}
             src="./images/blog/logo_cha.png"
           />
           <img
@@ -216,7 +224,7 @@ function BlogClassPage() {
         </div>
       </ClassMainPoster>
       <Row>
-        <Col style={{ padding: "1rem" }} span={12}>
+        <Col style={{ padding: "1rem" }} xs={24} lg={12}>
           <h2 className="blog_class_title">韓国語基礎</h2>
           <ClassLists>
             {classPosts &&
@@ -237,19 +245,13 @@ function BlogClassPage() {
               ))}
           </ClassLists>
         </Col>
-        <Col style={{ padding: "1rem" }} span={12}>
+        <Col style={{ padding: "1rem" }} xs={24} lg={12}>
           <h2 className="blog_class_title">韓国語今どき</h2>
           <div
             style={{
-              paddingTop: "6rem",
               background: `url('/images/blog/class_memo.jpg') no-repeat top`,
-              height: "330px",
-              position: "relative",
-              borderRadius: "7px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
             }}
+            className="blog_word_div"
           >
             <h3 style={{ fontSize: "1.2rem", textAlign: "center", marginBottom: "2rem" }}>
               {words[randomWord]?.question}

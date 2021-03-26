@@ -4,7 +4,12 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { navContents } from "../../config";
-import { BlogHeader, PortfolioHeader, PortfolioPostHeader } from "./_common/HeaderList";
+import {
+  BlogHeader,
+  PortfolioHeader,
+  PortfolioPostHeader,
+  BlogSmallHeader,
+} from "./_common/HeaderList";
 import { useDispatch, useSelector } from "react-redux";
 import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { message } from "antd";
@@ -18,7 +23,7 @@ const LogoMain = styled.img`
 
 function Header() {
   const [FixedNavbar, setFixedNavbar] = useState(false);
-  const { header } = useSelector((state) => state.blog);
+  const { header, onSlideMenu } = useSelector((state) => state.blog);
   const { user, logOutDone, logOutError } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -77,6 +82,8 @@ function Header() {
           alignItems: "center",
           marginBottom: "3rem",
           position: "relative",
+          zIndex: 2,
+          backgroundColor: "white",
         }}
       >
         <Link onClick={() => window.scrollTo({ top: 0 })} to={"/"}>
@@ -100,6 +107,9 @@ function Header() {
         ) : (
           <PortfolioPostHeader />
         )}
+      </div>
+      <div className={FixedNavbar ? " fixed" : "relative"}>
+        <BlogSmallHeader />
       </div>
       {FixedNavbar ? <div style={{ height: "70px" }} /> : null}
     </header>

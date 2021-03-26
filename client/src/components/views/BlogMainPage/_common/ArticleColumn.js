@@ -39,11 +39,9 @@ function ArticleColumn({ article }) {
               onError={handleImgError}
             />
           </div>
-          <div style={{ height: "180px" }}>
-            <h2 style={{ margin: 0 }} className="article_header">
-              {article.title}
-            </h2>
-            <ul style={{ margin: 0 }}>
+          <div>
+            <h2 className="article_header">{article.title}</h2>
+            <ul>
               {article.Hashtags &&
                 article.Hashtags.map((v, i) => {
                   return (
@@ -55,14 +53,16 @@ function ArticleColumn({ article }) {
                   );
                 })}
             </ul>
-            <div style={{ height: "80px", overflow: "hidden", marginBottom: "0.7rem" }}>
-              <p
-                style={{ textOverflow: "ellipsis", overflowY: "hidden", height: "80px" }}
-                className="article_desc"
-              >
-                {contentWithoutHTML}
-              </p>
-            </div>
+            <p
+              style={
+                article.Hashtags.length > 0
+                  ? null
+                  : { height: "5.6rem", WebkitLineClamp: 4, marginBottom: "1.7rem" }
+              }
+              className="article_desc"
+            >
+              {contentWithoutHTML}
+            </p>
           </div>
           <ul className="article_footer">
             <li>

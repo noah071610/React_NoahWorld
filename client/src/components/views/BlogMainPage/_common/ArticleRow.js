@@ -54,14 +54,17 @@ function ArticleRow({ article }) {
                   );
                 })}
             </ul>
-            <div style={{ height: "150px", overflow: "hidden" }}>
-              <p
-                style={{ height: "100%", textOverflow: "ellipsis", overflowY: "hidden" }}
-                className="article_desc"
-              >
-                {contentWithoutHTML}
-              </p>
-            </div>
+            <p
+              style={{
+                width: "100%",
+                maxHeight: "4rem",
+                overflow: "hidden",
+                margin: 0,
+              }}
+              className="article_desc"
+            >
+              {contentWithoutHTML}
+            </p>
             <ul style={{ marginTop: "1rem" }} className="article_footer">
               <li style={{ color: BLUE_COLOR, fontWeight: "bold" }}>
                 {dayjs().to(dayjs(article.createdAt), true)}

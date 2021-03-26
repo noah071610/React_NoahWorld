@@ -23,13 +23,7 @@ const Scroll = styled.div`
 function PageWrapper({ children }) {
   return (
     <>
-      <div
-        style={{
-          marginTop: "3rem",
-          padding: "0 2rem",
-          position: "relative",
-        }}
-      >
+      <div className="pageWrapper">
         <div style={{ maxWidth: "1120px", margin: "0 auto" }}>
           <Header />
           {children}

@@ -48,19 +48,26 @@ function ArticleAside({ article, type }) {
             >
               IN {article.category.toUpperCase()}
             </span>
+            <span className="article_md_footer">
+              {type === "comments"
+                ? article.Comments.length + " Comments"
+                : type === "like"
+                ? article.PostLikers.length + " Likes"
+                : article.hit + " views"}
+            </span>
             <h2 className="article_aside_header">{article.title}</h2>
             <ul className="article_footer">
-              <li>
+              <li className="date">
                 {dayjs().to(dayjs(article.createdAt), true)}
                 &nbsp;ago
               </li>
-              <li>
+              <li className="view">
                 ·
                 <span style={type === "view" ? { color: BLUE_COLOR, fontWeight: "bold" } : null}>
                   &nbsp;{article.hit} views
                 </span>
               </li>
-              <li>
+              <li className="comments">
                 ·
                 <span style={type === "view" ? null : { color: BLUE_COLOR, fontWeight: "bold" }}>
                   &nbsp;
