@@ -87,7 +87,7 @@ function Header() {
         }}
       >
         <Link onClick={() => window.scrollTo({ top: 0 })} to={"/"}>
-          <LogoMain style={{ width: "560px" }} src="/images/blog/logo_main.png" />
+          <LogoMain className="logo" src="/images/blog/logo_main.png" />
         </Link>
         {user ? (
           <a className="blog_header_loginout" onClick={onClickLogOut}>

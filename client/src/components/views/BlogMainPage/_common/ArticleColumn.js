@@ -55,7 +55,7 @@ function ArticleColumn({ article }) {
             </ul>
             <p
               style={
-                article.Hashtags.length > 0
+                article.Hashtags?.length > 0
                   ? null
                   : { height: "5.6rem", WebkitLineClamp: 4, marginBottom: "1.7rem" }
               }

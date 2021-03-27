@@ -12,6 +12,8 @@ import useToggle from "../../../../_hooks/useToggle";
 import { Link } from "react-router-dom";
 import { LOAD_INFO_REQUEST } from "../../../../_reducers/user";
 import useInput from "../../../../_hooks/useInput";
+import { SmallPoster } from "../_common/SmallSize";
+import { MainPoster } from "../_common/Components";
 
 const KakaoContent = styled.div`
   font-size: 0.9rem;
@@ -67,20 +69,6 @@ const QuizContent = styled.div`
   bottom: 4.2rem;
 `;
 
-const ClassMainPoster = styled.div`
-  box-shadow: 4px 8px 10px 0px rgba(0, 0, 0, 0.15);
-  background: linear-gradient(
-    180deg,
-    rgba(251, 255, 253, 1) 15%,
-    rgba(226, 150, 153, 0.804359243697479) 100%
-  );
-  width: 100%;
-  paddingtop: 3rem;
-  margin: 3rem 0;
-  height: 100%;
-  display: flex;
-`;
-
 const NextBtn = styled.button`
   position: absolute;
   bottom: 0;
@@ -111,6 +99,15 @@ function BlogClassPage() {
         breakpoint: 992,
         settings: {
           slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          autoplay: true,
+          autoplaySpeed: 2000,
+          slidesToShow: 1,
           slidesToScroll: 1,
         },
       },
@@ -181,55 +178,15 @@ function BlogClassPage() {
   return (
     <>
       {user && <HeaderProfile />}
-      <ClassMainPoster>
-        <img
-          data-aos="fade-right"
-          alt="class_poster_girl"
-          src="/images/blog/class_study.png"
-          className="blog_class_poster_girl"
-        />
-        <div
-          style={{
-            position: "relative",
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            overflow: "hidden",
-          }}
-        >
-          <h2 style={{ paddingLeft: "0.5rem" }} className="blog_class_poster_title">
-            楽しく始まる韓国語教室
-            <img
-              alt="class_poster_flag"
-              style={{ width: "3rem", paddingBottom: "0.7rem", marginLeft: "0.5rem" }}
-              src="https://img.icons8.com/plasticine/100/000000/south-korea.png"
-            />
-          </h2>
-          <img
-            className="blog_class_poster_cha"
-            data-aos="fade-up"
-            data-aos-anchor-placement="top-bottom"
-            data-aos-delay="500"
-            alt="class_intro_cha"
-            src="./images/blog/logo_cha.png"
-          />
-          <img
-            data-aos="fade-up"
-            data-aos-anchor-placement="top-bottom"
-            data-aos-delay="700"
-            alt="class_intro_text"
-            style={{ width: "70%" }}
-            src="./images/blog/kankokugo.png"
-          />
-        </div>
-      </ClassMainPoster>
+      <MainPoster />
+      <SmallPoster />
       <Row>
-        <Col style={{ padding: "1rem" }} xs={24} lg={12}>
+        <Col style={{ padding: "1rem" }} md={24} lg={12}>
           <h2 className="blog_class_title">韓国語基礎</h2>
           <ClassLists>
             {classPosts &&
               classPosts.map((v, i) => (
-                <div key={i}>
+                <div className="blog_class_card" key={i}>
                   <Link
                     onClick={() => window.scrollTo({ top: 0 })}
                     to={`/class/post/${v.id}`}

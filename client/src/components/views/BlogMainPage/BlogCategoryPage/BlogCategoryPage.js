@@ -69,9 +69,9 @@ function BlogCategoryPage() {
       {user && <Profile />}
       {(techPosts || dailyPosts) && (
         <div>
-          <h2 style={{ margin: "4rem 1rem", fontSize: "3rem" }}>
+          <h2 className="blog_category_header">
             {category.toUpperCase() + " POSTS"}
-            <span style={{ color: BLUE_COLOR, margin: "0 1rem", fontSize: "1.8rem" }}>
+            <span className="blog_category_count">
               +&nbsp;
               <CountUp duration={4} start={0} end={countPosts?.length} />
               &nbsp;posts.
@@ -80,11 +80,15 @@ function BlogCategoryPage() {
           <Divider />
           <div className="blog_category_big">
             <ArticleRow article={dailyPosts[0] || techPosts[0]} />
+            <Divider />
+          </div>
+          <div className="blog_category_medium">
+            <ArticleColumn article={dailyPosts[0] || techPosts[0]} />
+            <Divider />
           </div>
           <div className="blog_category_small">
             <ArticleColumn article={dailyPosts[0] || techPosts[0]} />
           </div>
-          <Divider />
           <Row>
             {(techPosts || dailyPosts).slice(1).map((v, i) => (
               <Col key={i} xs={24} sm={12} lg={8}>

@@ -147,7 +147,7 @@ export function BlogSmallHeader() {
         <Input.Search
           value={keyword}
           onChange={onChangeKeyword}
-          style={{ width: "40%", zIndex: "auto", overflow: "hidden" }}
+          style={{ width: "20%", zIndex: "auto", overflow: "hidden" }}
           onSearch={onSearchContent}
         />
       </div>

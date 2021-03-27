@@ -14,6 +14,35 @@ import Profile from "./_common/Profile";
 import { LOAD_POSTS_REQUEST } from "../../../_reducers/post";
 import { LOAD_INFO_REQUEST } from "../../../_reducers/user";
 import ArticleSmallAside from "./_common/ArticleSmallAside";
+import styled from "styled-components";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
+dayjs.locale("kor");
+
+const ArticleSmall = styled.a`
+  width: 100%;
+  padding: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  align-items: center;
+  transition: all 0.3s;
+  img {
+    transition: all 0.3s;
+  }
+  p {
+    color: black;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    img {
+      transform: scale(1.05);
+    }
+    p {
+      color: black;
+      text-decoration: underline;
+    }
+  }
+`;
 
 function BlogMainPage() {
   const history = useHistory();
@@ -32,6 +61,15 @@ function BlogMainPage() {
     infinite: true,
     speed: 500,
     slidesToShow: 2,
+    slidesToScroll: 1,
+  };
+  const smallSizeSettings = {
+    dots: false,
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 500,
+    slidesToShow: 1,
     slidesToScroll: 1,
   };
 
@@ -67,30 +105,104 @@ function BlogMainPage() {
             <div className="blog_category_big">
               <ArticleRow article={techPosts[0]} />
             </div>
-            <div className="blog_category_small">
+            <div className="blog_category_medium">
               <ArticleColumn article={techPosts[0]} />
             </div>
-            <Divider />
-            <Slider style={{ marginBottom: "3rem" }} {...settings}>
-              {techPosts.slice(1).map((v, i) => (
-                <ArticleColumn key={i} article={v} />
-              ))}
-            </Slider>
+            <div className="blog_category_small">
+              <Slider {...smallSizeSettings}>
+                {techPosts.slice(0, 3).map((techPost, i) => {
+                  return <ArticleColumn key={i} article={techPost} />;
+                })}
+              </Slider>
+            </div>
+            <div className="blog_main_big">
+              <Divider />
+              <Slider style={{ marginBottom: "3rem" }} {...settings}>
+                {techPosts.slice(1).map((v, i) => (
+                  <ArticleColumn key={i} article={v} />
+                ))}
+              </Slider>
+            </div>
+            {techPosts.slice(3).map((techPost, i) => {
+              return (
+                <ArticleSmall className="blog_main_small">
+                  <img
+                    style={{ width: "110px", height: "80px" }}
+                    src={
+                      techPost.thumbnail
+                        ? techPost.thumbnail
+                        : techPost.imagePath
+                        ? `http://localhost:5000/${techPost.imagePath}`
+                        : "images/blog/noImage.gif"
+                    }
+                    alt="ss"
+                  />
+                  <p className="article_desc_small">
+                    {techPost.title}
+                    <ul className="article_footer_small">
+                      <li>
+                        {dayjs().to(dayjs(techPost.createdAt), true)}
+                        &nbsp;ago
+                      </li>
+                      <li>·&nbsp;{techPost.hit} views</li>
+                      <li>·&nbsp;{techPost.PostLikers && techPost.PostLikers.length} Likes</li>
+                    </ul>
+                  </p>
+                </ArticleSmall>
+              );
+            })}
             <Divider orientation="left">
               <Link to={"/daily"}>Daily</Link>
             </Divider>
             <div className="blog_category_big">
               <ArticleRow article={dailyPosts[0]} />
             </div>
-            <div className="blog_category_small">
+            <div className="blog_category_medium">
               <ArticleColumn article={dailyPosts[0]} />
             </div>
-            <Divider />
-            <Slider style={{ marginBottom: "3rem" }} {...settings}>
-              {dailyPosts.slice(1).map((v, i) => (
-                <ArticleColumn key={i} article={v} />
-              ))}
-            </Slider>
+            <div className="blog_category_small">
+              <Slider {...smallSizeSettings}>
+                {dailyPosts.slice(0, 3).map((dailyPost, i) => {
+                  return <ArticleColumn key={i} article={dailyPost} />;
+                })}
+              </Slider>
+            </div>
+            <div className="blog_main_big">
+              <Divider />
+              <Slider style={{ marginBottom: "3rem" }} {...settings}>
+                {dailyPosts.slice(1).map((v, i) => (
+                  <ArticleColumn key={i} article={v} />
+                ))}
+              </Slider>
+            </div>
+            {dailyPosts.slice(3).map((dailyPost, i) => {
+              return (
+                <ArticleSmall className="blog_main_small">
+                  <img
+                    style={{ width: "110px", height: "80px" }}
+                    src={
+                      dailyPost.thumbnail
+                        ? dailyPost.thumbnail
+                        : dailyPost.imagePath
+                        ? `http://localhost:5000/${dailyPost.imagePath}`
+                        : "images/blog/noImage.gif"
+                    }
+                    alt="ss"
+                  />
+                  <p style={{ marginLeft: "1rem", height: "100%" }}>
+                    {dailyPost.title}{" "}
+                    <ul className="article_footer">
+                      <li>
+                        {dayjs().to(dayjs(dailyPost.createdAt), true)}
+                        &nbsp;ago
+                      </li>
+                      <li>·&nbsp;{dailyPost.hit} views</li>
+                      <li>·&nbsp;{dailyPost.PostLikers && dailyPost.PostLikers.length} Likes</li>
+                    </ul>
+                  </p>
+                </ArticleSmall>
+              );
+            })}
           </section>
         )}
         {/*Aside Manu*/}

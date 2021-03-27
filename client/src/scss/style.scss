@@ -470,6 +470,12 @@ h1 {
   &_main {
     width: 70%;
     margin-right: 2rem;
+    &_big {
+      display: block;
+    }
+    &_small {
+      display: none;
+    }
   }
   &_header {
     &_small {
@@ -644,12 +650,28 @@ h1 {
     &_big {
       display: block;
     }
+    &_medium {
+      display: none;
+    }
     &_small {
       display: none;
     }
+    &_header {
+      margin: 4rem 1rem;
+      font-size: 3rem;
+    }
+    &_count {
+      color: $BLUE_COLOR;
+      margin: 0 1rem;
+      font-size: 1.8rem;
+    }
   }
   &_class {
+    &_small_poster {
+      display: none;
+    }
     &_poster {
+      display: flex;
       &_girl {
         width: 500px;
       }
@@ -823,6 +845,9 @@ h1 {
   padding: 0 2rem;
   position: relative;
 }
+.logo {
+  width: 560px;
+}
 //===== BLOG MEDIA QUERY=========
 
 @media only screen and (max-width: 992px) {
@@ -867,6 +892,10 @@ h1 {
       max-width: 650px;
     }
     &_class {
+      &_card {
+        width: 50%;
+        display: inline-block;
+      }
       &_poster {
         &_girl {
           width: 400px;
@@ -876,7 +905,7 @@ h1 {
           right: 1rem;
         }
         &_title {
-          font-size: 1.7rem;
+          font-size: 1.5rem;
         }
       }
     }
@@ -895,7 +924,6 @@ h1 {
       &_small {
         display: block;
         &_nav {
-          transition: all 0.5s;
           width: 100%;
           height: 70px;
           display: flex;
@@ -923,8 +951,8 @@ h1 {
     left: 0;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-top: none;
-    transition: all 0.4s;
     z-index: 1;
+    animation: fadeIn 0.5s;
     li {
       width: 100%;
       padding: 1rem 0;
@@ -943,11 +971,106 @@ h1 {
       &_big {
         display: none;
       }
-      &_small {
+      &_medium {
         display: block;
+      }
+      &_small {
+        display: none;
       }
     }
     &_class {
+      &_card {
+        width: 100%;
+      }
+
+      &_small_poster {
+        display: block;
+        margin: 2rem 0;
+        box-shadow: 4px 8px 10px 0px rgba(0, 0, 0, 0.15);
+        background: linear-gradient(
+          180deg,
+          rgba(251, 255, 253, 1) 15%,
+          rgba(226, 150, 153, 0.8) 100%
+        );
+        h2 {
+          padding-top: 2rem;
+          text-align: center;
+          font-size: 2.5rem;
+        }
+      }
+      &_poster {
+        display: none;
+        &_girl {
+          width: 300px;
+        }
+        &_cha {
+          width: 80px;
+          right: 1rem;
+        }
+        &_title {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .pageWrapper {
+    position: relative;
+  }
+  .article {
+    height: 100%;
+    &_desc_small {
+      overflow: hidden;
+      margin-left: 1rem;
+    }
+    &_footer_small {
+      margin: 0.5rem 0 0 0;
+      color: rgba(0, 0, 0, 0.3);
+      li {
+        margin-right: 0.15rem;
+      }
+    }
+  }
+  .logo {
+    width: 80%;
+  }
+  .blog {
+    &_category {
+      &_big {
+        display: none;
+      }
+      &_medium {
+        display: none;
+      }
+      &_small {
+        display: block;
+      }
+      &_header {
+        margin: 3rem 1rem;
+        font-size: 2rem;
+      }
+      &_count {
+        color: $BLUE_COLOR;
+        margin: 0 1rem;
+        font-size: 1.2rem;
+      }
+    }
+    &_main {
+      &_big {
+        display: none;
+      }
+      &_small {
+        display: flex;
+      }
+    }
+    &_class {
+      &_small_poster {
+        h2 {
+          font-size: 1.3rem;
+        }
+      }
       &_poster {
         &_girl {
           width: 300px;
@@ -959,6 +1082,16 @@ h1 {
         &_title {
           font-size: 1.1rem;
         }
+      }
+    }
+    &_bottom {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-areas:
+        "hd hd hd sub1 sub1"
+        "sub2 sub2 sub3 sub3 sub3";
+      &_card_title {
+        font-size: 1.2rem;
       }
     }
   }
