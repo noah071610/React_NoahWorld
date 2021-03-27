@@ -35,7 +35,7 @@ function BlogLoginSection({ onClickSignUp }) {
 
   return (
     <>
-      <div style={{ margin: "3rem 0" }}>
+      <div className="login_title" style={{ margin: "3rem 0" }}>
         <h1>
           Login now!{" "}
           <img

@@ -23,19 +23,18 @@ function BlogLoginPage() {
   };
 
   return (
-    <Row>
-      <Col span={11}>
+    <div className="login">
+      <div className="login_form">
         {onSignUpPage ? (
           <BlogSignUpSection onClickLogin={onClickLogin} />
         ) : (
           <BlogLoginSection onClickSignUp={onClickSignUp} />
         )}
-      </Col>
-      <Col span={2} />
-      <Col span={11}>
+      </div>
+      <div className="login_image">
         <img alt="login_main_poster" style={{ width: "100%" }} src="/images/blog/signup.jpg" />
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 }
 

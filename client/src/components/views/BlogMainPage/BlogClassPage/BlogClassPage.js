@@ -206,7 +206,7 @@ function BlogClassPage() {
           <h2 className="blog_class_title">韓国語今どき</h2>
           <div
             style={{
-              background: `url('/images/blog/class_memo.jpg') no-repeat top`,
+              background: `url('/images/blog/class_memo.jpg') no-repeat center`,
             }}
             className="blog_word_div"
           >

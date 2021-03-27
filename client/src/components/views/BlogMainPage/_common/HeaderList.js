@@ -5,17 +5,23 @@ import {
   faClosedCaptioning,
   faHamburger,
   faHome,
+  faMagnet,
   faPaste,
+  faSearch,
+  faSignInAlt,
+  faSignOutAlt,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Divider, Input, message } from "antd";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import Scrollspy from "react-scrollspy";
 import useInput from "../../../../_hooks/useInput";
+import useToggle from "../../../../_hooks/useToggle";
 import { ON_SLIDE_MENU, SEARCH_KEYWORD_REQUEST } from "../../../../_reducers/blog";
+import { LOG_OUT_REQUEST } from "../../../../_reducers/user";
 export function BlogHeader() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -92,6 +98,8 @@ export function BlogSmallHeader() {
   const history = useHistory();
   const { searchKeywordDone, onSlideMenu } = useSelector((state) => state.blog);
   const [keyword, onChangeKeyword, setKeyword] = useInput("");
+  const { user } = useSelector((state) => state.user);
+
   const onSearchContent = () => {
     if (keyword.length < 2) {
       message.error("Keyword is required to have more then 1 letter");
@@ -107,13 +115,31 @@ export function BlogSmallHeader() {
       if (keyword.charAt(0) === "#") {
         history.push(`/search/${keyword.slice(1)}`);
         setKeyword("");
+        dispatch({
+          type: ON_SLIDE_MENU,
+        });
         return;
       }
       history.push(`/search/${keyword}`);
       setKeyword("");
+      dispatch({
+        type: ON_SLIDE_MENU,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchKeywordDone]);
+
+  const onClickLogOut = useCallback(() => {
+    dispatch({
+      type: LOG_OUT_REQUEST,
+    });
+    dispatch({
+      type: ON_SLIDE_MENU,
+    });
+  }, [dispatch]);
+
+  const [onSearchForm, onClickSearchForm] = useToggle(false);
+
   return (
     <div className="blog_header_small">
       <div
@@ -131,6 +157,14 @@ export function BlogSmallHeader() {
         }
         className="blog_header_small_nav"
       >
+        <Link style={{ display: "flex", alignItems: "center" }} to={"/"}>
+          <img alt="menu_logo" style={{ width: "1.9rem" }} src="/images/blog/favicon.png" />
+          <span
+            style={{ color: "black", marginLeft: "0.5rem", fontWeight: "bold", fontSize: "1.3rem" }}
+          >
+            Noah World
+          </span>
+        </Link>
         <a
           onClick={() =>
             dispatch({
@@ -144,115 +178,158 @@ export function BlogSmallHeader() {
             <FontAwesomeIcon style={{ fontSize: "1.5rem" }} icon={faBars} />
           )}
         </a>
-        <Input.Search
-          value={keyword}
-          onChange={onChangeKeyword}
-          style={{ width: "20%", zIndex: "auto", overflow: "hidden" }}
-          onSearch={onSearchContent}
-        />
-      </div>
-      <div
-        style={
-          onSlideMenu
-            ? {
-                display: "flex",
-              }
-            : { display: "none" }
-        }
-        className="slide_menu"
-      >
-        <ul style={{ margin: 0, width: "50%", paddingRight: "1rem" }}>
-          <h2>Blog</h2>
-          <Link
-            onClick={() => {
-              window.scrollTo({ top: 0 });
-              dispatch({
-                type: ON_SLIDE_MENU,
-              });
-            }}
-            to={"/"}
-          >
-            <li> - Home</li>
-          </Link>
-          <Link
-            onClick={() => {
-              window.scrollTo({ top: 0 });
-              dispatch({
-                type: ON_SLIDE_MENU,
-              });
-            }}
-            to={"/tech"}
-          >
-            <li> - Info Tech</li>
-          </Link>
-          <Link
-            onClick={() => {
-              window.scrollTo({ top: 0 });
-              dispatch({
-                type: ON_SLIDE_MENU,
-              });
-            }}
-            to={"/daily"}
-          >
-            <li> - Daily</li>
-          </Link>
-          <Link
-            onClick={() => {
-              window.scrollTo({ top: 0 });
-              dispatch({
-                type: ON_SLIDE_MENU,
-              });
-            }}
-            to={"/class"}
-          >
-            <li>
-              - Korean Class for &nbsp;
-              <img
-                style={{ width: "1.5rem" }}
-                alt="japan_flag"
-                src="https://img.icons8.com/color/48/000000/japan.png"
-              />
-            </li>
-          </Link>
-        </ul>
-        <ul
-          style={{
-            margin: 0,
-            width: "50%",
-            paddingLeft: "1rem",
-            borderLeft: "1px solid rgba(0,0,0,0.1)",
-          }}
+
+        <div
+          style={
+            onSlideMenu
+              ? {
+                  display: "block",
+                  overflow: "hidden",
+                }
+              : { display: "none" }
+          }
+          className="slide_menu"
         >
-          <h2>Direct Link</h2>
-          <Link
-            onClick={() => {
-              window.scrollTo({ top: 0 });
-              dispatch({
-                type: ON_SLIDE_MENU,
-              });
-            }}
-            to={"/aboutme"}
-          >
-            <li> - About me</li>
-          </Link>
-          <Link
-            onClick={() => {
-              window.scrollTo({ top: 0 });
-              dispatch({
-                type: ON_SLIDE_MENU,
-              });
-            }}
-            to={"/portfolio"}
-          >
-            <li> - Portfolio</li>
-          </Link>
-          <a href="https://www.instagram.com/salmonchobab/" target="_blank" rel="noreferrer">
-            <li> - Instagram</li>
-          </a>
-          <a href="https://github.com/noah071610" target="_blank" rel="noreferrer">
-            <li> - Git</li>
-          </a>
-        </ul>
+          <Input.Search
+            style={
+              onSearchForm
+                ? { transform: "translateY(0)", transition: "all 0.3s", marginBottom: "1rem" }
+                : {
+                    transform: "translateY(-200%)",
+                    transition: "all 0.3s",
+                    position: "absolute",
+                    left: 0,
+                  }
+            }
+            value={keyword}
+            onChange={onChangeKeyword}
+            onSearch={onSearchContent}
+          />
+
+          <div style={{ display: "flex", marginTop: "1rem" }}>
+            <ul style={{ margin: 0, width: "50%", paddingRight: "1rem" }}>
+              <h2>Blog</h2>
+              <Link
+                onClick={() => {
+                  window.scrollTo({ top: 0 });
+                  dispatch({
+                    type: ON_SLIDE_MENU,
+                  });
+                }}
+                to={"/"}
+              >
+                <li> - Home</li>
+              </Link>
+              <Link
+                onClick={() => {
+                  window.scrollTo({ top: 0 });
+                  dispatch({
+                    type: ON_SLIDE_MENU,
+                  });
+                }}
+                to={"/tech"}
+              >
+                <li> - Info Tech</li>
+              </Link>
+              <Link
+                onClick={() => {
+                  window.scrollTo({ top: 0 });
+                  dispatch({
+                    type: ON_SLIDE_MENU,
+                  });
+                }}
+                to={"/daily"}
+              >
+                <li> - Daily</li>
+              </Link>
+              <Link
+                onClick={() => {
+                  window.scrollTo({ top: 0 });
+                  dispatch({
+                    type: ON_SLIDE_MENU,
+                  });
+                }}
+                to={"/class"}
+              >
+                <li>
+                  - Korean Class for &nbsp;
+                  <img
+                    style={{ width: "1.5rem" }}
+                    alt="japan_flag"
+                    src="https://img.icons8.com/color/48/000000/japan.png"
+                  />
+                </li>
+              </Link>
+              <a onClick={onClickSearchForm}>
+                <li>
+                  {" "}
+                  - Search <FontAwesomeIcon style={{ marginLeft: "0.5rem" }} icon={faSearch} />
+                </li>
+              </a>
+            </ul>
+            <ul
+              style={{
+                margin: 0,
+                width: "50%",
+                paddingLeft: "1rem",
+                borderLeft: "1px solid rgba(0,0,0,0.1)",
+              }}
+            >
+              <h2>Direct Link</h2>
+
+              <Link
+                onClick={() => {
+                  window.scrollTo({ top: 0 });
+                  dispatch({
+                    type: ON_SLIDE_MENU,
+                  });
+                }}
+                to={"/aboutme"}
+              >
+                <li> - About me</li>
+              </Link>
+              <Link
+                onClick={() => {
+                  window.scrollTo({ top: 0 });
+                  dispatch({
+                    type: ON_SLIDE_MENU,
+                  });
+                }}
+                to={"/portfolio"}
+              >
+                <li> - Portfolio</li>
+              </Link>
+              <a href="https://www.instagram.com/salmonchobab/" target="_blank" rel="noreferrer">
+                <li> - Instagram</li>
+              </a>
+              <a href="https://github.com/noah071610" target="_blank" rel="noreferrer">
+                <li> - Git</li>
+              </a>
+              {user ? (
+                <a onClick={onClickLogOut}>
+                  <li>
+                    - Log out{" "}
+                    <FontAwesomeIcon style={{ marginLeft: "0.3rem" }} icon={faSignOutAlt} />
+                  </li>
+                </a>
+              ) : (
+                <Link
+                  onClick={() =>
+                    dispatch({
+                      type: ON_SLIDE_MENU,
+                    })
+                  }
+                  to={"/login"}
+                >
+                  <li>
+                    - Log In & Sign Up{" "}
+                    <FontAwesomeIcon style={{ marginLeft: "0.3rem" }} icon={faSignInAlt} />
+                  </li>
+                </Link>
+              )}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );

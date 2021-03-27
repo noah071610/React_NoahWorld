@@ -74,18 +74,8 @@ function Header() {
       }}
       className="header"
     >
-      <div
-        style={{
-          height: "180px",
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          marginBottom: "3rem",
-          position: "relative",
-          zIndex: 2,
-          backgroundColor: "white",
-        }}
-      >
+      <div className="space_small_on" />
+      <div className="header_logo">
         <Link onClick={() => window.scrollTo({ top: 0 })} to={"/"}>
           <LogoMain className="logo" src="/images/blog/logo_main.png" />
         </Link>
@@ -108,9 +98,7 @@ function Header() {
           <PortfolioPostHeader />
         )}
       </div>
-      <div className={FixedNavbar ? " fixed" : "relative"}>
-        <BlogSmallHeader />
-      </div>
+      <BlogSmallHeader />
       {FixedNavbar ? <div style={{ height: "70px" }} /> : null}
     </header>
   );

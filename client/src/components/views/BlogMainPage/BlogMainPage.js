@@ -15,34 +15,8 @@ import { LOAD_POSTS_REQUEST } from "../../../_reducers/post";
 import { LOAD_INFO_REQUEST } from "../../../_reducers/user";
 import ArticleSmallAside from "./_common/ArticleSmallAside";
 import styled from "styled-components";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-dayjs.extend(relativeTime);
-dayjs.locale("kor");
-
-const ArticleSmall = styled.a`
-  width: 100%;
-  padding: 1rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  align-items: center;
-  transition: all 0.3s;
-  img {
-    transition: all 0.3s;
-  }
-  p {
-    color: black;
-  }
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    img {
-      transform: scale(1.05);
-    }
-    p {
-      color: black;
-      text-decoration: underline;
-    }
-  }
-`;
+import ArticleSmall from "./_common/ArticleSmall";
+import CountUp from "react-countup";
 
 function BlogMainPage() {
   const history = useHistory();
@@ -95,8 +69,19 @@ function BlogMainPage() {
   return (
     <>
       {user && <Profile />}
-      <div className="space" />
       <div className="blog">
+        <h2 className="blog_category_header header_small_on">
+          HOME
+          {techPosts && dailyPosts && (
+            <span className="blog_category_count">
+              +&nbsp;
+              <CountUp duration={4} start={0} end={techPosts.concat(dailyPosts).length} />
+              &nbsp;posts.&nbsp;+&nbsp;
+              <CountUp duration={4} start={0} end={hashtags?.length} />
+              &nbsp;hashtags.
+            </span>
+          )}
+        </h2>
         {techPosts && dailyPosts && (
           <section className="blog_main">
             <Divider orientation="left">
@@ -124,32 +109,7 @@ function BlogMainPage() {
               </Slider>
             </div>
             {techPosts.slice(3).map((techPost, i) => {
-              return (
-                <ArticleSmall className="blog_main_small">
-                  <img
-                    style={{ width: "110px", height: "80px" }}
-                    src={
-                      techPost.thumbnail
-                        ? techPost.thumbnail
-                        : techPost.imagePath
-                        ? `http://localhost:5000/${techPost.imagePath}`
-                        : "images/blog/noImage.gif"
-                    }
-                    alt="ss"
-                  />
-                  <p className="article_desc_small">
-                    {techPost.title}
-                    <ul className="article_footer_small">
-                      <li>
-                        {dayjs().to(dayjs(techPost.createdAt), true)}
-                        &nbsp;ago
-                      </li>
-                      <li>·&nbsp;{techPost.hit} views</li>
-                      <li>·&nbsp;{techPost.PostLikers && techPost.PostLikers.length} Likes</li>
-                    </ul>
-                  </p>
-                </ArticleSmall>
-              );
+              return <ArticleSmall key={i} post={techPost} />;
             })}
             <Divider orientation="left">
               <Link to={"/daily"}>Daily</Link>
@@ -176,32 +136,7 @@ function BlogMainPage() {
               </Slider>
             </div>
             {dailyPosts.slice(3).map((dailyPost, i) => {
-              return (
-                <ArticleSmall className="blog_main_small">
-                  <img
-                    style={{ width: "110px", height: "80px" }}
-                    src={
-                      dailyPost.thumbnail
-                        ? dailyPost.thumbnail
-                        : dailyPost.imagePath
-                        ? `http://localhost:5000/${dailyPost.imagePath}`
-                        : "images/blog/noImage.gif"
-                    }
-                    alt="ss"
-                  />
-                  <p style={{ marginLeft: "1rem", height: "100%" }}>
-                    {dailyPost.title}{" "}
-                    <ul className="article_footer">
-                      <li>
-                        {dayjs().to(dayjs(dailyPost.createdAt), true)}
-                        &nbsp;ago
-                      </li>
-                      <li>·&nbsp;{dailyPost.hit} views</li>
-                      <li>·&nbsp;{dailyPost.PostLikers && dailyPost.PostLikers.length} Likes</li>
-                    </ul>
-                  </p>
-                </ArticleSmall>
-              );
+              return <ArticleSmall key={i} post={dailyPost} />;
             })}
           </section>
         )}

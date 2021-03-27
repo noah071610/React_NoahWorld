@@ -38,8 +38,8 @@ function BlogSearchPage() {
   };
   return (
     <>
-      <h2 style={{ margin: "4rem 1rem", fontSize: "2.3rem" }}>
-        SEARCH POSTS{" "}
+      <h2 className="search_title">
+        SEARCH POSTS <br className="br_search" />
         <span style={{ color: BLUE_COLOR }}>"{searchedKeyword && searchedKeyword}"</span>
         <span style={{ color: BLUE_COLOR, margin: "0 1rem", fontSize: "1.2rem" }}>
           +&nbsp;
@@ -72,7 +72,7 @@ function BlogSearchPage() {
           </div>
         )}
       </ul>
-      <div style={{ height: "10rem" }} />
+      <div style={{ height: "22rem" }} />
     </>
   );
 }

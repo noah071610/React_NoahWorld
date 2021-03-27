@@ -48,8 +48,9 @@ function BlogHashtagPage() {
   };
   return (
     <>
-      <h2 style={{ margin: "4rem 1rem", fontSize: "2.3rem" }}>
-        SEARCH TAGS <span style={{ color: BLUE_COLOR }}>"#{hashtagName && hashtagName}"</span>
+      <h2 className="search_title">
+        SEARCH TAGS <br className="br_search" />
+        <span style={{ color: BLUE_COLOR }}>"#{hashtagName && hashtagName}"</span>
         <span style={{ color: BLUE_COLOR, margin: "0 1rem", fontSize: "1.2rem" }}>
           +&nbsp;
           <CountUp duration={4} start={0} end={hashtagPosts?.length || 0} />
@@ -81,7 +82,7 @@ function BlogHashtagPage() {
           </div>
         )}
       </ul>
-      <div style={{ height: "10rem" }} />
+      <div style={{ height: "22rem" }} />
     </>
   );
 }

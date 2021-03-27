@@ -2,37 +2,11 @@ import { faGithub, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-
-const LinkToPort = styled(Link)`
-  transition: all 0.3s;
-  background-color: #3b2a25;
-  padding: 2rem;
-  border-radius: 20px;
-  font-size: 1.5rem;
-  color: white;
-  margin-top: 2rem;
-  position: relative;
-  &:hover {
-    transform: scale(1.2);
-    color: white;
-  }
-  &:before {
-    content: "";
-    width: 40px;
-    height: 40px;
-    background-color: #3b2a25;
-    position: absolute;
-    bottom: -20px;
-    transform: translateX(50%) rotateZ(45deg);
-    right: 50%;
-  }
-`;
 
 function BlogAboutPage() {
   return (
     <>
-      <h1 style={{ margin: "3rem 0", textAlign: "center" }}>Hello stranger! Great to meet you.</h1>
+      <h1 className="about_intro">Hello stranger! Great to meet you.</h1>
       <div
         style={{
           display: "flex",
@@ -41,7 +15,9 @@ function BlogAboutPage() {
           position: "relative",
         }}
       >
-        <LinkToPort to="/portfolio">Would you like to view my portfolio?</LinkToPort>
+        <Link className="link_to_port" to="/portfolio">
+          Would you like to view my portfolio?
+        </Link>
         <img
           style={{
             width: "30%",
@@ -53,16 +29,8 @@ function BlogAboutPage() {
           alt="profile"
         />
       </div>
-      <div
-        style={{
-          margin: "0 auto",
-          position: "relative",
-          padding: "4rem",
-          boxShadow: "4px 8px 21px 1px rgba(0, 0, 0, 0.15)",
-          backgroundColor: "white",
-        }}
-      >
-        <h2 style={{ fontSize: "2rem" }}>I'm Jang Hyun Soo, Web-developer who love world 👍 </h2>
+      <div className="intro_wrapper">
+        <h2 className="intro_me">I'm Jang Hyun Soo, Web-developer who love world 👍 </h2>
         <img
           style={{ width: "50%", margin: "2rem 0" }}
           src="/images/blog/profile_travel.jpg"

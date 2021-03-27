@@ -77,7 +77,6 @@ function BlogCategoryPage() {
               &nbsp;posts.
             </span>
           </h2>
-          <Divider />
           <div className="blog_category_big">
             <ArticleRow article={dailyPosts[0] || techPosts[0]} />
             <Divider />
