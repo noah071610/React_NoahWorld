@@ -5,6 +5,14 @@ import SkillBox from "./SkillBox";
 import Articles from "../_common/Articles";
 import Title from "../_common/Title";
 import SkillImageBox from "./SkillImageBox";
+import styled from "styled-components";
+
+const SkillDescDivider = styled.span`
+  font-size: 0.8rem;
+  @media only screen and (max-width: 400px) {
+    font-size: 0.5rem;
+  }
+`;
 
 function SkillSection({ id }) {
   return (
@@ -28,9 +36,7 @@ function SkillSection({ id }) {
         <div className="space" />
         <Divider orientation="left">
           <h4 style={{ textAlign: "start" }}>Language skills</h4>
-          <span style={{ fontSize: "0.8rem" }}>
-            통역사국가자격증을 보유중이며 어중간한 실력이 아닌 통번역까지 가능합니다.
-          </span>
+          <SkillDescDivider>통역사국가자격증을 보유하고 있습니다.</SkillDescDivider>
         </Divider>
         <Row>
           {languages.map((lan, i) => {
@@ -48,9 +54,9 @@ function SkillSection({ id }) {
         </Row>
         <Divider orientation="left">
           <h4 style={{ textAlign: "start" }}>Sub skills</h4>
-          <span style={{ fontSize: "0.8rem" }}>
-            기본기를 갖추고 있으며, 초록불은 주스킬과 연계해서 응용까지 공부한 스킬입니다.
-          </span>
+          <SkillDescDivider>
+            초록불은 주스킬과 연계해서 응용까지 공부한 스킬입니다.
+          </SkillDescDivider>
         </Divider>
         <Row style={{ marginTop: "2rem" }}>
           {sub_skills.map((skill, i) => {

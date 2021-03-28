@@ -1,4 +1,3 @@
-import { Col, Row } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ON_SIGN_UP_PAGE } from "../../../../_reducers/blog";

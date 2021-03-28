@@ -92,10 +92,10 @@ function RemoteControl({ Fullcontent }) {
 
   return (
     <div
+      className="remocontrol"
       style={{
         width: "270px",
         paddingLeft: "2rem",
-        display: "flex",
         flexDirection: "column",
         height: "100%",
         position: FixedRemote ? "sticky" : "static",
@@ -123,7 +123,10 @@ function RemoteControl({ Fullcontent }) {
         <li style={{ margin: 0 }}>
           {nextPost ? (
             <Popover content={nextPostContent} title="👈 Next Post ">
-              <Link to={`/${post.category}/post/${nextPost.id}`}>
+              <Link
+                onClick={() => window.scrollTo({ top: 0 })}
+                to={`/${post.category}/post/${nextPost.id}`}
+              >
                 <DoubleLeftOutlined />
               </Link>
             </Popover>
@@ -135,7 +138,10 @@ function RemoteControl({ Fullcontent }) {
         <li style={{ margin: 0 }}>
           {prevPost ? (
             <Popover content={prevPostContent} title="Previous Post 👉">
-              <Link to={`/${post.category}/post/${prevPost.id}`}>
+              <Link
+                onClick={() => window.scrollTo({ top: 0 })}
+                to={`/${post.category}/post/${prevPost.id}`}
+              >
                 <DoubleRightOutlined />
               </Link>
             </Popover>

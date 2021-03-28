@@ -52,8 +52,19 @@ const TdImg = styled.td`
 const Table = styled.table`
   width: 100%;
   margin: 1.5rem auto;
+  p {
+    width: 90%;
+    font-size: 0.8rem;
+    text-align: start;
+    margin: 0;
+  }
   @media only screen and (max-width: 768px) {
     margin: 0.7rem auto;
+  }
+  @media only screen and (max-width: 400px) {
+    p {
+      font-size: 0.7rem;
+    }
   }
 `;
 
@@ -78,16 +89,7 @@ function SkillBox(props) {
                 paddingLeft: "0.5rem",
               }}
             >
-              <p
-                style={{
-                  width: "90%",
-                  fontSize: "0.8rem",
-                  textAlign: "start",
-                  margin: 0,
-                }}
-              >
-                {props.desc}
-              </p>
+              <p>{props.desc}</p>
             </td>
           </tr>
         </tbody>

@@ -15,6 +15,7 @@ const initialState = {
   searchPosts: null,
   hashtagPosts: null,
   onSlideMenu: false,
+  onHeaderTitle: false,
 
   searchedKeyword: null,
 
@@ -58,6 +59,7 @@ export const POST_EDIT_ON = "POST_EDIT_ON";
 export const POST_EDIT_OFF = "POST_EDIT_OFF";
 export const CLICK_HASH_TAG = "CLICK_HASH_TAG";
 export const ON_SLIDE_MENU = "ON_SLIDE_MENU";
+export const ON_HEADER_TITLE = "ON_HEADER_TITLE";
 
 export const SEARCH_KEYWORD_REQUEST = "SEARCH_KEYWORD_REQUEST";
 export const SEARCH_KEYWORD_SUCCESS = "SEARCH_KEYWORD_SUCCESS";
@@ -122,6 +124,9 @@ const reducer = (state = initialState, action) =>
         break;
       case ON_SLIDE_MENU:
         draft.onSlideMenu = !draft.onSlideMenu;
+        break;
+      case ON_HEADER_TITLE:
+        draft.onHeaderTitle = action.data;
         break;
       case POST_EDIT_OFF:
         draft.postEditOn = false;

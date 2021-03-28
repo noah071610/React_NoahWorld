@@ -136,7 +136,7 @@ function BlogPostPage() {
     <>
       {post && (
         <div>
-          <h1 style={{ marginTop: "5rem" }}>{post.title}</h1>
+          <h1 className="post_main_title">{post.title}</h1>
           <Divider style={{ width: "850px" }} />
           <ul
             style={{
@@ -148,7 +148,7 @@ function BlogPostPage() {
             }}
           >
             <li>{dayjs(post.createdAt).format("YYYY.MM.DD")}</li>
-            <li>·&nbsp;24 views</li>
+            <li>·&nbsp;{post.hit} views</li>
             <li>·&nbsp;{post.PostLikers.length} likes</li>
           </ul>
           <div style={{ position: "relative", display: "flex", justifyContent: "space-between" }}>

@@ -33,7 +33,12 @@ const LoginSuggestModal = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.3);
+  @media only screen and (max-width: 576px) {
+    h2 {
+      font-size: 0.9rem;
+    }
+  }
 `;
 const CommentFormWrapper = styled.div`
   padding: 1.5rem 0.5rem;
@@ -44,6 +49,9 @@ const CommentFormWrapper = styled.div`
   transition: all 0.3s;
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
+  }
+  @media only screen and (max-width: 576px) {
+    padding-right: 0;
   }
 `;
 function CommentForm() {
@@ -89,37 +97,15 @@ function CommentForm() {
       >
         <div>
           <img
-            style={{
-              width: "100px",
-              height: "100px",
-              borderRadius: "50%",
-              boxShadow: "4px 8px 21px 1px rgba(0, 0, 0, 0.15)",
-              margin: "0 auto",
-            }}
+            className="comment_img"
             src={`http://localhost:5000/${user ? user.icon : "default-user.png"}`}
             alt="profile"
           />
           <h3 style={{ textAlign: "center" }}>{user ? user.name : "Guest"}</h3>
         </div>
         <div style={{ marginLeft: "2rem", width: "100%" }}>
-          <TextArea
-            value={content}
-            onChange={onChangeContent}
-            style={{
-              boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.15)",
-              width: "100%",
-              height: "100px",
-            }}
-          />
-          <button
-            style={{
-              marginTop: "1rem",
-              width: "30%",
-              float: "right",
-            }}
-            onClick={onClickAddComment}
-            className="public_btn"
-          >
+          <TextArea value={content} onChange={onChangeContent} className="comment_textArea" />
+          <button onClick={onClickAddComment} className="public_btn comment_btn">
             COMMENT
           </button>
         </div>

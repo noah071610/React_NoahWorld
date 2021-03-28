@@ -7,7 +7,6 @@ import Profile from "../_common/Profile";
 import { LOAD_CATEGORY_POSTS_REQUEST, LOAD_MORE_POSTS_REQUEST } from "../../../../_reducers/post";
 import { useHistory } from "react-router";
 import { LOAD_INFO_REQUEST } from "../../../../_reducers/user";
-import { BLUE_COLOR } from "../../../config";
 import CountUp from "react-countup";
 
 function BlogCategoryPage() {
@@ -71,6 +70,7 @@ function BlogCategoryPage() {
         <div>
           <h2 className="blog_category_header">
             {category.toUpperCase() + " POSTS"}
+            <br className="br_category" />
             <span className="blog_category_count">
               +&nbsp;
               <CountUp duration={4} start={0} end={countPosts?.length} />

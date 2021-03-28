@@ -198,9 +198,11 @@ export function WelcomeTable({ visible }) {
           </h4>
         </Col>
       </Row>
-      <Link style={{ padding: "1rem 0" }} to="/admin">
-        Administor Here!
-      </Link>
+      {user?.id === 1 && user.admin && (
+        <Link style={{ padding: "1rem 0" }} to="/admin">
+          Administor Here!
+        </Link>
+      )}
     </WelcomeTableWrapper>
   );
 }

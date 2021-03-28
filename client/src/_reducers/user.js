@@ -6,6 +6,7 @@ const initialState = {
   logInLoading: false,
   logInDone: false,
   logInError: null,
+  confirmPassword: false,
 
   logOutLoading: false,
   logOutDone: false,
@@ -22,6 +23,18 @@ const initialState = {
   addIconLoading: false,
   addIconDone: false,
   addIconError: null,
+
+  confirmPasswordLoading: false,
+  confirmPasswordDone: false,
+  confirmPasswordError: null,
+
+  withDrawalLoading: false,
+  withDrawalDone: false,
+  withDrawalError: null,
+
+  changePasswordLoading: false,
+  changePasswordDone: false,
+  changePasswordError: null,
 };
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
@@ -46,6 +59,21 @@ export const LOAD_INFO_FAILURE = "LOAD_INFO_FAILURE";
 export const ADD_ICON_REQUEST = "ADD_ICON_REQUEST";
 export const ADD_ICON_SUCCESS = "ADD_ICON_SUCCESS";
 export const ADD_ICON_FAILURE = "ADD_ICON_FAILURE";
+
+export const CHANGE_PASSWORD_REQUEST = "CHANGE_PASSWORD_REQUEST";
+export const CHANGE_PASSWORD_SUCCESS = "CHANGE_PASSWORD_SUCCESS";
+export const CHANGE_PASSWORD_FAILURE = "CHANGE_PASSWORD_FAILURE";
+export const CHANGE_PASSWORD_CLEAR = "CHANGE_PASSWORD_CLEAR";
+
+export const WITHDRWAL_REQUEST = "WITHDRWAL_REQUEST";
+export const WITHDRWAL_SUCCESS = "WITHDRWAL_SUCCESS";
+export const WITHDRWAL_FAILURE = "WITHDRWAL_FAILURE";
+export const WITHDRWAL_CLEAR = "WITHDRWAL_CLEAR";
+
+export const CONFIRM_PASSWORD_REQUEST = "CONFIRM_PASSWORD_REQUEST";
+export const CONFIRM_PASSWORD_SUCCESS = "CONFIRM_PASSWORD_SUCCESS";
+export const CONFIRM_PASSWORD_FAILURE = "CONFIRM_PASSWORD_FAILURE";
+export const CONFIRM_PASSWORD_CLEAR = "CONFIRM_PASSWORD_CLEAR";
 
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -131,6 +159,61 @@ const reducer = (state = initialState, action) =>
       case ADD_ICON_FAILURE:
         draft.addIconLoading = false;
         draft.addIconError = action.error;
+        break;
+      case CONFIRM_PASSWORD_REQUEST:
+        draft.confirmPasswordLoading = true;
+        draft.confirmPasswordError = null;
+        draft.confirmPasswordDone = false;
+        break;
+      case CONFIRM_PASSWORD_SUCCESS:
+        draft.confirmPasswordLoading = false;
+        draft.confirmPasswordDone = true;
+        draft.confirmPassword = true;
+        break;
+      case CONFIRM_PASSWORD_FAILURE:
+        draft.confirmPasswordLoading = false;
+        draft.confirmPasswordError = action.error;
+        break;
+      case CONFIRM_PASSWORD_CLEAR:
+        draft.confirmPasswordLoading = false;
+        draft.confirmPasswordError = null;
+        draft.confirmPasswordDone = false;
+        break;
+      case CHANGE_PASSWORD_REQUEST:
+        draft.changePasswordLoading = true;
+        draft.changePasswordError = null;
+        draft.changePasswordDone = false;
+        break;
+      case CHANGE_PASSWORD_SUCCESS:
+        draft.changePasswordLoading = false;
+        draft.changePasswordDone = true;
+        break;
+      case CHANGE_PASSWORD_FAILURE:
+        draft.changePasswordLoading = false;
+        draft.changePasswordError = action.error;
+        break;
+      case CHANGE_PASSWORD_CLEAR:
+        draft.changePasswordLoading = false;
+        draft.changePasswordDone = false;
+        draft.changePasswordError = null;
+        break;
+      case WITHDRWAL_REQUEST:
+        draft.withdrawalLoading = true;
+        draft.withdrawalError = null;
+        draft.withdrawalDone = false;
+        break;
+      case WITHDRWAL_SUCCESS:
+        draft.withdrawalLoading = false;
+        draft.withdrawalDone = true;
+        break;
+      case WITHDRWAL_FAILURE:
+        draft.withdrawalLoading = false;
+        draft.withdrawalError = action.error;
+        break;
+      case WITHDRWAL_CLEAR:
+        draft.withdrawalLoading = false;
+        draft.withdrawalError = null;
+        draft.withdrawalDone = false;
         break;
       default:
         return state;

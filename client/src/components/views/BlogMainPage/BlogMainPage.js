@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Col, Divider, Row } from "antd";
+import { Divider } from "antd";
 import React from "react";
 import ArticleAside from "./_common/ArticleAside";
 import ArticleColumn from "./_common/ArticleColumn";
@@ -14,7 +14,6 @@ import Profile from "./_common/Profile";
 import { LOAD_POSTS_REQUEST } from "../../../_reducers/post";
 import { LOAD_INFO_REQUEST } from "../../../_reducers/user";
 import ArticleSmallAside from "./_common/ArticleSmallAside";
-import styled from "styled-components";
 import ArticleSmall from "./_common/ArticleSmall";
 import CountUp from "react-countup";
 
@@ -74,6 +73,7 @@ function BlogMainPage() {
           HOME
           {techPosts && dailyPosts && (
             <span className="blog_category_count">
+              <br className="br_category" />
               +&nbsp;
               <CountUp duration={4} start={0} end={techPosts.concat(dailyPosts).length} />
               &nbsp;posts.&nbsp;+&nbsp;
@@ -108,7 +108,7 @@ function BlogMainPage() {
                 ))}
               </Slider>
             </div>
-            {techPosts.slice(3).map((techPost, i) => {
+            {techPosts.slice(3, 8).map((techPost, i) => {
               return <ArticleSmall key={i} post={techPost} />;
             })}
             <Divider orientation="left">
@@ -135,7 +135,7 @@ function BlogMainPage() {
                 ))}
               </Slider>
             </div>
-            {dailyPosts.slice(3).map((dailyPost, i) => {
+            {dailyPosts.slice(3, 8).map((dailyPost, i) => {
               return <ArticleSmall key={i} post={dailyPost} />;
             })}
           </section>
@@ -268,60 +268,64 @@ function BlogMainPage() {
         </Divider>
 
         <div className="blog_bottom">
-          <div className="blog_bottom_card" style={{ gridArea: "hd" }}>
+          <div
+            onClick={() => {
+              history.push("/class");
+              window.scrollTo({ top: 0 });
+            }}
+            className="blog_bottom_card"
+            style={{ gridArea: "hd" }}
+          >
+            <a className="blog_bottom_cover" />
             <h2 className="blog_bottom_card_title">韓国語基礎</h2>
-            <a
-              onClick={() => {
-                history.push("/class");
-                window.scrollTo({ top: 0 });
-              }}
-              className="blog_bottom_cover"
-            />
             <img
               className="blog_bottom_img"
               alt="korean_class_basic"
               src="https://images.unsplash.com/photo-1474366521946-c3d4b507abf2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=556&q=80"
             />
           </div>
-          <div className="blog_bottom_card" style={{ gridArea: "sub1" }}>
+          <div
+            onClick={() => {
+              history.push("/class");
+              window.scrollTo({ top: 0 });
+            }}
+            className="blog_bottom_card"
+            style={{ gridArea: "sub1" }}
+          >
+            <a className="blog_bottom_cover" />
             <h2 className="blog_bottom_card_title">文化</h2>
-            <a
-              onClick={() => {
-                history.push("/class");
-                window.scrollTo({ top: 0 });
-              }}
-              className="blog_bottom_cover"
-            />
             <img
               className="blog_bottom_img"
               alt="korean_class_culture"
               src="https://images.unsplash.com/photo-1485186667901-c039c19ecac3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=274&q=80"
             />
           </div>
-          <div className="blog_bottom_card" style={{ gridArea: "sub2" }}>
+          <div
+            onClick={() => {
+              history.push("/class");
+              window.scrollTo({ top: 0 });
+            }}
+            className="blog_bottom_card"
+            style={{ gridArea: "sub2" }}
+          >
+            <a className="blog_bottom_cover" />
             <h2 className="blog_bottom_card_title">今どき</h2>
-            <a
-              onClick={() => {
-                history.push("/class");
-                window.scrollTo({ top: 0 });
-              }}
-              className="blog_bottom_cover"
-            />
             <img
               className="blog_bottom_img"
               alt="korean_class_hotword"
               src="https://images.unsplash.com/photo-1550177205-89d100b75c34?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=274&q=80"
             />
           </div>
-          <div className="blog_bottom_card" style={{ gridArea: "sub3" }}>
+          <div
+            onClick={() => {
+              history.push("/class");
+              window.scrollTo({ top: 0 });
+            }}
+            className="blog_bottom_card"
+            style={{ gridArea: "sub3" }}
+          >
+            <a className="blog_bottom_cover" />
             <h2 className="blog_bottom_card_title">会話</h2>
-            <a
-              onClick={() => {
-                history.push("/class");
-                window.scrollTo({ top: 0 });
-              }}
-              className="blog_bottom_cover"
-            />
             <img
               className="blog_bottom_img"
               alt="korean_class_conversation"

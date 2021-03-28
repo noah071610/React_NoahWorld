@@ -4,6 +4,14 @@ import {
   ADD_ICON_FAILURE,
   ADD_ICON_REQUEST,
   ADD_ICON_SUCCESS,
+  CHANGE_PASSWORD_CLEAR,
+  CHANGE_PASSWORD_FAILURE,
+  CHANGE_PASSWORD_REQUEST,
+  CHANGE_PASSWORD_SUCCESS,
+  CONFIRM_PASSWORD_CLEAR,
+  CONFIRM_PASSWORD_FAILURE,
+  CONFIRM_PASSWORD_REQUEST,
+  CONFIRM_PASSWORD_SUCCESS,
   LOAD_INFO_FAILURE,
   LOAD_INFO_REQUEST,
   LOAD_INFO_SUCCESS,
@@ -19,6 +27,10 @@ import {
   SIGN_UP_FAILURE,
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
+  WITHDRWAL_CLEAR,
+  WITHDRWAL_FAILURE,
+  WITHDRWAL_REQUEST,
+  WITHDRWAL_SUCCESS,
 } from "../_reducers/user";
 import {
   ADD_POST_FAILURE,
@@ -811,6 +823,75 @@ function* editSubComment(action) {
   }
 }
 
+function confirmPasswordAPI(data) {
+  return axios.post(`api/user/confirm`, data);
+}
+
+function* confirmPassword(action) {
+  try {
+    const result = yield call(confirmPasswordAPI, action.data);
+    yield put({
+      type: CONFIRM_PASSWORD_SUCCESS,
+      data: result.data,
+    });
+    yield delay(3000);
+    yield put({
+      type: CONFIRM_PASSWORD_CLEAR,
+    });
+  } catch (err) {
+    yield put({
+      type: CONFIRM_PASSWORD_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function changePasswordAPI(data) {
+  return axios.post(`api/user/password`, data);
+}
+
+function* changePassword(action) {
+  try {
+    const result = yield call(changePasswordAPI, action.data);
+    yield put({
+      type: CHANGE_PASSWORD_SUCCESS,
+      data: result.data,
+    });
+    yield delay(3000);
+    yield put({
+      type: CHANGE_PASSWORD_CLEAR,
+    });
+  } catch (err) {
+    yield put({
+      type: CHANGE_PASSWORD_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function withdrawalAPI(data) {
+  return axios.delete(`api/user/${data}`);
+}
+
+function* withdrawal(action) {
+  try {
+    const result = yield call(withdrawalAPI, action.data);
+    yield put({
+      type: WITHDRWAL_SUCCESS,
+      data: result.data,
+    });
+    yield delay(3000);
+    yield put({
+      type: WITHDRWAL_CLEAR,
+    });
+  } catch (err) {
+    yield put({
+      type: WITHDRWAL_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function* watchAddWord() {
   yield takeLatest(ADD_WORD_REQUEST, addWord);
 }
@@ -906,6 +987,15 @@ function* watchRemoveSubComment() {
 function* watchEditSubComment() {
   yield takeLatest(EDIT_SUB_COMMENT_REQUEST, editSubComment);
 }
+function* watchConfirmPassword() {
+  yield takeLatest(CONFIRM_PASSWORD_REQUEST, confirmPassword);
+}
+function* watchChangePassword() {
+  yield takeLatest(CHANGE_PASSWORD_REQUEST, changePassword);
+}
+function* watchWithdrawal() {
+  yield takeLatest(WITHDRWAL_REQUEST, withdrawal);
+}
 
 export default function* rootSaga() {
   yield all([
@@ -940,5 +1030,8 @@ export default function* rootSaga() {
     fork(watchUploadImages),
     fork(watchRemovePost),
     fork(watchEditPost),
+    fork(watchConfirmPassword),
+    fork(watchChangePassword),
+    fork(watchWithdrawal),
   ]);
 }

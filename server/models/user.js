@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
+      recentComment: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       password: {
         type: DataTypes.STRING(100),
         allowNull: false,

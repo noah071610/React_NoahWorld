@@ -53,7 +53,7 @@ const PortfolioPostPage = ({ mobileSize }) => {
 
   const { portfolio } = useSelector((state) => state.blog);
 
-  const pageComponent = (mobileSize) => {
+  const pageComponent = () => {
     return (
       <PageWrapper>
         <Articles>
@@ -107,7 +107,7 @@ const PortfolioPostPage = ({ mobileSize }) => {
     <>
       <MobileHome>
         <div className="space" />
-        {portfolio && pageComponent(mobileSize)}
+        {portfolio && pageComponent()}
       </MobileHome>
     </>
   );

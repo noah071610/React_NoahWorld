@@ -32,12 +32,12 @@ function ArticleSmallAside({ article, type }) {
           style={{ marginLeft: "0.5rem" }}
           className="article article_aside"
         >
-          <div>
+          <div className="blog_small_aside_title">
             <span
               style={{
                 color: BLUE_COLOR,
                 fontWeight: "bold",
-                fontSize: "1rem",
+                fontSize: "0.9rem",
               }}
             >
               IN {article.category.toUpperCase()}
@@ -50,7 +50,7 @@ function ArticleSmallAside({ article, type }) {
                 ? article.PostLikers.length + " Likes"
                 : article.hit + " views"}
             </span>
-            <h2 className="article_aside_header">{article.title}</h2>
+            <h2 className="article_aside_header small_title">{article.title}</h2>
           </div>
         </Article>
       )}

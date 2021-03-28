@@ -23,6 +23,24 @@ const CommentWrapper = styled.div`
   padding: 1rem 0.5rem 1.5rem 2rem;
   position: relative;
   transition: all 0.2s;
+  .edit_from {
+    button {
+      width: 20%;
+    }
+  }
+  @media only screen and (max-width: 576px) {
+    padding: 0.5rem 0 1rem 0.5rem;
+    .blog_comment_deleteModal {
+      h2 {
+        font-size: 1rem;
+      }
+    }
+    .edit_form {
+      button {
+        width: 50%;
+      }
+    }
+  }
 `;
 
 const SpeechBubble = styled.div`
@@ -47,6 +65,10 @@ const SpeechBubble = styled.div`
     border-top: 1rem solid rgba(0, 0, 0, 0.05);
     border-right: 1rem solid transparent;
     transform: rotate(45deg);
+  }
+  @media only screen and (max-width: 576px) {
+    padding: 1rem;
+    width: 100%;
   }
 `;
 
@@ -137,18 +159,14 @@ function SubComments({ subComment, CommentId }) {
               </div>
             </div>
             {editForm ? (
-              <div style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
-                <Button
-                  onClick={onClickEditComment}
-                  type="primary"
-                  style={{ marginTop: "0.8rem", width: "20%" }}
-                >
+              <div
+                className="edit_form"
+                style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
+              >
+                <Button onClick={onClickEditComment} type="primary" style={{ marginTop: "0.8rem" }}>
                   EDIT
                 </Button>
-                <Button
-                  onClick={() => setEditForm(false)}
-                  style={{ marginTop: "0.8rem", width: "20%" }}
-                >
+                <Button onClick={() => setEditForm(false)} style={{ marginTop: "0.8rem" }}>
                   CANCEL
                 </Button>
               </div>

@@ -1,8 +1,5 @@
-// import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 import styled, { keyframes } from "styled-components";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router";
 import Slider from "react-slick";
 
@@ -28,6 +25,10 @@ const PosterWrapper = styled.div`
     h2 {
       font-size: 1.1rem;
     }
+  }
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    margin-bottom: 2rem;
   }
 `;
 
@@ -61,28 +62,6 @@ const GearRight = styled.img`
   animation: ${rotatingLeft} 2.6s infinite linear;
 `;
 
-// const LightModeIcon = styled(FontAwesomeIcon)`
-//   cursor: pointer;
-//   margin-left: 0.5rem;
-//   font-size: 1.2rem;
-//   transition: all 0.3s;
-//   &:hover {
-//     transform: rotateZ(360deg);
-//     color: orange;
-//   }
-// `;
-
-// const NightModeIcon = styled(FontAwesomeIcon)`
-//   cursor: pointer;
-//   margin-left: 0.5rem;
-//   font-size: 1.2rem;
-//   transition: all 0.3s;
-//   &:hover {
-//     transform: rotateY(360deg);
-//     color: #aab6fe;
-//   }
-// `;
-
 const Poster = () => {
   const history = useHistory();
 
@@ -105,11 +84,6 @@ const Poster = () => {
       <Title>
         <div className="portfolio_poster_name">
           <h2 style={{ fontSize: "2rem" }}>Jang Hyun Soo</h2>
-          {/* {theme === "light" ? (
-            <NightModeIcon onClick={onClickDarkMode} icon={faMoon} />
-          ) : (
-            <LightModeIcon onClick={onClickLightMode} icon={faSun} />
-          )} */}
         </div>
         <div>
           <Slider

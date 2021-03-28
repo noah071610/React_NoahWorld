@@ -109,9 +109,9 @@ router.post("/recent", async (req, res) => {
       attributes: ["id", "category", "title", "hit"],
     });
 
-    const recentCommentPost = await Post.findAll({
+    const recentCommentPost = await Post.findOne({
       attributes: ["id", "category", "title"],
-      limit: 1,
+      where: { id: req.body.recentComment },
       include: [
         {
           model: Comment,
@@ -121,7 +121,7 @@ router.post("/recent", async (req, res) => {
         },
       ],
     });
-    res.status(200).json({ recentViewPost, recentCommentPost: recentCommentPost[0] });
+    res.status(200).json({ recentViewPost, recentCommentPost });
   } catch (error) {
     console.error(error);
     next(error);

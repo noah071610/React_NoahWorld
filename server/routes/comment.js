@@ -28,6 +28,12 @@ router.post("/:postId", async (req, res, next) => {
         },
       ],
     });
+    User.update(
+      {
+        recentComment: parseInt(req.params.postId, 10),
+      },
+      { where: { id: parseInt(req.body.userId, 10) } }
+    );
     res.status(201).json(fullComment);
   } catch (error) {
     console.error(error);

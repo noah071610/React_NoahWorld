@@ -41,15 +41,23 @@ const Signal = styled.div`
 
 const Title = styled.h4`
   margin-top: 0.5rem;
-  fontsize: 0.8rem;
+  font-size: 0.8rem;
   @media only screen and (max-width: 532px) {
-    display: none;
+    font-size: 0.3rem;
+  }
+`;
+
+const ImageBoxWrapper = styled(Col)`
+  display: flex;
+  padding: 1rem;
+  @media only screen and (max-width: 532px) {
+    padding: 0.3rem;
   }
 `;
 
 function SkillImageBox(props) {
   return (
-    <Col xs={6} md={4} lg={3} style={{ display: "flex", padding: "1rem" }}>
+    <ImageBoxWrapper xs={6} md={4} lg={3}>
       {props.popup ? (
         <Popover
           placement="topLeft"
@@ -69,10 +77,10 @@ function SkillImageBox(props) {
             <Img style={{ width: "100%" }} alt={props.name} src={props.src} />
             {props.level ? <Signal /> : null}
           </div>
-          <h4 style={{ marginTop: "0.5rem" }}>{props.name}</h4>
+          <Title>{props.name}</Title>
         </TdImg>
       )}
-    </Col>
+    </ImageBoxWrapper>
   );
 }
 

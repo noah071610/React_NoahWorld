@@ -1,31 +1,38 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { DoubleLeftOutlined, DoubleRightOutlined } from "@ant-design/icons";
+import {
+  DoubleLeftOutlined,
+  DoubleRightOutlined,
+  EditFilled,
+  HomeFilled,
+  RollbackOutlined,
+  VerticalAlignTopOutlined,
+} from "@ant-design/icons";
 import {
   faBars,
-  faClosedCaptioning,
-  faHamburger,
+  faChevronDown,
   faHome,
-  faMagnet,
   faPaste,
   faSearch,
   faSignInAlt,
   faSignOutAlt,
   faTimes,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Divider, Input, message } from "antd";
+import Modal from "antd/lib/modal/Modal";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import Scrollspy from "react-scrollspy";
 import useInput from "../../../../_hooks/useInput";
 import useToggle from "../../../../_hooks/useToggle";
-import { ON_SLIDE_MENU, SEARCH_KEYWORD_REQUEST } from "../../../../_reducers/blog";
+import { ON_SLIDE_MENU, POST_EDIT_ON, SEARCH_KEYWORD_REQUEST } from "../../../../_reducers/blog";
+import { REMOVE_POST_REQUEST } from "../../../../_reducers/post";
 import { LOG_OUT_REQUEST } from "../../../../_reducers/user";
 export function BlogHeader() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { searchKeywordDone } = useSelector((state) => state.blog);
   const [keyword, onChangeKeyword, setKeyword] = useInput("");
   const onSearchContent = () => {
     if (keyword.length < 2) {
@@ -36,19 +43,14 @@ export function BlogHeader() {
       type: SEARCH_KEYWORD_REQUEST,
       data: { keyword },
     });
-  };
-  useEffect(() => {
-    if (searchKeywordDone) {
-      if (keyword.charAt(0) === "#") {
-        history.push(`/search/${keyword.slice(1)}`);
-        setKeyword("");
-        return;
-      }
-      history.push(`/search/${keyword}`);
+    if (keyword.charAt(0) === "#") {
+      history.push(`/search/${keyword.slice(1)}`);
       setKeyword("");
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchKeywordDone]);
+    history.push(`/search/${keyword}`);
+    setKeyword("");
+  };
   return (
     <>
       <ul className="blog_header_ul">
@@ -96,9 +98,38 @@ export function BlogHeader() {
 export function BlogSmallHeader() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { searchKeywordDone, onSlideMenu } = useSelector((state) => state.blog);
+  const { onSlideMenu, portfolios, portfolio } = useSelector((state) => state.blog);
+  const [password, onChangePassword] = useInput();
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [keyword, onChangeKeyword, setKeyword] = useInput("");
   const { user } = useSelector((state) => state.user);
+  const { post, removePostDone, prevPost, nextPost } = useSelector((state) => state.post);
+  const [onSearchForm, onClickSearchForm] = useToggle(false);
+  const [slideTitle, onClickSlideTitle, setSlideTitle] = useToggle(false);
+  const [headerTitle, setHeaderTitle] = useState(false);
+  const [portfolioTitle, setPortfolioTitle] = useState(false);
+  useEffect(() => {
+    function scrollCallBack() {
+      let pathname = window.location.pathname.split("/");
+      if (window.scrollY > 200 && pathname[2] === "post") {
+        setHeaderTitle(true);
+        return;
+      }
+      if (window.scrollY > 200 && pathname[1] === "portfolio" && !isNaN(parseInt(pathname[2]))) {
+        setHeaderTitle(true);
+        setPortfolioTitle(true);
+        return;
+      }
+      setHeaderTitle(false);
+      setSlideTitle(false);
+      setPortfolioTitle(false);
+    }
+    window.addEventListener("scroll", scrollCallBack);
+    return () => {
+      window.removeEventListener("scroll", scrollCallBack);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSearchContent = () => {
     if (keyword.length < 2) {
@@ -109,25 +140,20 @@ export function BlogSmallHeader() {
       type: SEARCH_KEYWORD_REQUEST,
       data: { keyword },
     });
-  };
-  useEffect(() => {
-    if (searchKeywordDone) {
-      if (keyword.charAt(0) === "#") {
-        history.push(`/search/${keyword.slice(1)}`);
-        setKeyword("");
-        dispatch({
-          type: ON_SLIDE_MENU,
-        });
-        return;
-      }
-      history.push(`/search/${keyword}`);
+    if (keyword.charAt(0) === "#") {
+      history.push(`/search/${keyword.slice(1)}`);
       setKeyword("");
       dispatch({
         type: ON_SLIDE_MENU,
       });
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchKeywordDone]);
+    history.push(`/search/${keyword}`);
+    setKeyword("");
+    dispatch({
+      type: ON_SLIDE_MENU,
+    });
+  };
 
   const onClickLogOut = useCallback(() => {
     dispatch({
@@ -138,39 +164,127 @@ export function BlogSmallHeader() {
     });
   }, [dispatch]);
 
-  const [onSearchForm, onClickSearchForm] = useToggle(false);
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+    dispatch({
+      type: REMOVE_POST_REQUEST,
+      data: { PostId: post.id, password, tags: post.Hashtags },
+    });
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  useEffect(() => {
+    if (removePostDone) {
+      message.success("Removed Post Successfully");
+      history.push("/");
+    }
+  }, [dispatch, history, removePostDone]);
 
   return (
     <div className="blog_header_small">
       <div
         style={
-          onSlideMenu
+          onSlideMenu || slideTitle
             ? {
                 backgroundColor: "white",
                 border: "1px solid rgba(0, 0, 0, 0.1)",
                 borderBottom: "none",
+                overflow: "inherit",
               }
             : {
                 borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
                 borderTop: "1px solid rgba(0, 0, 0, 0.1)",
+                overflow: "hidden",
               }
         }
         className="blog_header_small_nav"
       >
-        <Link style={{ display: "flex", alignItems: "center" }} to={"/"}>
-          <img alt="menu_logo" style={{ width: "1.9rem" }} src="/images/blog/favicon.png" />
-          <span
-            style={{ color: "black", marginLeft: "0.5rem", fontWeight: "bold", fontSize: "1.3rem" }}
-          >
-            Noah World
-          </span>
-        </Link>
+        <div
+          style={
+            headerTitle
+              ? { transform: "translateY(-100%)", transition: "all 0.5s", width: "70%" }
+              : { transform: "translateY(0)", transition: "all 0.5s" }
+          }
+        >
+          <Link style={{ display: "flex", alignItems: "center", height: "70px" }} to={"/"}>
+            <img alt="menu_logo" style={{ width: "1.9rem" }} src="/images/blog/favicon.png" />
+            <span
+              style={{
+                color: "black",
+                marginLeft: "0.5rem",
+                fontWeight: "bold",
+                fontSize: "1.3rem",
+              }}
+            >
+              Noah World
+            </span>
+          </Link>
+          {portfolioTitle ? (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                height: "70px",
+              }}
+            >
+              {portfolios && (
+                <Link
+                  onClick={() => {
+                    window.scrollTo({ top: 130 });
+                  }}
+                  to={`/portfolio/${portfolio.id === 1 ? portfolios.length : portfolio.id - 1}`}
+                  style={{ display: "flex", alignItems: "center", fontSize: "1rem" }}
+                >
+                  <DoubleLeftOutlined />
+                  <span className="portfolio_nav_btn">이전 포트폴리오</span>
+                </Link>
+              )}
+              <Divider type="vertical" />
+              {portfolios && (
+                <Link
+                  onClick={() => {
+                    window.scrollTo({ top: 130 });
+                  }}
+                  to={`/portfolio/${portfolio.id === portfolios.length ? 1 : portfolio.id + 1}`}
+                  style={{ display: "flex", alignItems: "center", fontSize: "1rem" }}
+                >
+                  <span className="portfolio_nav_btn">다음 포트폴리오</span>
+                  <DoubleRightOutlined />
+                </Link>
+              )}
+            </div>
+          ) : (
+            <a
+              onClick={onClickSlideTitle}
+              style={{ display: "flex", alignItems: "center", width: "100%", height: "70px" }}
+            >
+              {post?.title}
+              <FontAwesomeIcon
+                style={{
+                  marginLeft: "1rem",
+                  transition: "all 0.3s",
+                  transform: `rotate(${slideTitle ? "180deg" : "0deg"})`,
+                }}
+                icon={faChevronDown}
+              />
+            </a>
+          )}
+        </div>
         <a
-          onClick={() =>
+          onClick={() => {
             dispatch({
               type: ON_SLIDE_MENU,
-            })
-          }
+            });
+            setSlideTitle(false);
+          }}
+          style={{ display: "flex", alignItems: "center" }}
         >
           {onSlideMenu ? (
             <FontAwesomeIcon style={{ fontSize: "1.5rem" }} icon={faTimes} />
@@ -178,7 +292,100 @@ export function BlogSmallHeader() {
             <FontAwesomeIcon style={{ fontSize: "1.5rem" }} icon={faBars} />
           )}
         </a>
-
+        {slideTitle && headerTitle ? (
+          <ul className="slide_title">
+            <li style={{ margin: 0 }}>
+              <Link to={"/"}>
+                <HomeFilled />
+              </Link>
+            </li>
+            <Divider type="vertical" />
+            <li style={{ margin: 0 }}>
+              <a
+                onClick={() =>
+                  history.push(`/${post.category === "culture" ? "class" : post.category}`)
+                }
+              >
+                <RollbackOutlined />
+              </a>
+            </li>
+            <Divider type="vertical" />
+            <li style={{ margin: 0 }}>
+              {nextPost ? (
+                <Link
+                  onClick={() => window.scrollTo({ top: 0 })}
+                  to={`/${post.category}/post/${nextPost.id}`}
+                >
+                  <DoubleLeftOutlined />
+                </Link>
+              ) : (
+                <DoubleLeftOutlined style={{ color: "rgba(0,0,0,0.2)" }} />
+              )}
+            </li>
+            <Divider type="vertical" />
+            <li style={{ margin: 0 }}>
+              {prevPost ? (
+                <Link
+                  onClick={() => window.scrollTo({ top: 0 })}
+                  to={`/${post.category}/post/${prevPost.id}`}
+                >
+                  <DoubleRightOutlined />
+                </Link>
+              ) : (
+                <DoubleRightOutlined style={{ color: "rgba(0,0,0,0.2)" }} />
+              )}
+            </li>
+            <Divider type="vertical" />
+            <li style={{ margin: 0 }}>
+              <a onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+                <VerticalAlignTopOutlined />
+              </a>
+            </li>
+            {user && user.admin && (
+              <>
+                <Divider type="vertical" />
+                <li style={{ margin: 0 }}>
+                  <a
+                    onClick={() => {
+                      dispatch({
+                        type: POST_EDIT_ON,
+                      });
+                      history.push("/admin");
+                    }}
+                  >
+                    <EditFilled />
+                  </a>
+                </li>
+                <Divider type="vertical" />
+                <li style={{ margin: 0 }}>
+                  <a onClick={() => showModal()}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </a>
+                </li>
+              </>
+            )}
+          </ul>
+        ) : null}
+        <Modal
+          title="Please Enter Admin password"
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <p>
+            This fucntion is for ADMIN only. If you are not a administrator, please go back and
+            feedback to us. Thank you for your cooperation.
+          </p>
+          <p>
+            이 기능은 관리자 전용이며 관리자용 비밀번호가 필요합니다. 예상치 못하게 접근하셨을 경우
+            피드백 주시면 정말 감사하겠습니다. 협력해주셔서 감사합니다.
+          </p>
+          <p>
+            この機能は管理者専用でございます、何が問題が発生した場合は管理者にご連絡して頂ければ幸いだと思います。
+          </p>
+          <br />
+          <Input.Password value={password} onChange={onChangePassword} />
+        </Modal>
         <div
           style={
             onSlideMenu
@@ -205,7 +412,6 @@ export function BlogSmallHeader() {
             onChange={onChangeKeyword}
             onSearch={onSearchContent}
           />
-
           <div style={{ display: "flex", marginTop: "1rem" }}>
             <ul style={{ margin: 0, width: "50%", paddingRight: "1rem" }}>
               <h2>Blog</h2>

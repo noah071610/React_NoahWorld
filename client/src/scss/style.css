@@ -296,7 +296,7 @@ table {
 .portfolio_summary {
   text-align: start;
   font-size: 1rem;
-  padding: 0 0 7rem 1rem;
+  padding: 0 0 7rem 0;
   line-height: 2.5;
 }
 
@@ -334,6 +334,14 @@ table {
 .portfolio_poster_name:hover h2 {
   -webkit-animation: bounce 1s;
   animation: bounce 1s;
+}
+
+.profile_table {
+  display: none;
+}
+
+.br_category {
+  display: none;
 }
 
 li {
@@ -927,6 +935,28 @@ h1 {
           align-items: center;
 }
 
+.comment_img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  -webkit-box-shadow: 4px 8px 21px 1px rgba(0, 0, 0, 0.15);
+          box-shadow: 4px 8px 21px 1px rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
+}
+
+.comment_btn {
+  margin-top: 1rem;
+  width: 30%;
+  float: right;
+}
+
+.comment_textArea {
+  -webkit-box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.15);
+          box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  height: 100px !important;
+}
+
 .article {
   padding: 1rem;
   cursor: pointer;
@@ -1132,6 +1162,26 @@ h1 {
   font-size: 2.3rem;
 }
 
+.remoteControl {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.remoteControl_small {
+  display: none;
+}
+
+.post_main_title {
+  margin-top: 5rem;
+  font-size: 4rem;
+}
+
+.portfolio_nav_btn {
+  font-size: 0.8rem;
+  margin: 0 0.5rem;
+}
+
 @media only screen and (max-width: 992px) {
   .about_intro {
     font-size: 2.5rem;
@@ -1193,6 +1243,18 @@ h1 {
 }
 
 @media only screen and (max-width: 830px) {
+  .post_main_title {
+    margin-top: 3rem;
+    font-size: 2rem;
+  }
+  .remocontrol {
+    display: none;
+  }
+  .remocontrol_small {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
   .br_search {
     display: block;
   }
@@ -1252,9 +1314,6 @@ h1 {
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
     background-color: white;
     padding: 0 1rem;
     z-index: 2;
@@ -1266,12 +1325,27 @@ h1 {
     padding: 0 !important;
     z-index: 2;
   }
+  .slide_title {
+    width: 100%;
+    padding: 0 1rem 1rem 1rem;
+    position: absolute;
+    background-color: white;
+    top: 68px;
+    left: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: none;
+    z-index: 1;
+    -webkit-animation: fadeIn 0.5s;
+            animation: fadeIn 0.5s;
+  }
   .slide_menu {
     width: 100%;
     padding: 1rem;
     position: absolute;
     background-color: white;
-    top: 69px;
+    top: 68px;
     left: 0;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
@@ -1366,6 +1440,9 @@ h1 {
 }
 
 @media only screen and (max-width: 576px) {
+  .profile_table {
+    display: block;
+  }
   .search_title {
     margin: 3rem 1rem;
     font-size: 2rem;
@@ -1410,6 +1487,18 @@ h1 {
   }
   .logo {
     width: 80%;
+  }
+  .comment_img {
+    width: 50px;
+    height: 50px;
+    -webkit-box-shadow: 3px 6px 16px 1px rgba(0, 0, 0, 0.15);
+            box-shadow: 3px 6px 16px 1px rgba(0, 0, 0, 0.15);
+  }
+  .comment_btn {
+    width: 60%;
+  }
+  .comment_textArea {
+    height: 70px !important;
   }
   .blog_word_div {
     background-size: 444px;
@@ -1462,6 +1551,37 @@ h1 {
   }
   .blog_bottom_card_title {
     font-size: 1.2rem;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .slide_menu li {
+    font-size: 0.8rem;
+  }
+  .portfolio_nav_btn {
+    font-size: 0.6rem;
+  }
+  .post_main_title {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+  }
+  .br_category {
+    display: block;
+  }
+  .small_title {
+    font-size: 1rem;
+  }
+  .blog_main_small {
+    font-size: 0.85rem;
+  }
+  .blog_main_small li {
+    font-size: 0.65rem;
+  }
+  .blog_footer_list li {
+    font-size: 0.6rem;
+  }
+  .blog_category_count {
+    margin: 0;
   }
 }
 /*# sourceMappingURL=style.css.map */

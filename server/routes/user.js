@@ -102,6 +102,41 @@ router.post("/logIn", (req, res, next) => {
   })(req, res, next);
 });
 
+router.post("/confirm", async (req, res, next) => {
+  const myuser = await User.findOne({
+    where: { id: parseInt(req.body.user.id, 10) },
+  });
+  const result = await bcrypt.compare(req.body.password, myuser.password);
+  if (result) {
+    res.status(200).send({ success: true });
+  } else {
+    res.status(401).send({ success: false, message: "wrong password" });
+  }
+});
+
+router.post("/password", async (req, res, next) => {
+  const mynewPassword = await bcrypt.hash(req.body.newPassword, 12);
+  await User.update(
+    {
+      password: mynewPassword,
+    },
+    {
+      where: { id: parseInt(req.body.user.id, 10) },
+    }
+  );
+  res.status(200).send({ success: true });
+});
+
+router.delete("/:UserId", async (req, res, next) => {
+  const myuser = await User.destroy({
+    where: { id: parseInt(req.params.UserId, 10) },
+  });
+  if (!myuser) {
+    res.status(401).send("유저가 없는디용?");
+  }
+  res.status(200).send({ success: true });
+});
+
 router.post("/logOut", async (req, res, next) => {
   req.logout();
   req.session.destroy();

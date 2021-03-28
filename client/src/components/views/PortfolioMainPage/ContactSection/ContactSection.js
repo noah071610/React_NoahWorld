@@ -81,7 +81,11 @@ function ContactSection({ id }) {
               />
               <h2 style={{ marginLeft: "1rem" }}>인스타그램 DM</h2>
             </ContactLink>
-            <ContactLink href="tel:01056723486">
+            <ContactLink
+              value="01056723486"
+              onClick={() => document.execCommand("copy")}
+              href="tel:01056723486"
+            >
               <img
                 alt="contact_link"
                 style={{ width: "50px" }}

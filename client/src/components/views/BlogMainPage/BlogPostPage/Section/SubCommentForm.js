@@ -13,6 +13,16 @@ const CommentFormWrapper = styled.div`
   display: flex;
   transition: all 0.3s;
   padding: 1rem 0.5rem 1rem 2rem;
+  button {
+    width: 20%;
+  }
+  @media only screen and (max-width: 576px) {
+    padding-left: 0.5rem;
+    padding-right: 0;
+    button {
+      width: 30%;
+    }
+  }
 `;
 function SubCommentForm({ CommentId }) {
   const { user } = useSelector((state) => state.user);
@@ -65,7 +75,6 @@ function SubCommentForm({ CommentId }) {
           />
           <button
             style={{
-              width: "20%",
               float: "right",
             }}
             onClick={onClickAddComment}

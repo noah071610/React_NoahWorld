@@ -23,7 +23,7 @@ const LogoMain = styled.img`
 
 function Header() {
   const [FixedNavbar, setFixedNavbar] = useState(false);
-  const { header, onSlideMenu } = useSelector((state) => state.blog);
+  const { header } = useSelector((state) => state.blog);
   const { user, logOutDone, logOutError } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const history = useHistory();

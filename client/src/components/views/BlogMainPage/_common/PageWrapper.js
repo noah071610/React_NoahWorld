@@ -15,9 +15,12 @@ const Scroll = styled.div`
   bottom: 0.5rem;
   right: 2rem;
   font-size: 2rem;
-  z-index: 10;
+  z-index: 2;
   cursor: pointer;
   animation: ${scrollEffect} 1s linear infinite alternate;
+  @media only screen and (max-width: 430px) {
+    display: none;
+  }
 `;
 
 function PageWrapper({ children }) {

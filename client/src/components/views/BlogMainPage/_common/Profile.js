@@ -3,12 +3,10 @@
 import { CameraFilled } from "@ant-design/icons";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
-import { Col, Divider, Row } from "antd";
+import { useHistory } from "react-router-dom";
+import { Col, Row } from "antd";
 import { ADD_ICON_REQUEST } from "../../../../_reducers/user";
 import { LOAD_RECENT_POSTS_REQUEST } from "../../../../_reducers/post";
-import { BLUE_COLOR } from "../../../config";
-import styled from "styled-components";
 import { RecentTableComment, RecentTableView, WelcomeTable } from "./Components";
 import Slider from "react-slick";
 
@@ -88,7 +86,7 @@ function HeaderProfile() {
         <RecentTableView />
         <RecentTableComment />
       </Row>
-      <Slider {...settings}>
+      <Slider className="profile_table" {...settings}>
         <WelcomeTable visible={true} />
         <RecentTableView visible={true} />
         <RecentTableComment visible={true} />

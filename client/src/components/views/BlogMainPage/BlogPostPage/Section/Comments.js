@@ -25,9 +25,7 @@ dayjs.extend(relativeTime);
 const CommentWrapper = styled.div`
   width: 100%;
   position: relative;
-  transition:all 0.2s;
-  
-}}
+  transition: all 0.2s;
 `;
 
 const LikeComment = styled.a`
@@ -42,6 +40,19 @@ const MainContentWrapper = styled.div`
   cursor: pointer;
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
+  }
+  .edit_form {
+    button {
+      width: 20%;
+    }
+  }
+  @media only screen and (max-width: 576px) {
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+    .edit_form {
+      button {
+        width: 50%;
+      }
+    }
   }
 `;
 
@@ -198,18 +209,14 @@ function Comments({ comment }) {
               </div>
             </div>
             {editForm ? (
-              <div style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
-                <Button
-                  onClick={onClickEditComment}
-                  type="primary"
-                  style={{ marginTop: "0.8rem", width: "20%" }}
-                >
+              <div
+                className="edit_form"
+                style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
+              >
+                <Button onClick={onClickEditComment} type="primary" style={{ marginTop: "0.8rem" }}>
                   EDIT
                 </Button>
-                <Button
-                  onClick={() => setEditForm(false)}
-                  style={{ marginTop: "0.8rem", width: "20%" }}
-                >
+                <Button onClick={() => setEditForm(false)} style={{ marginTop: "0.8rem" }}>
                   CANCEL
                 </Button>
               </div>

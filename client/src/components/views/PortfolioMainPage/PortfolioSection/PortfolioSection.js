@@ -79,7 +79,7 @@ const CardImg = styled.img`
     height: 200px;
   }
   @media only screen and (max-width: 460px) {
-    height: 170px;
+    height: 150px;
   }
 `;
 
@@ -88,6 +88,9 @@ const PortfolioDesc = styled.div`
   margin-bottom: 1rem;
   @media only screen and (max-width: 650px) {
     padding-right: 2.3rem;
+  }
+  @media only screen and (max-width: 460px) {
+    padding-right: 1.3rem;
     display: block;
     text-align: end;
   }
@@ -195,10 +198,7 @@ function PortfolioSection({ id }) {
       <div className="space" />
       <Articles>
         <Title title="Portfolio" sub="최고가 아니더라도 항상 최선을 다합니다." />
-        <div
-          style={{ padding: "2rem 0 3rem  0" }}
-          onClick={(e) => onClickCardHandler(e.target.className)}
-        >
+        <div className="carousel_wrapper" onClick={(e) => onClickCardHandler(e.target.className)}>
           <Carousel slides={slides} autoplay={false} />
         </div>
         {portfolioDescComponent(PortfolioNumber)}
