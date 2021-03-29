@@ -25,6 +25,9 @@ function HeaderProfile() {
     });
   };
   useEffect(() => {
+    if (!user) {
+      return;
+    }
     dispatch({
       type: LOAD_RECENT_POSTS_REQUEST,
       data: user,

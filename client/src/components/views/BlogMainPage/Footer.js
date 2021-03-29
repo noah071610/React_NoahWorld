@@ -109,7 +109,7 @@ function Footer() {
       <a
         onClick={() => {
           if (!user) {
-            message.error("Only for user! why don`t you sign up 😸");
+            message.error("Only for user who signed in ! why don`t you sign up 😸");
             return;
           }
           showModal();
@@ -121,7 +121,7 @@ function Footer() {
       <a
         onClick={() => {
           if (!user) {
-            message.error("Only for user! why don`t you sign up 😸");
+            message.error("Only for user who signed in ! why don`t you sign up 😸");
             return;
           }
           showModal();
@@ -171,7 +171,7 @@ function Footer() {
             </li>
           </Popover>
           <FooterDivider type="vertical" />
-          <Popover content={info_content}>
+          <Popover placement="topRight" content={info_content}>
             <li>
               <a>Infomation</a>
             </li>
@@ -225,7 +225,7 @@ function Footer() {
               </Form.Item>
             </Form>
           ) : (
-            <p>Would you really like to withdrawal? 😿</p>
+            <h2>Would you really like to withdrawal? 😿</h2>
           )
         ) : (
           <>

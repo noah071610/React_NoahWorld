@@ -38,38 +38,6 @@ export const CardContents = [
     src: "/images/Passion.png",
   },
 ];
-export const dataSource = [
-  {
-    key: "1",
-    date: "1994/7/16",
-    summary: "Born in Seoul , South Korea",
-  },
-  {
-    key: "2",
-    date: "2013/3/2",
-    summary: "Entered Induk University Entertainment major ",
-  },
-  {
-    key: "3",
-    date: "2013/11/5",
-    summary: "Enlisted 17th infantry division for Military duty, South Korea",
-  },
-  {
-    key: "4",
-    date: "2016/7/1",
-    summary: "Worked at K-Hotel as a Receptionist , Seoul South Korea",
-  },
-  {
-    key: "5",
-    date: "2017/4/1",
-    summary: "Worked at Sky Ticket as a Merchandiser(MD) , Tokyo Japan",
-  },
-  {
-    key: "6",
-    date: "2018/11/1",
-    summary: "Worked at K-Hotel as a General Manager(GM) , Seoul South Korea",
-  },
-];
 
 // Nav Contents
 export const navContents = [
@@ -141,45 +109,47 @@ export const sub_skills = [
   {
     name: "Photoshop",
     src: "https://img.icons8.com/color/144/000000/adobe-photoshop.png",
-    desc: "스케치를 활용하여 UI/UX 웹사이트의 표본을 디자인합니다.",
-  },
-  {
-    name: "Sketch",
-    src: "https://img.icons8.com/plasticine/100/000000/sketch.png",
-    desc: "스케치를 활용하여 UI/UX 웹사이트의 표본을 디자인합니다.",
-  },
-  {
-    name: "J-Query",
-    src: "https://img.icons8.com/ios-filled/150/000000/jquery.png",
-    desc: "제이쿼리 문법해석과 셀렉터에 기본적 의미를 이해합니다.",
   },
   {
     name: "Type Script",
     src: "https://img.icons8.com/color/144/000000/typescript.png",
-    desc: "인터페이스 및 제네릭 메소드를 이해하고 타입을 정의할 수 있습니다.",
+
     level: true,
   },
   {
     name: "Nodejs",
     src: "https://img.icons8.com/color/144/000000/nodejs.png",
-    desc: "다양한 라이브러리를 사용가능하며 RESTful API를 준수합니다.",
+
     level: true,
   },
 
   {
     name: "MongoDB",
     src: "https://img.icons8.com/color/144/000000/mongodb.png",
-    desc: "스키마 정의와 데이터베이스관계도를 이해하고 테이블을 생성,수정하고 관리합니다.",
   },
   {
     name: "Postman",
     src: "https://miro.medium.com/max/512/1*fVBL9mtLJmHIH6YpU7WvHQ.png",
-    desc: "스키마 정의와 데이터베이스관계도를 이해하고 테이블을 생성,수정하고 관리합니다.",
   },
   {
     name: "Express",
     src: "https://www.mementotech.in/assets/images/icons/express.png",
-    desc: "스키마 정의와 데이터베이스관계도를 이해하고 테이블을 생성,수정하고 관리합니다.",
+    level: true,
+  },
+  {
+    name: "Antd",
+    src: "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg",
+    level: true,
+  },
+  {
+    name: "Styled-components",
+    src: "https://avatars.githubusercontent.com/u/20658825?s=280&v=4",
+    level: true,
+  },
+  {
+    name: "PassportJS",
+    src:
+      "https://leolanchas.com/wp-content/uploads/2013/07/0d184ee3-fd8d-4b94-acf4-b4e686e57375.png",
     level: true,
   },
 ];

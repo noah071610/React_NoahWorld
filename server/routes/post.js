@@ -298,36 +298,6 @@ router.get("/", async (req, res) => {
         },
       ],
     });
-    // const classPosts = await Post.findAll({
-    //   where: { category: "class" },
-    //   order: [["createdAt", "DESC"]],
-    //   include: [
-    //     {
-    //       model: Hashtag,
-    //       attributes: ["name"],
-    //     },
-    //     {
-    //       model: User,
-    //       as: "PostLikers",
-    //       attributes: ["id"],
-    //     },
-    //   ],
-    // });
-    // const culturePosts = await Post.findAll({
-    //   where: { category: "culture" },
-    //   order: [["createdAt", "DESC"]],
-    //   include: [
-    //     {
-    //       model: Hashtag,
-    //       attributes: ["name"],
-    //     },
-    //     {
-    //       model: User,
-    //       as: "PostLikers",
-    //       attributes: ["id"],
-    //     },
-    //   ],
-    // });
     const getAttributesFromPosts = await Post.findAll({
       order: [["createdAt", "DESC"]],
       attributes: ["id", "hit"],
@@ -436,8 +406,6 @@ router.get("/", async (req, res) => {
     res.status(200).json({
       techPosts,
       dailyPosts,
-      // classPosts,
-      // culturePosts,
       mostViewedPost,
       mostLikedPost,
       mostCommentedPost,
@@ -477,7 +445,7 @@ router.post("/", async (req, res) => {
       res.status(401).send("Wrong Password");
       return;
     }
-    const hashtags = await req.body.content.match(/#[^\s#+^<]+/g);
+    const hashtags = await req.body.content.match(/(#[^\s#+^<]+)/g);
     const post = await Post.create({
       hit: 0,
       thumbnail: req.body.thumbnail,
@@ -489,7 +457,7 @@ router.post("/", async (req, res) => {
     });
     if (hashtags) {
       const result = await Promise.all(
-        hashtags.map((tag) =>
+        hashtagReplace.map((tag) =>
           Hashtag.findOrCreate({
             where: { name: tag.slice(1).toLowerCase() },
           })

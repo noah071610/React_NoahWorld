@@ -1,8 +1,9 @@
-import { Col, Row } from "antd";
+import { Col, message, Row } from "antd";
 import React from "react";
 import styled from "styled-components";
 import Articles from "../_common/Articles";
 import Title from "../_common/Title";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const ContactLinkBox = styled(Col)`
   display: flex;
@@ -81,18 +82,19 @@ function ContactSection({ id }) {
               />
               <h2 style={{ marginLeft: "1rem" }}>인스타그램 DM</h2>
             </ContactLink>
-            <ContactLink
-              value="01056723486"
-              onClick={() => document.execCommand("copy")}
-              href="tel:01056723486"
-            >
-              <img
-                alt="contact_link"
-                style={{ width: "50px" }}
-                src="https://img.icons8.com/fluent/48/000000/outgoing-call.png"
-              />
-              <h2 style={{ marginLeft: "1rem" }}> 전화 연결 </h2>
-            </ContactLink>
+            <CopyToClipboard text="01056723486">
+              <ContactLink
+                onClick={() => message.success("전화번호가 복사됬어요! 잘부탁드립니다 ^^")}
+                href="tel:01056723486"
+              >
+                <img
+                  alt="contact_link"
+                  style={{ width: "50px" }}
+                  src="https://img.icons8.com/fluent/48/000000/outgoing-call.png"
+                />
+                <h2 style={{ marginLeft: "1rem" }}> 전화 연결 </h2>
+              </ContactLink>
+            </CopyToClipboard>
           </ContactLinkBox>
         </Row>
       </Articles>

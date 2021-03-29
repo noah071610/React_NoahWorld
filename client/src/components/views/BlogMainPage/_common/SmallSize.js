@@ -23,7 +23,7 @@ export function SmallPoster() {
           data-aos-anchor-placement="top-bottom"
           data-aos-delay="700"
           alt="class_intro_text"
-          style={{ width: "50%", height: "130px" }}
+          className="small_poster_cha"
           src="./images/blog/kankokugo.png"
         />
         <img

@@ -92,20 +92,39 @@ export function RecentTableComment({ visible }) {
         >
           <h3>
             · Post Number:{" "}
-            <span style={{ color: BLUE_COLOR, marginLeft: "0.3rem" }}>{recentCommentPost?.id}</span>
+            <span style={{ color: BLUE_COLOR, marginLeft: "0.3rem" }}>{recentCommentPost?.id}</span>{" "}
           </h3>
           <h3>
-            · Post Title:{" "}
-            <span style={{ color: BLUE_COLOR, marginLeft: "0.3rem" }}>
-              {recentCommentPost?.title}
-            </span>
+            · Post Title: <br />
           </h3>
+          <span
+            style={{
+              whiteSpace: "nowrap",
+              display: "inline-block",
+              marginLeft: "0.5rem",
+              width: "100%",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {recentCommentPost?.title}
+          </span>
           <h3>
-            · Your comment:{" "}
-            <span style={{ color: BLUE_COLOR, marginLeft: "0.3rem" }}>
-              {recentCommentPost?.Comments[0].content}
-            </span>
+            · Your comment:
+            <br />
           </h3>
+          <span
+            style={{
+              whiteSpace: "nowrap",
+              display: "inline-block",
+              marginLeft: "0.5rem",
+              width: "100%",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {recentCommentPost?.Comments[0].content}
+          </span>
         </div>
       ) : (
         <div
@@ -143,9 +162,20 @@ export function RecentTableView({ visible }) {
             <span style={{ color: BLUE_COLOR, marginLeft: "0.3rem" }}>{recentViewPost?.id}</span>
           </h3>
           <h3>
-            · Post Title:{" "}
-            <span style={{ color: BLUE_COLOR, marginLeft: "0.3rem" }}>{recentViewPost?.title}</span>
+            · Post Title: <br />
           </h3>
+          <span
+            style={{
+              whiteSpace: "nowrap",
+              display: "inline-block",
+              marginLeft: "0.5rem",
+              width: "100%",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {recentViewPost?.title}
+          </span>
           <h3>
             · Total Post Views:
             <span style={{ color: BLUE_COLOR, marginLeft: "0.3rem" }}>{recentViewPost?.hit}</span>

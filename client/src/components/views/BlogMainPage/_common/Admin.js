@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import codeSyntaxHighlightPlugin from "@toast-ui/editor-plugin-code-syntax-highlight";
+import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import colorSyntaxPlugin from "@toast-ui/editor-plugin-color-syntax";
+import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
 import hljs from "highlight.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -11,6 +12,10 @@ import Profile from "./Profile";
 import Form from "antd/lib/form/Form";
 import { Button, Radio, Modal, Input, message } from "antd";
 import useInput from "../../../../_hooks/useInput";
+import "codemirror/lib/codemirror.css";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import "highlight.js/styles/github.css";
+import "tui-color-picker/dist/tui-color-picker.css";
 import {
   ADD_POST_REQUEST,
   EDIT_POST_REQUEST,
@@ -187,11 +192,11 @@ function Admin() {
           ) : null}
         </div>
         <Editor
-          plugins={[codeSyntaxHighlightPlugin.bind(hljs), colorSyntaxPlugin]}
+          plugins={[[codeSyntaxHighlight, { hljs }], colorSyntaxPlugin]}
           placeholder="Welcome Noah!"
           height="600px"
           initialValue={postEditOn && postEditOn ? post.content : null}
-          initialEditType="markdown"
+          initialEditType="wysiwyg"
           useCommandShortcut={true}
           usageStatistics={false}
           ref={editorRef}

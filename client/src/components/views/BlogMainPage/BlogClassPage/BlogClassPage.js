@@ -15,6 +15,46 @@ import useInput from "../../../../_hooks/useInput";
 import { SmallPoster } from "../_common/SmallSize";
 import { MainPoster } from "../_common/Components";
 
+const Quiz = styled.div`
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 500px;
+  .quiz_input_wrapper {
+    width: 320px;
+    position: absolute;
+    right: 3.5rem;
+    bottom: 0.6rem;
+  }
+  .quiz_input {
+    width: 300px;
+  }
+  @media only screen and (max-width: 476px) {
+    height: 360px;
+    .quiz_input_wrapper {
+      width: 260px;
+      left: 2rem;
+      bottom: 0.3rem;
+    }
+    .quiz_input {
+      width: 210px;
+    }
+  }
+`;
+const QuizWrapper = styled.div`
+  width: 420px;
+  height: 100%;
+  position: absolute;
+  right: 1rem;
+  bottom: 0;
+  @media only screen and (max-width: 476px) {
+    position: absolute;
+    width: 300px;
+    right: 50%;
+    transform: translateX(50%);
+  }
+`;
 const KakaoContent = styled.div`
   font-size: 0.9rem;
   padding: 0.3rem 0.5rem;
@@ -29,6 +69,19 @@ const KakaoContent = styled.div`
   overflow: auto;
   &::-webkit-scrollbar {
     display: none;
+  }
+  button {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.8rem;
+    float: right;
+  }
+  @media only screen and (max-width: 476px) {
+    font-size: 0.7rem;
+    height: 50px;
+    button {
+      font-size: 0.5rem;
+    }
   }
 `;
 
@@ -52,7 +105,7 @@ const ContentTailQuestion = styled.div`
 `;
 const ContentTailAnswer = styled.div`
   position: absolute;
-  right: -0.35rem;
+  right: -0.32rem;
   transform: rotateZ(45deg);
   bottom: 4rem;
   z-index: 1;
@@ -60,6 +113,9 @@ const ContentTailAnswer = styled.div`
   height: 9px;
   background-color: rgb(235, 235, 235);
   content: "";
+  @media only screen and (max-width: 476px) {
+    bottom: 6rem;
+  }
 `;
 const QuizContent = styled.div`
   width: 250px;
@@ -67,6 +123,11 @@ const QuizContent = styled.div`
   position: absolute;
   right: 4rem;
   bottom: 4.2rem;
+  @media only screen and (max-width: 476px) {
+    width: 190px;
+    right: 2.5rem;
+    bottom: 0;
+  }
 `;
 
 const NextBtn = styled.button`
@@ -237,6 +298,28 @@ function BlogClassPage() {
               次の単語 <ArrowRightOutlined />
             </NextBtn>
           </div>
+          <div className="word_small">
+            <h3>{words[randomWord]?.question}</h3>
+            <div>
+              <span
+                style={{
+                  backgroundColor: wordOpen ? "none" : "#cccccc",
+                  color: wordOpen ? "black" : "#cccccc",
+                }}
+                onClick={onClickWord}
+                className="blog_class_imadoki_contents"
+              >
+                {words[randomWord]?.answer}
+              </span>
+            </div>
+            <button
+              style={{ width: "50%", marginTop: "1.5rem" }}
+              onClick={onClickNextWord}
+              className="public_btn"
+            >
+              次の単語 <ArrowRightOutlined />
+            </button>
+          </div>
         </Col>
         <Col span={24} style={{ marginTop: "2rem" }}>
           <h2 style={{ paddingLeft: "1rem" }} className="blog_class_title">
@@ -252,26 +335,14 @@ function BlogClassPage() {
           <h2 style={{ paddingLeft: "1rem" }} className="blog_class_title">
             韓国語会話
           </h2>
-          <div
+          <Quiz
             style={{
-              position: "relative",
-              overflow: "hidden",
-              width: "100%",
-              height: "500px",
               background: `url('https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80') no-repeat bottom fixed`,
               backgroundSize: "cover",
             }}
           >
-            <div
-              data-aos="fade-up"
-              data-aos-duration="800"
-              data-aos-delay="550"
+            <QuizWrapper
               style={{
-                width: "420px",
-                height: "100%",
-                position: "absolute",
-                right: "1rem",
-                bottom: "0",
                 background: `url('/images/blog/kakao.png') no-repeat`,
                 backgroundSize: "cover",
               }}
@@ -287,16 +358,7 @@ function BlogClassPage() {
                     <KakaoContent whiteType={true}>
                       貴方の答え：{quizAnswer}
                       <br />
-                      <button
-                        className="public_btn"
-                        onClick={onClickNextQuiz}
-                        style={{
-                          marginTop: "0.5rem",
-                          fontSize: "0.8rem",
-                          padding: "0.2rem 0.8rem",
-                          float: "right",
-                        }}
-                      >
+                      <button className="public_btn" onClick={onClickNextQuiz}>
                         次のクイズ
                         <ArrowRightOutlined />
                       </button>
@@ -304,18 +366,9 @@ function BlogClassPage() {
                   </>
                 ) : null}
               </QuizContent>
-              <div
-                style={{
-                  width: "320px",
-                  position: "absolute",
-                  right: "3.5rem",
-                  bottom: "0.8rem",
-                }}
-              >
+              <div className="quiz_input_wrapper">
                 <Input
-                  style={{
-                    width: "300px",
-                  }}
+                  className="quiz_input"
                   value={quizAnswer}
                   disabled={viewQuizAnswer ? true : false}
                   onChange={onChangeQuizAnswer}
@@ -330,8 +383,8 @@ function BlogClassPage() {
                   />
                 </a>
               </div>
-            </div>
-          </div>
+            </QuizWrapper>
+          </Quiz>
           <div className="space" />
         </Col>
       </Row>

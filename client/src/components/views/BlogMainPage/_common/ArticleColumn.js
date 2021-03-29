@@ -27,7 +27,6 @@ function ArticleColumn({ article }) {
           <div style={{ marginBottom: "1rem", width: "100%", overflow: "hidden" }}>
             <img
               className="article_img"
-              style={{ width: "100%", height: "250px", border: "0.3px solid rgba(0,0,0,0.1)" }}
               alt={article.title}
               src={
                 article.thumbnail
