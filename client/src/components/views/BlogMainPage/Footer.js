@@ -225,7 +225,7 @@ function Footer() {
               </Form.Item>
             </Form>
           ) : (
-            <h2>Would you really like to withdrawal? 😿</h2>
+            <h2>Would you really like to withdraw? 😿</h2>
           )
         ) : (
           <>

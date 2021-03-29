@@ -18,7 +18,11 @@ function ArticleRow({ article }) {
     history.push(`/${article.category}/post/${article.id}`);
   };
   const contentWithoutHTML =
-    article && article.content.replace(/(<([^>]+)>)/gi, "").replace("!#", "#");
+    article &&
+    article.content
+      .replace(/(<([^>]+)>)/gi, "")
+      .replace(/(!#[^\s!#+^<]+)/g, "")
+      .replace(/&nbsp;|&..;/gi, "");
   const handleImgError = (e) => {
     e.target.src = "images/blog/noImage.gif";
   };
