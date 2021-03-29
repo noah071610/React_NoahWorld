@@ -43,16 +43,28 @@ const uploadThumbNail = multer({
   limits: { fileSize: 20 * 1024 * 1024 },
 });
 
-router.post("/uploadfiles", (req, res) => {
-  upload(req, res, (err) => {
-    if (err) {
-      return res.json({ success: false, err });
-    }
-    return res.json({ success: true, url: res.req.file.path, fileName: res.req.file.filename });
-  });
+const uploadPostImage = multer({
+  storage: multer.diskStorage({
+    destination(req, file, done) {
+      done(null, "server/uploads");
+    },
+    filename(req, file, done) {
+      const ext = path.extname(file.originalname);
+      done(null, "postImage_" + new Date().getTime() + ext);
+    },
+  }),
+  limits: { fileSize: 20 * 1024 * 1024 },
+});
+
+router.post("/uploadfiles", uploadThumbNail.any, (req, res) => {
+  res.json({ success: true, url: res.req.file.path, fileName: res.req.file.filename });
 });
 
 router.post("/images", uploadThumbNail.single("image"), async (req, res, next) => {
+  res.json(req.file.filename);
+});
+
+router.post("/image", uploadPostImage.single("image"), async (req, res, next) => {
   res.json(req.file.filename);
 });
 
@@ -445,7 +457,7 @@ router.post("/", async (req, res) => {
       res.status(401).send("Wrong Password");
       return;
     }
-    const hashtags = await req.body.content.match(/(#[^\s#+^<]+)/g);
+    const hashtags = await req.body.content.match(/(!#[^\s!#+^<]+)/g);
     const post = await Post.create({
       hit: 0,
       thumbnail: req.body.thumbnail,
@@ -457,9 +469,9 @@ router.post("/", async (req, res) => {
     });
     if (hashtags) {
       const result = await Promise.all(
-        hashtagReplace.map((tag) =>
+        hashtags.map((tag) =>
           Hashtag.findOrCreate({
-            where: { name: tag.slice(1).toLowerCase() },
+            where: { name: tag.slice(2).toLowerCase() },
           })
         )
       );
@@ -487,7 +499,7 @@ router.post("/edit", async (req, res) => {
           where: { name: v.name },
         });
       });
-    const hashtags = req.body.content.match(/#[^\s#+^<]+/g);
+    const hashtags = req.body.content.match(/!#[^\s!#+^<]+/g);
     const newPost = await Post.update(
       {
         thumbnail: req.body.thumbnail,
@@ -502,7 +514,7 @@ router.post("/edit", async (req, res) => {
       const result = await Promise.all(
         hashtags.map((tag) =>
           Hashtag.findOrCreate({
-            where: { name: tag.slice(1).toLowerCase() },
+            where: { name: tag.slice(2).toLowerCase() },
           })
         )
       );

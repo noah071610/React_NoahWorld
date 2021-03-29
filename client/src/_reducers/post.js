@@ -16,6 +16,7 @@ const initialState = {
   nextPost: null,
   countPosts: [],
   imagePath: null,
+  postImagePath: null,
   recentViewPost: null,
   recentCommentPost: null,
 
@@ -26,6 +27,10 @@ const initialState = {
   uploadImagesLoading: false,
   uploadImagesDone: false,
   uploadImagesError: null,
+
+  uploadPostImageLoading: false,
+  uploadPostImageDone: false,
+  uploadPostImageError: null,
 
   removePostLoading: false,
   removePostDone: false,
@@ -106,6 +111,11 @@ export const UPLOAD_IMAGES_REQUEST = "UPLOAD_IMAGES_REQUEST";
 export const UPLOAD_IMAGES_SUCCESS = "UPLOAD_IMAGES_SUCCESS";
 export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";
 export const UPLOAD_IMAGES_CLEAR = "UPLOAD_IMAGES_CLEAR";
+
+export const UPLOAD_POST_IMAGE_REQUEST = "UPLOAD_POST_IMAGE_REQUEST";
+export const UPLOAD_POST_IMAGE_SUCCESS = "UPLOAD_POST_IMAGE_SUCCESS";
+export const UPLOAD_POST_IMAGE_FAILURE = "UPLOAD_POST_IMAGE_FAILURE";
+export const UPLOAD_POST_IMAGE_CLEAR = "UPLOAD_POST_IMAGE_CLEAR";
 
 export const ADD_POST_REQUEST = "ADD_POST_REQUEST";
 export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
@@ -537,6 +547,26 @@ const reducer = (state = initialState, action) =>
       case UPLOAD_IMAGES_CLEAR:
         draft.uploadImagesLoading = false;
         draft.uploadImagesDone = false;
+        draft.imagePath = null;
+        break;
+      case UPLOAD_POST_IMAGE_REQUEST:
+        draft.uploadPostImageLoading = true;
+        draft.uploadPostImageDone = false;
+        draft.uploadPostImageError = null;
+        break;
+      case UPLOAD_POST_IMAGE_SUCCESS: {
+        draft.PostImagePath = action.data;
+        draft.uploadPostImageLoading = false;
+        draft.uploadPostImageDone = true;
+        break;
+      }
+      case UPLOAD_POST_IMAGE_FAILURE:
+        draft.uploadPostImageLoading = false;
+        draft.uploadPostImageError = action.error;
+        break;
+      case UPLOAD_POST_IMAGE_CLEAR:
+        draft.uploadPostImageLoading = false;
+        draft.uploadPostImageDone = false;
         draft.imagePath = null;
         break;
       case LOAD_RECENT_POSTS_REQUEST:

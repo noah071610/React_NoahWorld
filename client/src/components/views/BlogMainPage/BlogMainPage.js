@@ -103,7 +103,7 @@ function BlogMainPage() {
             <div className="blog_main_big">
               <Divider />
               <Slider style={{ marginBottom: "3rem" }} {...settings}>
-                {techPosts.slice(1).map((v, i) => (
+                {techPosts.slice(1, 8).map((v, i) => (
                   <ArticleColumn key={i} article={v} />
                 ))}
               </Slider>
@@ -130,7 +130,7 @@ function BlogMainPage() {
             <div className="blog_main_big">
               <Divider />
               <Slider style={{ marginBottom: "3rem" }} {...settings}>
-                {dailyPosts.slice(1).map((v, i) => (
+                {dailyPosts.slice(1, 8).map((v, i) => (
                   <ArticleColumn key={i} article={v} />
                 ))}
               </Slider>

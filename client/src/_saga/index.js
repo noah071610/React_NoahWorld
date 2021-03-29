@@ -99,6 +99,10 @@ import {
   LOAD_RECENT_POSTS_REQUEST,
   LOAD_RECENT_POSTS_SUCCESS,
   LOAD_RECENT_POSTS_FAILURE,
+  UPLOAD_POST_IMAGE_REQUEST,
+  UPLOAD_POST_IMAGE_SUCCESS,
+  UPLOAD_POST_IMAGE_CLEAR,
+  UPLOAD_POST_IMAGE_FAILURE,
 } from "../_reducers/post";
 import {
   ADD_QUIZ_CLEAR,
@@ -608,6 +612,33 @@ function* uploadImages(action) {
   }
 }
 
+function uploadPostImageAPI(data) {
+  return axios.post("/api/post/image", data);
+}
+
+function* uploadPostImage(action) {
+  try {
+    const result = yield call(uploadPostImageAPI, action.data);
+    yield put({
+      type: UPLOAD_POST_IMAGE_SUCCESS,
+      data: result.data,
+    });
+    yield delay(3000);
+    yield put({
+      type: UPLOAD_POST_IMAGE_CLEAR,
+    });
+  } catch (err) {
+    yield put({
+      type: UPLOAD_POST_IMAGE_FAILURE,
+      error: err.response.data,
+    });
+    yield delay(3000);
+    yield put({
+      type: UPLOAD_POST_IMAGE_CLEAR,
+    });
+  }
+}
+
 function removePostAPI(data) {
   return axios.post(`api/post/delete`, data);
 }
@@ -962,6 +993,9 @@ function* watchEditPost() {
 function* watchUploadImages() {
   yield takeLatest(UPLOAD_IMAGES_REQUEST, uploadImages);
 }
+function* watchUploadPostImage() {
+  yield takeLatest(UPLOAD_POST_IMAGE_REQUEST, uploadPostImage);
+}
 function* watchAddComment() {
   yield takeLatest(ADD_COMMENT_REQUEST, addComment);
 }
@@ -1028,6 +1062,7 @@ export default function* rootSaga() {
     fork(watchRemoveSubComment),
     fork(watchEditSubComment),
     fork(watchUploadImages),
+    fork(watchUploadPostImage),
     fork(watchRemovePost),
     fork(watchEditPost),
     fork(watchConfirmPassword),

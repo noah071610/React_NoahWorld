@@ -1194,6 +1194,10 @@ h1 {
   display: none;
 }
 
+.tui-editor-contents img {
+  width: 65%;
+}
+
 @media only screen and (max-width: 992px) {
   .about_intro {
     font-size: 2.5rem;
@@ -1378,6 +1382,9 @@ h1 {
 }
 
 @media only screen and (max-width: 768px) {
+  .tui-editor-contents img {
+    width: 100%;
+  }
   .intro_me {
     font-size: 1.5rem;
   }

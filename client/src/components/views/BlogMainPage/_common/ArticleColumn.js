@@ -16,7 +16,8 @@ function ArticleColumn({ article }) {
     window.scrollTo({ top: 0 });
     history.push(`/${article.category}/post/${article.id}`);
   };
-  const contentWithoutHTML = article && article.content.replace(/(<([^>]+)>)/gi, "");
+  const contentWithoutHTML =
+    article && article.content.replace(/(<([^>]+)>)/gi, "").replace("!#", "#");
   const handleImgError = (e) => {
     e.target.src = "images/blog/noImage.gif";
   };

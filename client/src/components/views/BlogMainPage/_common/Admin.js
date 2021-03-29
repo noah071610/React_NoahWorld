@@ -21,6 +21,7 @@ import {
   EDIT_POST_REQUEST,
   UPLOAD_IMAGES_CLEAR,
   UPLOAD_IMAGES_REQUEST,
+  UPLOAD_POST_IMAGE_REQUEST,
 } from "../../../../_reducers/post";
 import {
   POST_EDIT_OFF,
@@ -29,18 +30,34 @@ import {
   ADD_QUIZ_REQUEST,
 } from "../../../../_reducers/blog";
 
+const dataURLtoFile = (dataurl, fileName) => {
+  var arr = dataurl.split(","),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+
+  return new File([u8arr], fileName, { type: mime });
+};
+
 function Admin() {
   const history = useHistory();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { postEditOn } = useSelector((state) => state.blog);
-  const { post, uploadImagesDone, imagePath } = useSelector((state) => state.post);
+  const { post, uploadImagesDone, imagePath, PostImagePath, uploadPostImageDone } = useSelector(
+    (state) => state.post
+  );
   const [radioValue, setRadioValue] = useState("tech");
   const [typeValue, setTypeValue] = useState("word");
   const [password, onChangePassword, setPassword] = useInput();
   const [thumbnail, onChangeThumbnail, setthumbnail] = useInput("");
   const [title, onChangeTitle, setTitle] = useInput();
-  const [content, setContent] = useState();
+  const [content, onChangeContent, setContent] = useInput();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [PostId, setPostId] = useState(null);
   const [tags, setTags] = useState(null);
@@ -152,12 +169,31 @@ function Admin() {
     setQuizForm(false);
     message.success("Post added or Edited");
     history.push("/");
+    editorRef.current.getInstance().setHtml("");
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
     setQuizForm(false);
   };
+
+  function uploadImage(blob) {
+    let formData = new FormData();
+    formData.append("image", blob);
+    console.log(formData);
+  }
+
+  useEffect(() => {
+    if (uploadPostImageDone) {
+      editorRef.current
+        .getInstance()
+        .setHtml(
+          editorRef.current.getInstance().getHtml() +
+            `<img src="http://localhost:5000/${PostImagePath}" alt="post_image" />`
+        );
+    }
+  }, [uploadPostImageDone]);
+
   return (
     <>
       <Profile />
@@ -200,6 +236,16 @@ function Admin() {
           useCommandShortcut={true}
           usageStatistics={false}
           ref={editorRef}
+          hooks={{
+            addImageBlobHook: async (blob) => {
+              const imageFormData = new FormData();
+              imageFormData.append("image", blob);
+              dispatch({
+                type: UPLOAD_POST_IMAGE_REQUEST,
+                data: imageFormData,
+              });
+            },
+          }}
         />
         <div style={{ display: "flex", alignItems: "center", margin: "1rem 0" }}>
           <Radio.Group

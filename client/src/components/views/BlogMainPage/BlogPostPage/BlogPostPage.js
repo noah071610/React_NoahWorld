@@ -6,6 +6,7 @@ import parse from "html-react-parser";
 import { Divider, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import hljs from "highlight.js";
 import {
   LIKE_POST_REQUEST,
   LOAD_POST_REQUEST,
@@ -67,17 +68,16 @@ function BlogPostPage() {
   useEffect(() => {
     const tagContent =
       post &&
-      post.content.split(/(#[^\s#+^<]+)/g).map((v, i) => {
-        if (v.match(/(#[^\s#+^<]+)/g)) {
-          let tagWithoutHash = v.slice(1);
-          return `<a class="hashtag" href='/hashtag/${tagWithoutHash}'>${v}</a>`;
+      post.content.split(/(!#[^\s!#+^<]+)/g).map((v, i) => {
+        if (v.match(/(!#[^\s!#+^<]+)/g)) {
+          let tagWithoutHash = v.slice(2);
+          return `<a class="hashtag" href='/hashtag/${tagWithoutHash}'>${v.slice(1)}</a>`;
         }
         return v;
       });
     const fullContentRemoveComma = post && tagContent.join("");
     setFullcontent(fullContentRemoveComma);
   }, [post]);
-
   useEffect(() => {
     const postId = history.location.pathname.replace(/[^0-9]/g, "");
     if (!postId) {
@@ -101,6 +101,12 @@ function BlogPostPage() {
     removeSubCommentDone,
     editSubCommentDone,
   ]);
+
+  useEffect(() => {
+    document.querySelectorAll("pre code").forEach((block) => {
+      hljs.highlightBlock(block);
+    });
+  }, [Fullcontent]);
 
   useEffect(() => {
     if (addCommentDone) {
@@ -157,7 +163,7 @@ function BlogPostPage() {
               <div className="tui-editor-contents" style={{ marginBottom: "3rem" }}>
                 <img
                   alt={post.title}
-                  style={{ width: "100%", marginBottom: "2rem" }}
+                  style={{ width: "100%" }}
                   src={
                     post.thumbnail
                       ? post.thumbnail
@@ -166,6 +172,7 @@ function BlogPostPage() {
                       : "images/blog/noImage.gif"
                   }
                 />
+                <Divider style={{ margin: "3rem 0" }} />
                 {Fullcontent && parse(Fullcontent)}
               </div>
               <h4 style={{ fontSize: "1.5rem", fontWeight: "bold" }}>

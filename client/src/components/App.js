@@ -14,12 +14,9 @@ import PageWrapper from "./views/BlogMainPage/_common/PageWrapper";
 import BlogLoginPage from "./views/BlogMainPage/BlogLoginPage/BlogLoginPage";
 import BlogAboutPage from "./views/BlogMainPage/BlogAboutPage";
 import Admin from "./views/BlogMainPage/_common/Admin";
-import "codemirror/lib/codemirror.css";
-import "@toast-ui/editor/dist/toastui-editor.css";
-import "highlight.js/styles/github.css";
-import "tui-color-picker/dist/tui-color-picker.css";
 import BlogSearchPage from "./views/BlogMainPage/BlogSearchPage/BlogSearchPage";
 import BlogHashtagPage from "./views/BlogMainPage/BlogSearchPage/BlogHashtagPage";
+import "highlight.js/styles/github.css";
 
 const GlobalStyles = createGlobalStyle`
 
