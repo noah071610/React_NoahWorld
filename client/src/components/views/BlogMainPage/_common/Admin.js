@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import colorSyntaxPlugin from "@toast-ui/editor-plugin-color-syntax";
 import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
+import ToastEditor from "@toast-ui/editor";
 import hljs from "highlight.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -30,18 +31,22 @@ import {
   ADD_QUIZ_REQUEST,
 } from "../../../../_reducers/blog";
 
-const dataURLtoFile = (dataurl, fileName) => {
-  var arr = dataurl.split(","),
-    mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]),
-    n = bstr.length,
-    u8arr = new Uint8Array(n);
+function renderYoutube(wrapperId, youtubeId) {
+  const el = document.querySelector(`#${wrapperId}`);
 
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
+  el.innerHTML = `<iframe width="420" height="315" src="https://www.youtube.com/embed/${youtubeId}"></iframe>`;
+}
 
-  return new File([u8arr], fileName, { type: mime });
+const youtubePlugin = () => {
+  ToastEditor.codeBlockManager.setReplacer("youtube", function (youtubeId) {
+    // Indentify multiple code blocks
+    const wrapperId = `yt${Math.random().toString(36).substr(2, 10)}`;
+
+    // Avoid sanitizing iframe tag
+    setTimeout(renderYoutube.bind(null, wrapperId, youtubeId), 0);
+
+    return `<div  id="${wrapperId}"></div>`;
+  });
 };
 
 function Admin() {
@@ -228,7 +233,7 @@ function Admin() {
           ) : null}
         </div>
         <Editor
-          plugins={[[codeSyntaxHighlight, { hljs }], colorSyntaxPlugin]}
+          plugins={[[codeSyntaxHighlight, { hljs }], colorSyntaxPlugin, youtubePlugin]}
           placeholder="Welcome Noah!"
           height="600px"
           initialValue={postEditOn && postEditOn ? post.content : null}

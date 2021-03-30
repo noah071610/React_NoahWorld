@@ -21,8 +21,8 @@ function ArticleRow({ article }) {
     article &&
     article.content
       .replace(/(<([^>]+)>)/gi, "")
-      .replace(/(!#[^\s!#+^<]+)/g, "")
-      .replace(/&nbsp;|&..;/gi, "");
+      .replace(/(#youtube:.*)/g, "(Youtube Video Link)")
+      .replace(/&.*;/gi, "");
   const handleImgError = (e) => {
     e.target.src = "images/blog/noImage.gif";
   };

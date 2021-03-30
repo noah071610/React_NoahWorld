@@ -44,7 +44,9 @@ function RemoteControl({ Fullcontent }) {
   }, []);
 
   useEffect(() => {
-    let contentHeaders = document.querySelectorAll(".tui-editor-contents h2");
+    let contentHeaders = document.querySelectorAll(
+      ".tui-editor-contents h1, .tui-editor-contents h2"
+    );
     let arr = [];
     contentHeaders.forEach((v, i) => {
       v.setAttribute("id", v.innerHTML);

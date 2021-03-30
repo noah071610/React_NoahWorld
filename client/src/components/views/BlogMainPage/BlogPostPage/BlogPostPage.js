@@ -68,10 +68,17 @@ function BlogPostPage() {
   useEffect(() => {
     const tagContent =
       post &&
-      post.content.split(/(!#[^\s!#+^<]+)/g).map((v, i) => {
-        if (v.match(/(!#[^\s!#+^<]+)/g)) {
-          let tagWithoutHash = v.slice(2);
-          return `<a class="hashtag" href='/hashtag/${tagWithoutHash}'>${v.slice(1)}</a>`;
+      post.content.split(/(#[^\s#+^<]+)/g).map((v, i) => {
+        if (v.match(/(#.*")/g)) {
+          return v;
+        }
+        if (v.match(/(#youtube:)/g)) {
+          return `<iframe title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen width="560" height="315" src="https://www.youtube.com/embed/${v.slice(
+            9
+          )}"></iframe>`;
+        }
+        if (v.match(/(#[^\s#+^<]+)/g)) {
+          return `<a class="hashtag" href='/hashtag/${v}'>${v}</a>`;
         }
         return v;
       });

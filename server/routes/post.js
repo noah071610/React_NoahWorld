@@ -457,7 +457,9 @@ router.post("/", async (req, res) => {
       res.status(401).send("Wrong Password");
       return;
     }
-    const hashtags = await req.body.content.match(/(!#[^\s!#+^<]+)/g);
+    const hashtags = await req.body.content
+      .replace(/([:'\\\/#-=`\|~+%\^&;]#[^\s#+^<]+)/g, "")
+      .match(/(#[^\s#+^<]+)/g);
     const post = await Post.create({
       hit: 0,
       thumbnail: req.body.thumbnail,
@@ -471,7 +473,7 @@ router.post("/", async (req, res) => {
       const result = await Promise.all(
         hashtags.map((tag) =>
           Hashtag.findOrCreate({
-            where: { name: tag.slice(2).toLowerCase() },
+            where: { name: tag.slice(1).toLowerCase() },
           })
         )
       );
