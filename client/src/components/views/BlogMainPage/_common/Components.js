@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { BLUE_COLOR } from "../../../config";
 
-const ClassMainPoster = styled.div`
+const ClassMainPoster = styled.section`
   box-shadow: 4px 8px 10px 0px rgba(0, 0, 0, 0.15);
   background: linear-gradient(180deg, rgba(251, 255, 253, 1) 15%, rgba(226, 150, 153, 0.8) 100%);
   width: 100%;

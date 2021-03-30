@@ -73,12 +73,12 @@ function BlogPostPage() {
           return v;
         }
         if (v.match(/(#youtube:)/g)) {
-          return `<iframe title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen width="560" height="315" src="https://www.youtube.com/embed/${v.slice(
+          return `<iframe class="youtube" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen src="https://www.youtube.com/embed/${v.slice(
             9
           )}"></iframe>`;
         }
         if (v.match(/(#[^\s#+^<]+)/g)) {
-          return `<a class="hashtag" href='/hashtag/${v}'>${v}</a>`;
+          return `<a class="hashtag" href='/hashtag/${v.slice(1)}'>${v}</a>`;
         }
         return v;
       });

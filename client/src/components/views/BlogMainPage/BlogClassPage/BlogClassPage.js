@@ -188,24 +188,24 @@ function BlogClassPage() {
   }, []);
 
   const onClickNextWord = () => {
-    let a = Math.floor(Math.random() * words.length);
-    if (a === randomWord) {
-      if (a === 0) {
+    let myRandNum = Math.floor(Math.random() * words.length);
+    if (myRandNum === randomWord) {
+      if (myRandNum === 0) {
         setRandomWord(words.length - 1);
         setwordOpen(false);
         return;
       }
-      if (a === words.length - 1) {
+      if (myRandNum === words.length - 1) {
         setRandomWord(0);
         setwordOpen(false);
         return;
       }
-      let b = a + 1;
-      setRandomWord(b);
+      let myNewRandNum = myRandNum + 1;
+      setRandomWord(myNewRandNum);
       setwordOpen(false);
       return;
     }
-    setRandomWord(a);
+    setRandomWord(myRandNum);
     setwordOpen(false);
   };
 

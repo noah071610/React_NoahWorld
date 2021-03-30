@@ -89,7 +89,7 @@ function Header() {
           </Link>
         )}
       </div>
-      <div className={FixedNavbar ? "blog_header_nav fixed" : "blog_header_nav static"}>
+      <nav className={FixedNavbar ? "blog_header_nav fixed" : "blog_header_nav static"}>
         {header === "blog" ? (
           <BlogHeader />
         ) : header === "portfolio" ? (
@@ -97,7 +97,7 @@ function Header() {
         ) : (
           <PortfolioPostHeader />
         )}
-      </div>
+      </nav>
       <BlogSmallHeader />
       {FixedNavbar ? <div style={{ height: "70px" }} /> : null}
     </header>

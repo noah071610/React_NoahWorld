@@ -157,7 +157,7 @@ function RemoteControl({ Fullcontent }) {
             <VerticalAlignTopOutlined />
           </a>
         </li>
-        {user && user.admin && (
+        {user?.id === 1 && user.admin && (
           <>
             <Divider type="vertical" />
             <li style={{ margin: 0 }}>

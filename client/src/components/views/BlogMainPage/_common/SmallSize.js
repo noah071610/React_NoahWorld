@@ -2,7 +2,7 @@ import React from "react";
 
 export function SmallPoster() {
   return (
-    <div className="blog_class_small_poster">
+    <section className="blog_class_small_poster">
       <h2>
         楽しく始まる韓国語教室
         <img
@@ -34,6 +34,6 @@ export function SmallPoster() {
           src="./images/blog/logo_cha.png"
         />
       </div>
-    </div>
+    </section>
   );
 }

@@ -1109,6 +1109,11 @@ h1 {
   right: 50%;
 }
 
+.youtube {
+  width: 100%;
+  height: 500px;
+}
+
 .intro_me {
   font-size: 2rem;
 }
@@ -1382,6 +1387,9 @@ h1 {
 }
 
 @media only screen and (max-width: 768px) {
+  .youtube {
+    height: 400px;
+  }
   .tui-editor-contents img {
     width: 100%;
   }
@@ -1457,6 +1465,9 @@ h1 {
 }
 
 @media only screen and (max-width: 576px) {
+  .youtube {
+    height: 300px;
+  }
   .profile_table {
     display: block;
   }
@@ -1582,6 +1593,9 @@ h1 {
 }
 
 @media only screen and (max-width: 400px) {
+  .youtube {
+    height: 200px;
+  }
   .article_img {
     height: 180px;
   }

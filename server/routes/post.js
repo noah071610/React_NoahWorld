@@ -459,7 +459,9 @@ router.post("/", async (req, res) => {
     }
     const hashtags = await req.body.content
       .replace(/([:'\\\/#-=`\|~+%\^&;]#[^\s#+^<]+)/g, "")
+      .replace(/(#youtube:[^\s#+^<]+)/g, "")
       .match(/(#[^\s#+^<]+)/g);
+    console.log(hashtags);
     const post = await Post.create({
       hit: 0,
       thumbnail: req.body.thumbnail,
@@ -501,7 +503,11 @@ router.post("/edit", async (req, res) => {
           where: { name: v.name },
         });
       });
-    const hashtags = req.body.content.match(/!#[^\s!#+^<]+/g);
+    const hashtags = await req.body.content
+      .replace(/([:'\\\/#-=`\|~+%\^&;]#[^\s#+^<]+)/g, "")
+      .replace(/(#youtube:[^\s#+^<]+)/g, "")
+      .replace(/(&.*;)/g, "")
+      .match(/(#[^\s#+^<]+)/g);
     const newPost = await Post.update(
       {
         thumbnail: req.body.thumbnail,
@@ -516,7 +522,7 @@ router.post("/edit", async (req, res) => {
       const result = await Promise.all(
         hashtags.map((tag) =>
           Hashtag.findOrCreate({
-            where: { name: tag.slice(2).toLowerCase() },
+            where: { name: tag.slice(1).toLowerCase() },
           })
         )
       );

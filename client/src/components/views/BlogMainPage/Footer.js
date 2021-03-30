@@ -92,7 +92,13 @@ function Footer() {
       return;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changePasswordDone, changePasswordError, confirmPasswordError]);
+  }, [
+    changePasswordDone,
+    changePasswordError,
+    confirmPasswordError,
+    withdrawalDone,
+    withdrawalError,
+  ]);
 
   const social_content = (
     <ul className="blog_footer_content">
@@ -149,7 +155,7 @@ function Footer() {
     </ul>
   );
   return (
-    <div className="blog_footer">
+    <footer className="blog_footer">
       <div className="blog_footer_wrapper">
         <div>ⓒ 2021, Jang Hyun Soo. All Rights Resrved.</div>
         <ul className="blog_footer_list">
@@ -235,7 +241,7 @@ function Footer() {
           </>
         )}
       </Modal>
-    </div>
+    </footer>
   );
 }
 

@@ -1,31 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const { Post, User, Image, Comment, Hashtag } = require("../models");
-const { Op } = require("sequelize");
+const { sequelize } = require("../models/index");
+const { Op, QueryTypes } = require("sequelize");
 
 router.post("/", async (req, res) => {
   try {
     if (req.body.keyword.length < 2) {
       res.status(401).json({ searchedKeyword: "need keyword more then 1 letter" });
     }
-    const searchPosts = await Post.findAll({
-      where: {
-        [Op.or]: [
-          { title: { [Op.like]: "%" + req.body.keyword + "%" } },
-          { content: { [Op.like]: "%" + req.body.keyword + "%" } },
-        ],
-      },
-      order: [["createdAt", "DESC"]],
-      attributes: {
-        exclude: ["thumbnail"],
-      },
-      include: [
-        {
-          model: Hashtag,
-          attributes: ["name"],
-        },
-      ],
-    });
+    const searchPosts = await sequelize.query(
+      "SELECT * FROM portfolio_blog.posts WHERE title LIKE '$1 $2 $1' or content Like '$1 $2 $1'",
+      {
+        bind: ["%", req.body.keyword],
+        type: QueryTypes.SELECT,
+      }
+    );
     res.status(200).json({ searchPosts, searchedKeyword: req.body.keyword });
   } catch (error) {
     console.error(error);

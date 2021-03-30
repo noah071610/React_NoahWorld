@@ -6,6 +6,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const saltRounds = 10;
 
 try {
   fs.accessSync("./server/uploads");
@@ -115,7 +116,8 @@ router.post("/confirm", async (req, res, next) => {
 });
 
 router.post("/password", async (req, res, next) => {
-  const mynewPassword = await bcrypt.hash(req.body.newPassword, 12);
+  const salt = await bcrypt.genSalt(saltRounds);
+  const mynewPassword = await bcrypt.hash(req.body.newPassword, salt);
   await User.update(
     {
       password: mynewPassword,
@@ -145,6 +147,8 @@ router.post("/logOut", async (req, res, next) => {
 
 router.post("/signUp", async (req, res, next) => {
   try {
+    const salt = await bcrypt.genSalt(saltRounds);
+
     const exUser = await User.findOne({
       where: {
         email: req.body.email,
@@ -155,7 +159,7 @@ router.post("/signUp", async (req, res, next) => {
         .status(403)
         .send({ success: false, message: "Your E-mail is already used, please Check one`s again" });
     }
-    const hashedPassword = await bcrypt.hash(req.body.password, 12);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
     await User.create({
       email: req.body.email,
       name: req.body.name,

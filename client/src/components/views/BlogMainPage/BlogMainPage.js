@@ -141,7 +141,7 @@ function BlogMainPage() {
           </section>
         )}
         {/*Aside Manu*/}
-        <section className="blog_aside">
+        <aside className="blog_aside">
           <div style={{ marginBottom: "1rem" }}>
             <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
               <img
@@ -196,7 +196,7 @@ function BlogMainPage() {
                 })}
             </ul>
           </div>
-        </section>
+        </aside>
       </div>
       <div className="blog_md_aside">
         <Divider />

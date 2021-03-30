@@ -188,7 +188,7 @@ export function BlogSmallHeader() {
   }, [dispatch, history, removePostDone]);
 
   return (
-    <div className="blog_header_small">
+    <nav className="blog_header_small">
       <div
         style={
           onSlideMenu || slideTitle
@@ -537,7 +537,7 @@ export function BlogSmallHeader() {
           </div>
         </div>
       </div>
-    </div>
+    </nav>
   );
 }
 
