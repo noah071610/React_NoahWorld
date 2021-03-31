@@ -4,7 +4,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import colorSyntaxPlugin from "@toast-ui/editor-plugin-color-syntax";
 import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
-import ToastEditor from "@toast-ui/editor";
 import hljs from "highlight.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -30,24 +29,6 @@ import {
   ADD_WORD_REQUEST,
   ADD_QUIZ_REQUEST,
 } from "../../../../_reducers/blog";
-
-function renderYoutube(wrapperId, youtubeId) {
-  const el = document.querySelector(`#${wrapperId}`);
-
-  el.innerHTML = `<iframe width="420" height="315" src="https://www.youtube.com/embed/${youtubeId}"></iframe>`;
-}
-
-const youtubePlugin = () => {
-  ToastEditor.codeBlockManager.setReplacer("youtube", function (youtubeId) {
-    // Indentify multiple code blocks
-    const wrapperId = `yt${Math.random().toString(36).substr(2, 10)}`;
-
-    // Avoid sanitizing iframe tag
-    setTimeout(renderYoutube.bind(null, wrapperId, youtubeId), 0);
-
-    return `<div  id="${wrapperId}"></div>`;
-  });
-};
 
 function Admin() {
   const history = useHistory();
@@ -233,7 +214,7 @@ function Admin() {
           ) : null}
         </div>
         <Editor
-          plugins={[[codeSyntaxHighlight, { hljs }], colorSyntaxPlugin, youtubePlugin]}
+          plugins={[[codeSyntaxHighlight, { hljs }], colorSyntaxPlugin]}
           placeholder="Welcome Noah!"
           height="600px"
           initialValue={postEditOn && postEditOn ? post.content : null}

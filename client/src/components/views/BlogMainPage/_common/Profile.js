@@ -41,6 +41,10 @@ function HeaderProfile() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
+  const handleImgError = (e) => {
+    e.target.src = `http://localhost:5000/default-user.png`;
+  };
   return (
     <>
       <Row className={"blog_header_profile display"}>
@@ -62,6 +66,7 @@ function HeaderProfile() {
                   boxShadow: "4px 8px 21px 1px rgba(0, 0, 0, 0.15)",
                 }}
                 src={user.icon && `http://localhost:5000/${user.icon}`}
+                onError={handleImgError}
                 alt="profile_img"
               />
             )}

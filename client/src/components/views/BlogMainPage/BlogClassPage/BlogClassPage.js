@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Col, Divider, Input, message, Row } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 import ArticleColumn from "../_common/ArticleColumn";
@@ -187,7 +187,7 @@ function BlogClassPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onClickNextWord = () => {
+  const onClickNextWord = useCallback(() => {
     let myRandNum = Math.floor(Math.random() * words.length);
     if (myRandNum === randomWord) {
       if (myRandNum === 0) {
@@ -207,9 +207,9 @@ function BlogClassPage() {
     }
     setRandomWord(myRandNum);
     setwordOpen(false);
-  };
+  }, [randomWord, setwordOpen, words.length]);
 
-  const onClickNextQuiz = () => {
+  const onClickNextQuiz = useCallback(() => {
     let myRandNum = Math.floor(Math.random() * quizzes.length);
     if (myRandNum === randomQuiz) {
       if (myRandNum === quizzes.length - 1) {
@@ -227,15 +227,15 @@ function BlogClassPage() {
     setRandomQuiz(myRandNum);
     setViewQuizAnswer(false);
     setQuizAnswer("");
-  };
+  }, [quizzes.length, randomQuiz, setQuizAnswer]);
 
-  const onClickQuizSubmit = () => {
+  const onClickQuizSubmit = useCallback(() => {
     if (quizAnswer === "") {
       message.error("答えを書いてくださいね！");
       return;
     }
     setViewQuizAnswer(true);
-  };
+  }, [quizAnswer]);
   return (
     <>
       {user && <HeaderProfile />}

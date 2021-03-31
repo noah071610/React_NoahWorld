@@ -10,9 +10,9 @@ router.post("/", async (req, res) => {
       res.status(401).json({ searchedKeyword: "need keyword more then 1 letter" });
     }
     const searchPosts = await sequelize.query(
-      "SELECT * FROM portfolio_blog.posts WHERE title LIKE '$1 $2 $1' or content Like '$1 $2 $1'",
+      "SELECT * FROM portfolio_blog.posts WHERE title LIKE $1 or content Like $1",
       {
-        bind: ["%", req.body.keyword],
+        bind: ["%" + req.body.keyword + "%"],
         type: QueryTypes.SELECT,
       }
     );

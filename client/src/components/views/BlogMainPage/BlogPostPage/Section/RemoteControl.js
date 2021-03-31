@@ -11,7 +11,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Divider, Input, message, Popover, Timeline } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import Scrollspy from "react-scrollspy";
@@ -56,15 +56,13 @@ function RemoteControl({ Fullcontent }) {
     setHeaders(arr);
   }, [Fullcontent]);
 
-  const timelineLists = () => {
-    return headers.map((v, i) => {
-      return (
-        <Timeline.Item color="gray" key={i} style={{ width: "100%" }}>
-          <a href={`#${v}`}>{v}</a>
-        </Timeline.Item>
-      );
-    });
-  };
+  const timelineLists = useCallback(() => {
+    return headers.map((v, i) => (
+      <Timeline.Item color="gray" key={i} style={{ width: "100%" }}>
+        <a href={`#${v}`}>{v}</a>
+      </Timeline.Item>
+    ));
+  }, [headers]);
 
   const nextPostContent = <h3 style={{ margin: 0 }}>{nextPost?.title}</h3>;
   const prevPostContent = <h3 style={{ margin: 0 }}>{prevPost?.title}</h3>;

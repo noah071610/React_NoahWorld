@@ -115,7 +115,7 @@ function Footer() {
       <a
         onClick={() => {
           if (!user) {
-            message.error("Only for user who signed in ! why don`t you sign up 😸");
+            message.error("Only for user who signed in.");
             return;
           }
           showModal();
@@ -127,7 +127,7 @@ function Footer() {
       <a
         onClick={() => {
           if (!user) {
-            message.error("Only for user who signed in ! why don`t you sign up 😸");
+            message.error("Only for user who signed in.");
             return;
           }
           showModal();
