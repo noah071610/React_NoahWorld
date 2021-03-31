@@ -142,7 +142,7 @@ function BlogMainPage() {
         )}
         {/*Aside Manu*/}
         <aside className="blog_aside">
-          <div style={{ marginBottom: "1rem" }}>
+          <div>
             <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
               <img
                 alt="trophy"
@@ -153,7 +153,7 @@ function BlogMainPage() {
             </h3>
             <ArticleAside type="like" article={mostLikedPost} />
           </div>
-          <div style={{ marginBottom: "1rem" }}>
+          <div>
             <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
               <img
                 alt="view_log"

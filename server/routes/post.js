@@ -430,7 +430,6 @@ router.get("/", async (req, res) => {
 
 router.get("/hashtag/:hashtag", async (req, res, next) => {
   try {
-    console.log(req.params.hashtag);
     const posts = await Post.findAll({
       limit: 5,
       order: [["createdAt", "DESC"]],

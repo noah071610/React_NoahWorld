@@ -105,6 +105,10 @@ function SubComments({ subComment, CommentId }) {
     setEditForm(false);
   }, [dispatch, CommentId, SubCommentId, editText]);
 
+  const handleImgError = (e) => {
+    e.target.src = `http://localhost:5000/default-user.png`;
+  };
+
   return (
     <>
       {subComment.User && (
@@ -128,6 +132,7 @@ function SubComments({ subComment, CommentId }) {
                       ? `http://localhost:5000/${subComment.User.icon}`
                       : "http://www.snschool.com/assets/admin/images/users/default-user.png"
                   }
+                  onError={handleImgError}
                   alt="profile"
                 />
               </div>

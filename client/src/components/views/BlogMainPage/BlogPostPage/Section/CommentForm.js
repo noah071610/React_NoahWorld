@@ -88,6 +88,10 @@ function CommentForm() {
     });
   };
 
+  const handleImgError = (e) => {
+    e.target.src = `http://localhost:5000/default-user.png`;
+  };
+
   return (
     <>
       <CommentFormWrapper
@@ -100,6 +104,7 @@ function CommentForm() {
             className="comment_img"
             src={`http://localhost:5000/${user ? user.icon : "default-user.png"}`}
             alt="profile"
+            onError={handleImgError}
           />
           <h3 style={{ textAlign: "center" }}>{user ? user.name : "Guest"}</h3>
         </div>

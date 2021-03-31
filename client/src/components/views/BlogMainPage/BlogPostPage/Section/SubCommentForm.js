@@ -51,6 +51,10 @@ function SubCommentForm({ CommentId }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleImgError = (e) => {
+    e.target.src = `http://localhost:5000/default-user.png`;
+  };
+
   return (
     <>
       <CommentFormWrapper className="blog_post_comment">
@@ -63,6 +67,7 @@ function SubCommentForm({ CommentId }) {
           }}
           src={`http://localhost:5000/${user ? user.icon : "default-user.png"}`}
           alt="profile"
+          onError={handleImgError}
         />
         <div style={{ width: "100%", display: "flex" }}>
           <input

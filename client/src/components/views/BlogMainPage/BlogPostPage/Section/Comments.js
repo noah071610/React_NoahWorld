@@ -151,6 +151,11 @@ function Comments({ comment }) {
     },
     [comment.SubComments?.length, moreSubComments, setMoreSubComments, subCommentForm]
   );
+
+  const handleImgError = (e) => {
+    e.target.src = `http://localhost:5000/default-user.png`;
+  };
+
   return (
     <>
       {comment.User && (
@@ -179,6 +184,7 @@ function Comments({ comment }) {
                       : "http://www.snschool.com/assets/admin/images/users/default-user.png"
                   }
                   alt="profile"
+                  onError={handleImgError}
                 />
               </div>
               <div style={{ marginLeft: "2rem", width: "100%" }}>

@@ -18,6 +18,7 @@ const validateMessages = {
 function BlogSignUpSection({ onClickLogin }) {
   const dispatch = useDispatch();
   const { signUpError, signUpDone } = useSelector((state) => state.user);
+
   const onFinish = (values: any) => {
     dispatch({
       type: SIGN_UP_REQUEST,

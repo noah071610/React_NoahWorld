@@ -264,7 +264,7 @@ function BlogClassPage() {
           </ClassLists>
         </Col>
         <Col style={{ padding: "1rem" }} xs={24} lg={12}>
-          <h2 className="blog_class_title">韓国語今どき</h2>
+          <h2 className="blog_class_title">韓国語単語</h2>
           <div
             style={{
               background: `url('/images/blog/class_memo.jpg') no-repeat center`,

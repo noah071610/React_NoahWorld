@@ -52,7 +52,11 @@ function ArticleRow({ article }) {
                 article.Hashtags.map((v, i) => {
                   return (
                     <li key={i}>
-                      <Link className="hashtag" to={`/hashtag/${v.name}`}>
+                      <Link
+                        className="hashtag"
+                        onClick={() => window.scrollTo({ top: 0 })}
+                        to={`/hashtag/${v.name}`}
+                      >
                         #{v.name}
                       </Link>
                     </li>

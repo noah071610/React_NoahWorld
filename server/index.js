@@ -13,42 +13,9 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const expiryDate = new Date(Date.now() + 60 * 60 * 1000);
 
-// app.use((req, res, next) => {
-//   res.locals.cspNonce = crypto.randomBytes(16).toString("hex");
-//   next();
-// });
-
-// const cspOptions = {
-//   directives: {
-//     ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-//     "script-src": [
-//       "'self'",
-//       "https://www.googletagmanager.com",
-//       "https://www.google-analytics.com",
-//       "https://ssl.google-analytics.com",
-//       "https://tagmanager.google.com",
-//       "*.gstatic.com",
-//       (req, res) => `'nonce-${res.locals.cspNonce}'`,
-//     ],
-//     "img-src": [
-//       "'self'",
-//       "www.googletagmanager.com",
-//       "https://www.google-analytics.com",
-//       "https://*.gstatic.com",
-//       "https://www.gstatic.com",
-//       "data:",
-//     ],
-
-//     "connect-src": ["'self'", "https://www.google-analytics.com"],
-//   },
-// };
-// app.use(
-//   helmet({
-//     contentSecurityPolicy: cspOptions,
-//   })
-// );
-// app.disable("x-powered-by");
-// app.use(helmet.xssFilter());
+app.use(helmet());
+app.disable("x-powered-by");
+app.use(helmet.xssFilter());
 
 dotenv.config();
 app.use(cookieParser(process.env.COOKIE));
