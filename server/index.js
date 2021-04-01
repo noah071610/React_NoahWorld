@@ -11,6 +11,7 @@ const passportConfig = require("./passport");
 const passport = require("passport");
 const morgan = require("morgan");
 const helmet = require("helmet");
+const hpp = require("hpp");
 const expiryDate = new Date(Date.now() + 60 * 60 * 1000);
 
 app.disable("x-powered-by");
@@ -68,24 +69,17 @@ db.sequelize
 if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
   app.use(hpp());
-  app.use(helmet({ contentSecurityPolicy: false }));
-  app.use(helmet.xssFilter());
-  app.use(
-    cors({
-      origin: "noahworld.com",
-      credentials: true,
-    })
-  );
+  app.use(helmet());
 } else {
   app.use(morgan("dev"));
-  app.use(
-    cors({
-      origin: true,
-      credentials: true,
-    })
-  );
 }
 
+app.use(
+  cors({
+    origin: ["http://localhost:5000", "noahworld.com"],
+    credentials: true,
+  })
+);
 app.get("/", (req, res) => {
   res.send("Noah world");
 });
@@ -109,7 +103,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const port = process.env.PORT || 5000;
+const port = 80;
 
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`);
