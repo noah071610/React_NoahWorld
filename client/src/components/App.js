@@ -87,7 +87,7 @@ const App = () => {
               <Route exact path="/hashtag/:keyword" component={BlogHashtagPage} />
               <Route exact path="/login" component={BlogLoginPage} />
               <Route exact path="/admin" component={Admin} />
-              <Route path="/:category/post/:id" component={BlogPostPage} />
+              <Route exact path="/:category/post/:id" component={BlogPostPage} />
               <Route exact path="/portfolio" component={PortfolioMainPage} />
               <Route exact path="/portfolio/:id" component={PortfolioPostPage} />
               <Route path="*" component={NoMatch} />
