@@ -7,30 +7,28 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const saltRounds = 10;
+const multerS3 = require("multer-s3");
+const AWS = require("aws-sdk");
 
-try {
-  fs.accessSync("server/uploads");
-} catch (error) {
-  console.log("create new folder");
-  fs.mkdirSync / "server/uploads";
-}
-
+AWS.config.update({
+  accessKeyId: process.env.S3_ACCESS_KEY_ID,
+  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  region: "ap-northeast-2",
+});
 const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, done) {
-      done(null, "server/uploads");
-    },
-    filename(req, file, done) {
-      const ext = path.extname(file.originalname);
-      done(null, "icon_" + new Date().getTime() + ext);
+  storage: multerS3({
+    s3: new AWS.S3(),
+    bucket: "react-nodebird",
+    key(req, file, cb) {
+      cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
     },
   }),
-  limits: { fileSize: 20 * 1024 * 1024 },
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
 });
 
 router.post("/icon", upload.single("image"), async (req, res, next) => {
-  User.update({ icon: req.file.filename }, { where: { id: req.body.id } });
-  res.json(req.file.filename);
+  User.update({ icon: req.file.location }, { where: { id: req.body.id } });
+  res.json(req.file.location);
 });
 
 router.get("/", async (req, res, next) => {

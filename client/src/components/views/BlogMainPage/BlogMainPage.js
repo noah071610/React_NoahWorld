@@ -59,6 +59,12 @@ function BlogMainPage() {
     });
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch({
+      type: LOAD_INFO_REQUEST,
+    });
+  }, []);
+
   return (
     <>
       {user && <Profile />}
