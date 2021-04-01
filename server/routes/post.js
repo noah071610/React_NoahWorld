@@ -10,21 +10,12 @@ const { Op } = require("sequelize");
 const multerS3 = require("multer-s3");
 const AWS = require("aws-sdk");
 
-let storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "server/uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}_${file.originalname}`);
-  },
-  fileFilter: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    if (ext !== ".jpg" && ext !== ".png" && ext !== ".mp4") {
-      return cb(res.status(400).end("only jpg, png, mp4 is allowed"), false);
-    }
-    cb(null, true);
-  },
-});
+try {
+  fs.accessSync("server/uploads");
+} catch (error) {
+  console.log("create new folder");
+  fs.mkdirSync / "server/uploads";
+}
 
 AWS.config.update({
   accessKeyId: process.env.S3_ACCESS_KEY_ID,
@@ -43,7 +34,7 @@ const upload = multer({
 });
 
 router.post("/uploadfiles", upload.any, (req, res) => {
-  res.json({ success: true, url: res.req.file.path, fileName: res.req.file.filename });
+  res.json({ success: true, url: res.req.file.path, fileName: res.req.file.location });
 });
 
 router.post("/images", upload.single("image"), async (req, res, next) => {

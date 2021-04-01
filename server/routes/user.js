@@ -9,6 +9,12 @@ const fs = require("fs");
 const saltRounds = 10;
 const multerS3 = require("multer-s3");
 const AWS = require("aws-sdk");
+try {
+  fs.accessSync("server/uploads");
+} catch (error) {
+  console.log("create new folder");
+  fs.mkdirSync / "server/uploads";
+}
 
 AWS.config.update({
   accessKeyId: process.env.S3_ACCESS_KEY_ID,
@@ -28,8 +34,8 @@ const upload = multer({
 });
 
 router.post("/icon", upload.single("image"), async (req, res, next) => {
-  User.update({ icon: req.file.filename }, { where: { id: req.body.id } });
-  res.json(req.file.filename);
+  User.update({ icon: req.file.location }, { where: { id: req.body.id } });
+  res.json(req.file.location);
 });
 
 router.get("/", async (req, res, next) => {
