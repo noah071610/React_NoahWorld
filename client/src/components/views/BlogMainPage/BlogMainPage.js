@@ -59,12 +59,6 @@ function BlogMainPage() {
     });
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch({
-      type: LOAD_INFO_REQUEST,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   return (
     <>
       {user && <Profile />}
