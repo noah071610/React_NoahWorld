@@ -8,10 +8,10 @@ const path = require("path");
 const fs = require("fs");
 const { Op } = require("sequelize");
 try {
-  fs.accessSync("./server/uploads");
+  fs.accessSync("server/uploads");
 } catch (error) {
   console.log("create new folder");
-  fs.mkdirSync("./server/uploads");
+  fs.mkdirSync / "server/uploads";
 }
 
 let storage = multer.diskStorage({
