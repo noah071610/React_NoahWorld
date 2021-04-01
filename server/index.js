@@ -67,7 +67,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(
   cors({
-    origin: ["http://localhost:5000", "noahworld.com"],
+    origin: ["http://localhost:5000", "noahworld.com", "http://15.164.215.229"],
     credentials: true,
   })
 );
