@@ -214,7 +214,7 @@ export function BlogSmallHeader() {
           }
         >
           <Link style={{ display: "flex", alignItems: "center", height: "70px" }} to={"/"}>
-            <img alt="menu_logo" style={{ width: "1.9rem" }} src="/images/blog/favicon.png" />
+            <img alt="menu_logo" style={{ width: "1.9rem" }} src="/images/blog/logo_icon.png" />
             <span
               style={{
                 color: "black",
