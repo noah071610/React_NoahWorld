@@ -7,7 +7,7 @@ function NoMatch() {
   return (
     <div style={{ width: "100%", height: "80vh", paddingTop: "7rem" }}>
       <h1 style={{ fontSize: "2rem", textAlign: "center" }}>
-        Oops!! "{history.location.pathname}" which isn't a registered route.{" "}
+        Oops!!! "{history.location.pathname}" which isn't a registered route.{" "}
         <img alt="not_found_img" src="https://img.icons8.com/officel/80/000000/crying-baby.png" />
       </h1>
       <br />
