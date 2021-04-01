@@ -89,7 +89,7 @@ function CommentForm() {
   };
 
   const handleImgError = (e) => {
-    e.target.src = `${BACKEND_URL}/default-user.png`;
+    e.target.src = `default-user.png`;
   };
 
   return (
@@ -102,7 +102,7 @@ function CommentForm() {
         <div>
           <img
             className="comment_img"
-            src={`${BACKEND_URL}/${user ? user.icon : "default-user.png"}`}
+            src={`${user ? user.icon : "default-user.png"}`}
             alt="profile"
             onError={handleImgError}
           />

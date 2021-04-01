@@ -32,7 +32,7 @@ function ArticleAside({ article, type }) {
                 article.thumbnail
                   ? article.thumbnail
                   : article.imagePath
-                  ? `${BACKEND_URL}/${article.imagePath}`
+                  ? `${article.imagePath}`
                   : "images/blog/noImage.gif"
               }
               onError={handleImgError}

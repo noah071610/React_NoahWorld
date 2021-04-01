@@ -175,7 +175,7 @@ function BlogPostPage() {
                     post.thumbnail
                       ? post.thumbnail
                       : post.imagePath
-                      ? `${BACKEND_URL}/${post.imagePath}`
+                      ? `${post.imagePath}`
                       : "images/blog/noImage.gif"
                   }
                 />

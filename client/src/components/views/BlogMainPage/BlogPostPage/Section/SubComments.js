@@ -107,7 +107,7 @@ function SubComments({ subComment, CommentId }) {
   }, [dispatch, CommentId, SubCommentId, editText]);
 
   const handleImgError = (e) => {
-    e.target.src = `${BACKEND_URL}/default-user.png`;
+    e.target.src = `default-user.png`;
   };
 
   return (
@@ -130,7 +130,7 @@ function SubComments({ subComment, CommentId }) {
                   }}
                   src={
                     subComment.User.icon
-                      ? `${BACKEND_URL}/${subComment.User.icon}`
+                      ? `${subComment.User.icon}`
                       : "http://www.snschool.com/assets/admin/images/users/default-user.png"
                   }
                   onError={handleImgError}

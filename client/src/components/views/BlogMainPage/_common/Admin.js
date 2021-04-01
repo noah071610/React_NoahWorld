@@ -176,7 +176,7 @@ function Admin() {
         .getInstance()
         .setHtml(
           editorRef.current.getInstance().getHtml() +
-            `<img src="${BACKEND_URL}/${PostImagePath}" alt="post_image" />`
+            `<img src="${PostImagePath}" alt="post_image" />`
         );
     }
   }, [uploadPostImageDone]);

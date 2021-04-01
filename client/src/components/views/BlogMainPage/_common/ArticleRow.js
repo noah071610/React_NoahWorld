@@ -39,7 +39,7 @@ function ArticleRow({ article }) {
                 article.thumbnail
                   ? article.thumbnail
                   : article.imagePath
-                  ? `${BACKEND_URL}/${article.imagePath}`
+                  ? `${article.imagePath}`
                   : "images/blog/noImage.gif"
               }
               onError={handleImgError}

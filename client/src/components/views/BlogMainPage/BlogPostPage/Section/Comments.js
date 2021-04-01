@@ -153,7 +153,7 @@ function Comments({ comment }) {
   );
 
   const handleImgError = (e) => {
-    e.target.src = `${BACKEND_URL}/default-user.png`;
+    e.target.src = `default-user.png`;
   };
 
   return (
@@ -180,7 +180,7 @@ function Comments({ comment }) {
                   }}
                   src={
                     comment.User.icon
-                      ? `${BACKEND_URL}/${comment.User.icon}`
+                      ? `${comment.User.icon}`
                       : "http://www.snschool.com/assets/admin/images/users/default-user.png"
                   }
                   alt="profile"

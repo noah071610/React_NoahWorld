@@ -53,7 +53,7 @@ function SubCommentForm({ CommentId }) {
   }, []);
 
   const handleImgError = (e) => {
-    e.target.src = `${BACKEND_URL}/default-user.png`;
+    e.target.src = `default-user.png`;
   };
 
   return (
@@ -66,7 +66,7 @@ function SubCommentForm({ CommentId }) {
             borderRadius: "50%",
             margin: "0 1rem",
           }}
-          src={`${BACKEND_URL}/${user ? user.icon : "default-user.png"}`}
+          src={`${user ? user.icon : "default-user.png"}`}
           alt="profile"
           onError={handleImgError}
         />
