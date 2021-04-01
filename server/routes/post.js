@@ -7,6 +7,9 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const { Op } = require("sequelize");
+const multerS3 = require("multer-s3");
+const AWS = require("aws-sdk");
+
 try {
   fs.accessSync("server/uploads");
 } catch (error) {
@@ -30,27 +33,17 @@ let storage = multer.diskStorage({
   },
 });
 
-const uploadThumbNail = multer({
-  storage: multer.diskStorage({
-    destination(req, file, done) {
-      done(null, "server/uploads");
-    },
-    filename(req, file, done) {
-      const ext = path.extname(file.originalname);
-      done(null, "thumbnail_" + new Date().getTime() + ext);
-    },
-  }),
-  limits: { fileSize: 20 * 1024 * 1024 },
+AWS.config.update({
+  accessKeyId: process.env.S3_ACCESS_KEY_ID,
+  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  region: "ap-northeast-2",
 });
-
-const uploadPostImage = multer({
-  storage: multer.diskStorage({
-    destination(req, file, done) {
-      done(null, "server/uploads");
-    },
-    filename(req, file, done) {
-      const ext = path.extname(file.originalname);
-      done(null, "postImage_" + new Date().getTime() + ext);
+const upload = multer({
+  storage: multerS3({
+    s3: new AWS.S3(),
+    bucket: "noahworld",
+    key(req, file, cb) {
+      cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
     },
   }),
   limits: { fileSize: 20 * 1024 * 1024 },
@@ -60,12 +53,12 @@ router.post("/uploadfiles", uploadThumbNail.any, (req, res) => {
   res.json({ success: true, url: res.req.file.path, fileName: res.req.file.filename });
 });
 
-router.post("/images", uploadThumbNail.single("image"), async (req, res, next) => {
-  res.json(req.file.filename);
+router.post("/images", upload.single("image"), async (req, res, next) => {
+  res.json(req.file.location);
 });
 
-router.post("/image", uploadPostImage.single("image"), async (req, res, next) => {
-  res.json(req.file.filename);
+router.post("/image", upload.single("image"), async (req, res, next) => {
+  res.json(req.file.location);
 });
 
 router.get("/class", async (req, res) => {

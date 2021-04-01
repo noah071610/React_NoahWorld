@@ -68,6 +68,7 @@ if (process.env.NODE_ENV === "production") {
       credentials: true,
     })
   );
+  console.log("production on");
 } else {
   app.use(morgan("dev"));
   app.use(
@@ -76,6 +77,7 @@ if (process.env.NODE_ENV === "production") {
       credentials: true,
     })
   );
+  console.log("production off");
 }
 
 app.get("/", (req, res) => {
