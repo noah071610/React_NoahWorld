@@ -1,5 +1,8 @@
 import { faAddressCard, faEnvelope, faImages, faLaptop } from "@fortawesome/free-solid-svg-icons";
 
+// Config
+export const BACKEND_URL = "http://15.164.224.206";
+
 // Color
 
 export const BLUE_COLOR = "#1187cf";

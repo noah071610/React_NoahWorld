@@ -13,6 +13,7 @@ import {
 } from "../../../../../_reducers/post";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { BACKEND_URL } from "../../../../config";
 dayjs.locale("kor");
 dayjs.extend(relativeTime);
 
@@ -106,7 +107,7 @@ function SubComments({ subComment, CommentId }) {
   }, [dispatch, CommentId, SubCommentId, editText]);
 
   const handleImgError = (e) => {
-    e.target.src = `http://localhost:5000/default-user.png`;
+    e.target.src = `${BACKEND_URL}/default-user.png`;
   };
 
   return (
@@ -129,7 +130,7 @@ function SubComments({ subComment, CommentId }) {
                   }}
                   src={
                     subComment.User.icon
-                      ? `http://localhost:5000/${subComment.User.icon}`
+                      ? `${BACKEND_URL}/${subComment.User.icon}`
                       : "http://www.snschool.com/assets/admin/images/users/default-user.png"
                   }
                   onError={handleImgError}

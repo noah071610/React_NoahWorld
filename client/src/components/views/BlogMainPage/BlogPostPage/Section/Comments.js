@@ -14,7 +14,7 @@ import {
   LIKE_COMMENT_REQUEST,
   UNLIKE_COMMENT_REQUEST,
 } from "../../../../../_reducers/post";
-import { BLUE_COLOR, RED_COLOR } from "../../../../config";
+import { BACKEND_URL, BLUE_COLOR, RED_COLOR } from "../../../../config";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import SubCommentForm from "./SubCommentForm";
@@ -153,7 +153,7 @@ function Comments({ comment }) {
   );
 
   const handleImgError = (e) => {
-    e.target.src = `http://localhost:5000/default-user.png`;
+    e.target.src = `${BACKEND_URL}/default-user.png`;
   };
 
   return (
@@ -180,7 +180,7 @@ function Comments({ comment }) {
                   }}
                   src={
                     comment.User.icon
-                      ? `http://localhost:5000/${comment.User.icon}`
+                      ? `${BACKEND_URL}/${comment.User.icon}`
                       : "http://www.snschool.com/assets/admin/images/users/default-user.png"
                   }
                   alt="profile"

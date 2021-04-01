@@ -29,6 +29,7 @@ import {
   ADD_WORD_REQUEST,
   ADD_QUIZ_REQUEST,
 } from "../../../../_reducers/blog";
+import { BACKEND_URL } from "../../../config";
 
 function Admin() {
   const history = useHistory();
@@ -175,7 +176,7 @@ function Admin() {
         .getInstance()
         .setHtml(
           editorRef.current.getInstance().getHtml() +
-            `<img src="http://localhost:5000/${PostImagePath}" alt="post_image" />`
+            `<img src="${BACKEND_URL}/${PostImagePath}" alt="post_image" />`
         );
     }
   }, [uploadPostImageDone]);

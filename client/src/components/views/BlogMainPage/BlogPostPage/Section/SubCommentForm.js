@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import useInput from "../../../../../_hooks/useInput";
 import { ADD_SUB_COMMENT_REQUEST } from "../../../../../_reducers/post";
+import { BACKEND_URL } from "../../../../config";
 
 const CommentFormWrapper = styled.div`
   width: 100%;
@@ -52,7 +53,7 @@ function SubCommentForm({ CommentId }) {
   }, []);
 
   const handleImgError = (e) => {
-    e.target.src = `http://localhost:5000/default-user.png`;
+    e.target.src = `${BACKEND_URL}/default-user.png`;
   };
 
   return (
@@ -65,7 +66,7 @@ function SubCommentForm({ CommentId }) {
             borderRadius: "50%",
             margin: "0 1rem",
           }}
-          src={`http://localhost:5000/${user ? user.icon : "default-user.png"}`}
+          src={`${BACKEND_URL}/${user ? user.icon : "default-user.png"}`}
           alt="profile"
           onError={handleImgError}
         />

@@ -17,7 +17,7 @@ import RemoteControl from "./Section/RemoteControl";
 import CommentForm from "./Section/CommentForm";
 import styled from "styled-components";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
-import { RED_COLOR } from "../../../config";
+import { BACKEND_URL, RED_COLOR } from "../../../config";
 import { LOAD_INFO_REQUEST } from "../../../../_reducers/user";
 dayjs.locale("kor");
 
@@ -175,7 +175,7 @@ function BlogPostPage() {
                     post.thumbnail
                       ? post.thumbnail
                       : post.imagePath
-                      ? `http://localhost:5000/${post.imagePath}`
+                      ? `${BACKEND_URL}/${post.imagePath}`
                       : "images/blog/noImage.gif"
                   }
                 />

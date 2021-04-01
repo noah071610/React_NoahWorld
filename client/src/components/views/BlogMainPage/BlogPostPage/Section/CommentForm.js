@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import useInput from "../../../../../_hooks/useInput";
 import { ADD_COMMENT_REQUEST } from "../../../../../_reducers/post";
-import { BLUE_COLOR } from "../../../../config";
+import { BACKEND_URL, BLUE_COLOR } from "../../../../config";
 import Comments from "./Comments";
 
 const LoginLink = styled(Link)`
@@ -89,7 +89,7 @@ function CommentForm() {
   };
 
   const handleImgError = (e) => {
-    e.target.src = `http://localhost:5000/default-user.png`;
+    e.target.src = `${BACKEND_URL}/default-user.png`;
   };
 
   return (
@@ -102,7 +102,7 @@ function CommentForm() {
         <div>
           <img
             className="comment_img"
-            src={`http://localhost:5000/${user ? user.icon : "default-user.png"}`}
+            src={`${BACKEND_URL}/${user ? user.icon : "default-user.png"}`}
             alt="profile"
             onError={handleImgError}
           />

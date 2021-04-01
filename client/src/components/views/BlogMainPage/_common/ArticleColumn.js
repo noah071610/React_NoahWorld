@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "react-router-dom";
+import { BACKEND_URL } from "../../../config";
 dayjs.extend(relativeTime);
 dayjs.locale("kor");
 
@@ -37,7 +38,7 @@ function ArticleColumn({ article }) {
                 article.thumbnail
                   ? article.thumbnail
                   : article.imagePath
-                  ? `http://localhost:5000/${article.imagePath}`
+                  ? `${BACKEND_URL}/${article.imagePath}`
                   : "images/blog/noImage.gif"
               }
               onError={handleImgError}
