@@ -43,7 +43,7 @@ function HeaderProfile() {
   };
 
   const handleImgError = (e) => {
-    e.target.src = `default-user.png`;
+    e.target.src = "./images/blog/default-user.png";
   };
   return (
     <>
@@ -65,7 +65,7 @@ function HeaderProfile() {
                   borderRadius: "50%",
                   boxShadow: "4px 8px 21px 1px rgba(0, 0, 0, 0.15)",
                 }}
-                src={user.icon && `${user.icon}`}
+                src={user?.icon}
                 onError={handleImgError}
                 alt="profile_img"
               />
