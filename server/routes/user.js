@@ -9,10 +9,10 @@ const fs = require("fs");
 const saltRounds = 10;
 
 try {
-  fs.accessSync("./server/uploads");
+  fs.accessSync("server/uploads");
 } catch (error) {
   console.log("create new folder");
-  fs.mkdirSync("./server/uploads");
+  fs.mkdirSync / "server/uploads";
 }
 
 const upload = multer({
