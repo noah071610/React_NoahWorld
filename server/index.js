@@ -13,9 +13,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const expiryDate = new Date(Date.now() + 60 * 60 * 1000);
 
-app.use(helmet());
 app.disable("x-powered-by");
-app.use(helmet.xssFilter());
 
 dotenv.config();
 app.use(cookieParser(process.env.COOKIE));
@@ -66,6 +64,27 @@ db.sequelize
     console.log("db connected");
   })
   .catch(console.error);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(morgan("combined"));
+  app.use(hpp());
+  app.use(helmet({ contentSecurityPolicy: false }));
+  app.use(helmet.xssFilter());
+  app.use(
+    cors({
+      origin: "noahworld.com",
+      credentials: true,
+    })
+  );
+} else {
+  app.use(morgan("dev"));
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+    })
+  );
+}
 
 app.get("/", (req, res) => {
   res.send("Noah world");
