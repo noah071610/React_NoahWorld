@@ -10,13 +10,6 @@ const { Op } = require("sequelize");
 const multerS3 = require("multer-s3");
 const AWS = require("aws-sdk");
 
-try {
-  fs.accessSync("server/uploads");
-} catch (error) {
-  console.log("create new folder");
-  fs.mkdirSync / "server/uploads";
-}
-
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "server/uploads/");
@@ -49,7 +42,7 @@ const upload = multer({
   limits: { fileSize: 20 * 1024 * 1024 },
 });
 
-router.post("/uploadfiles", uploadThumbNail.any, (req, res) => {
+router.post("/uploadfiles", upload.any, (req, res) => {
   res.json({ success: true, url: res.req.file.path, fileName: res.req.file.filename });
 });
 
