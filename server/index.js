@@ -19,13 +19,6 @@ app.disable("x-powered-by");
 dotenv.config();
 app.use(cookieParser(process.env.COOKIE));
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
-);
-
 app.use(express.json());
 app.use(
   express.json({
@@ -40,7 +33,6 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.set("trust proxy", 1);
 app.use(
   session({
     name: process.env.SESSION_NAME,
@@ -48,7 +40,6 @@ app.use(
     resave: false,
     secret: process.env.COOKIE,
     cookie: {
-      // secure: true, 이놈은 https 할때
       httpOnly: true,
       expires: expiryDate,
     },
@@ -80,6 +71,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.get("/", (req, res) => {
   res.send("Noah world");
 });
