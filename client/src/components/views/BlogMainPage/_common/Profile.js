@@ -9,7 +9,6 @@ import { ADD_ICON_REQUEST } from "../../../../_reducers/user";
 import { LOAD_RECENT_POSTS_REQUEST } from "../../../../_reducers/post";
 import { RecentTableComment, RecentTableView, WelcomeTable } from "./Components";
 import Slider from "react-slick";
-import { BACKEND_URL } from "../../../config";
 
 function HeaderProfile() {
   const { user } = useSelector((state) => state.user);
