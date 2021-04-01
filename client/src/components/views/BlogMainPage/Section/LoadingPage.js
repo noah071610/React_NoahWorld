@@ -6,7 +6,7 @@ function LoadingPage() {
       style={{
         width: "100%",
         height: "80vh",
-        paddingTop: "8rem",
+        paddingTop: "7rem",
         display: "flex",
         justifyContent: "center",
       }}
