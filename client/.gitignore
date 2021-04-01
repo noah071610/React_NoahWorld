@@ -1,9 +1,7 @@
 /node_modules
 /build
-/uploads
 .vscode
 memo.txt
-public/images/
 noahworld.pem
 
 # Logs
