@@ -42,6 +42,7 @@ app.use(
     cookie: {
       httpOnly: true,
       expires: expiryDate,
+      domain: process.env.NODE_ENV === "production" && ".noahworld.site",
     },
   })
 );
@@ -61,16 +62,21 @@ if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
   app.use(hpp());
   app.use(helmet());
+  app.use(
+    cors({
+      origin: "http://noahworld.site",
+      credentials: true,
+    })
+  );
 } else {
   app.use(morgan("dev"));
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+    })
+  );
 }
-
-app.use(
-  cors({
-    origin: ["http://localhost:5000", "noahworld.com", "http://15.164.215.229"],
-    credentials: true,
-  })
-);
 
 app.get("/", (req, res) => {
   res.send("Noah world");
