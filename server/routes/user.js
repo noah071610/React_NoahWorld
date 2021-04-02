@@ -33,6 +33,16 @@ router.post("/icon", upload.single("image"), async (req, res, next) => {
   res.json(req.file.location.replace(/\/original\//, "/thumb/"));
 });
 
+router.post("/icon/url", async (req, res, next) => {
+  User.update({ icon: req.body.url }, { where: { id: req.body.UserId } });
+  res.json(req.body.url);
+});
+
+router.delete("/icon/:UserId", async (req, res, next) => {
+  User.update({ icon: "default-user.png" }, { where: { id: parseInt(req.params.UserId, 10) } });
+  res.send({ success: true });
+});
+
 router.get("/", async (req, res, next) => {
   try {
     if (req.user) {

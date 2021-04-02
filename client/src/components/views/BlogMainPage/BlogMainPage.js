@@ -65,10 +65,10 @@ function BlogMainPage() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  //{user && <Profile />}
   return (
     <>
-      {user && <Profile />}
+      <Profile />
       <div className="blog">
         <h2 className="blog_category_header header_small_on">
           HOME

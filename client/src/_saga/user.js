@@ -4,6 +4,9 @@ import {
   ADD_ICON_FAILURE,
   ADD_ICON_REQUEST,
   ADD_ICON_SUCCESS,
+  ADD_ICON_URL_FAILURE,
+  ADD_ICON_URL_REQUEST,
+  ADD_ICON_URL_SUCCESS,
   CHANGE_PASSWORD_CLEAR,
   CHANGE_PASSWORD_FAILURE,
   CHANGE_PASSWORD_REQUEST,
@@ -23,6 +26,9 @@ import {
   LOG_OUT_FAILURE,
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
+  REMOVE_ICON_FAILURE,
+  REMOVE_ICON_REQUEST,
+  REMOVE_ICON_SUCCESS,
   SIGN_UP_CLEAR,
   SIGN_UP_FAILURE,
   SIGN_UP_REQUEST,
@@ -128,6 +134,44 @@ function* addIcon(action) {
   }
 }
 
+function addIconUrlAPI(data) {
+  return axios.post("/api/user/icon/url", data);
+}
+
+function* addIconUrl(action) {
+  try {
+    const result = yield call(addIconUrlAPI, action.data);
+    yield put({
+      type: ADD_ICON_URL_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: ADD_ICON_URL_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function removeIconAPI(data) {
+  return axios.delete(`/api/user/icon/${data}`);
+}
+
+function* removeIcon(action) {
+  try {
+    const result = yield call(removeIconAPI, action.data);
+    yield put({
+      type: REMOVE_ICON_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: REMOVE_ICON_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function loadInfoAPI() {
   return axios.get("/api/user");
 }
@@ -228,6 +272,12 @@ function* watchSignUp() {
 function* watchAddIcon() {
   yield takeLatest(ADD_ICON_REQUEST, addIcon);
 }
+function* watchAddIconUrl() {
+  yield takeLatest(ADD_ICON_URL_REQUEST, addIconUrl);
+}
+function* watchRemoveIcon() {
+  yield takeLatest(REMOVE_ICON_REQUEST, removeIcon);
+}
 function* watchLoadInfo() {
   yield takeLatest(LOAD_INFO_REQUEST, loadInfo);
 }
@@ -246,6 +296,8 @@ export default function* userSaga() {
     fork(watchLogIn),
     fork(watchSignUp),
     fork(watchAddIcon),
+    fork(watchAddIconUrl),
+    fork(watchRemoveIcon),
     fork(watchLogOut),
     fork(watchLoadInfo),
     fork(watchConfirmPassword),
