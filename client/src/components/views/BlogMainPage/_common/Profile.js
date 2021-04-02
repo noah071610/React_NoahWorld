@@ -48,12 +48,14 @@ function HeaderProfile() {
   return (
     <>
       <Row className={"blog_header_profile display"}>
-        <Col style={{ paddingRight: "1rem", marginBottom: "1.5rem" }} xs={24} lg={6}>
+        <Col
+          style={{ paddingRight: "1rem", marginBottom: "1.5rem", width: "200px", height: "200px" }}
+          xs={24}
+          lg={6}
+        >
           <div
             style={{
               position: "relative",
-              width: "200px",
-              height: "100%",
               margin: "0 auto",
             }}
           >
@@ -65,7 +67,7 @@ function HeaderProfile() {
                   borderRadius: "50%",
                   boxShadow: "4px 8px 21px 1px rgba(0, 0, 0, 0.15)",
                 }}
-                src={user?.icon}
+                src={user?.icon.replace(/\/thumb\//, "/original/")}
                 onError={handleImgError}
                 alt="profile_img"
               />

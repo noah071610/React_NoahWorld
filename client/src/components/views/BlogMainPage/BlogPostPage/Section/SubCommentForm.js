@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import useInput from "../../../../../_hooks/useInput";
 import { ADD_SUB_COMMENT_REQUEST } from "../../../../../_reducers/post";
-import { BACKEND_URL } from "../../../../config";
 
 const CommentFormWrapper = styled.div`
   width: 100%;

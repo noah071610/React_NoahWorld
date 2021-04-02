@@ -5,17 +5,9 @@ const { Post, User, Image, Hashtag, Comment, PostLike, SubComment, Quiz } = requ
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
-const fs = require("fs");
 const { Op } = require("sequelize");
 const multerS3 = require("multer-s3");
 const AWS = require("aws-sdk");
-
-try {
-  fs.accessSync("uploads");
-} catch (error) {
-  console.log("uploads 폴더가 없으므로 생성합니다.");
-  fs.mkdirSync("uploads");
-}
 
 AWS.config.update({
   accessKeyId: process.env.S3_ACCESS_KEY_ID,

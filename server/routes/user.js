@@ -5,7 +5,6 @@ const { Post, User, Image, Comment } = require("../models");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
-const fs = require("fs");
 const saltRounds = 10;
 const multerS3 = require("multer-s3");
 const AWS = require("aws-sdk");

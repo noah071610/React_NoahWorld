@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import useInput from "../../../../../_hooks/useInput";
 import { ADD_COMMENT_REQUEST } from "../../../../../_reducers/post";
-import { BACKEND_URL, BLUE_COLOR } from "../../../../config";
+import { BLUE_COLOR } from "../../../../config";
 import Comments from "./Comments";
 
 const LoginLink = styled(Link)`

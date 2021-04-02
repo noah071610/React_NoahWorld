@@ -14,7 +14,7 @@ import {
   LIKE_COMMENT_REQUEST,
   UNLIKE_COMMENT_REQUEST,
 } from "../../../../../_reducers/post";
-import { BACKEND_URL, BLUE_COLOR, RED_COLOR } from "../../../../config";
+import { BLUE_COLOR, RED_COLOR } from "../../../../config";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import SubCommentForm from "./SubCommentForm";

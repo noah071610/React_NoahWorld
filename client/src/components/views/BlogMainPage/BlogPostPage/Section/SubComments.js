@@ -13,7 +13,6 @@ import {
 } from "../../../../../_reducers/post";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { BACKEND_URL } from "../../../../config";
 dayjs.locale("kor");
 dayjs.extend(relativeTime);
 

@@ -173,9 +173,9 @@ function BlogPostPage() {
                   style={{ width: "100%" }}
                   src={
                     post.thumbnail
-                      ? post.thumbnail.replace(/\/thumb\//, "/original/")
+                      ? post.thumbnail
                       : post.imagePath
-                      ? `${post.imagePath}`
+                      ? post.imagePath.replace(/\/thumb\//, "/original/")
                       : "images/blog/noImage.gif"
                   }
                 />
