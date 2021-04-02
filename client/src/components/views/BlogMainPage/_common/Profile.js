@@ -78,8 +78,8 @@ function HeaderProfile() {
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    setImageForm("");
-    setImageInputValue("");
+    setImageForm(null);
+    setImageInputValue(null);
     setUrl("");
   };
 
@@ -113,7 +113,6 @@ function HeaderProfile() {
     e.target.src = "./images/blog/default-user.png";
     setImageError(true);
   };
-  //src={user?.icon.replace(/\/thumb\//, "/original/")}
   return (
     <>
       <Row className={"blog_header_profile display"}>
@@ -133,7 +132,7 @@ function HeaderProfile() {
                 borderRadius: "50%",
                 boxShadow: "4px 8px 21px 1px rgba(0, 0, 0, 0.15)",
               }}
-              src="./images/blog/default-user.png"
+              src={user?.icon.replace(/\/thumb\//, "/original/")}
               onError={handleImgError}
               alt="profile_img"
             />
