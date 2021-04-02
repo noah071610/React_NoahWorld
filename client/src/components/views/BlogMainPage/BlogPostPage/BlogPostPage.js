@@ -6,6 +6,7 @@ import parse from "html-react-parser";
 import { Divider, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import MetaTags from "react-meta-tags";
 import hljs from "highlight.js";
 import {
   LIKE_POST_REQUEST,
@@ -150,6 +151,18 @@ function BlogPostPage() {
     <>
       {post && (
         <div>
+          <MetaTags>
+            <title>{"Noah World - " + post?.post.title.slice(0, 7) + "..."}</title>
+            <meta name="description" content="Welcome to Noah world!" />
+            <meta property="og:title" content={post?.post.title.slice(0, 10)} />
+            <meta
+              property="og:image"
+              content={
+                post.thumbnail ? post.thumbnail : post.imagePath || "./images/blog/logo_icon.png"
+              }
+            />
+            <meta property="og:url" content={`https://noahworld.site/${post?.id}`} />
+          </MetaTags>
           <h1 className="post_main_title">{post.title}</h1>
           <Divider style={{ width: "850px" }} />
           <ul

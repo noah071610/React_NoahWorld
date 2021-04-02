@@ -80,7 +80,7 @@ function HeaderProfile() {
         type: ADD_ICON_REQUEST,
         data: imageForm,
       });
-    } else if (url) {
+    } else if (url && !imageForm) {
       dispatch({
         type: ADD_ICON_URL_REQUEST,
         data: { url, UserId: user.id },
@@ -127,51 +127,55 @@ function HeaderProfile() {
   };
   return (
     <>
-      <Row className={"blog_header_profile display"}>
-        <Col style={{ paddingRight: "1rem", marginBottom: "1.5rem" }} xs={24} lg={6}>
-          <div
-            style={{
-              position: "relative",
-              width: "200px",
-              height: "200px",
-              margin: "0 auto",
-            }}
-          >
-            <img
-              style={{
-                width: "200px",
-                height: "200px",
-                borderRadius: "50%",
-                boxShadow: "4px 8px 21px 1px rgba(0, 0, 0, 0.15)",
-              }}
-              src={user?.icon.replace(/\/thumb\//, "/original/")}
-              onError={handleImgError}
-              alt="profile_img"
-            />
-            {user?.icon !== "./images/blog/default-user.png" ? (
-              <Close
-                onClick={() =>
-                  dispatch({
-                    type: REMOVE_ICON_REQUEST,
-                    data: user.id,
-                  })
-                }
-                icon={faTrashAlt}
-              />
-            ) : (
-              <Camera onClick={() => setIsModalVisible(true)} />
-            )}
-          </div>
-        </Col>
-        <WelcomeTable />
-        <RecentTableView />
-        <RecentTableComment />
-      </Row>
-      <Slider className="profile_table" {...settings}>
-        <WelcomeTable visible={true} />
-        <RecentTableView visible={true} />
-        <RecentTableComment visible={true} />
-      </Slider>
+      {user && (
+        <>
+          <Row className={"blog_header_profile display"}>
+            <Col style={{ paddingRight: "1rem", marginBottom: "1.5rem" }} xs={24} lg={6}>
+              <div
+                style={{
+                  position: "relative",
+                  width: "200px",
+                  height: "200px",
+                  margin: "0 auto",
+                }}
+              >
+                <img
+                  style={{
+                    width: "200px",
+                    height: "200px",
+                    borderRadius: "50%",
+                    boxShadow: "4px 8px 21px 1px rgba(0, 0, 0, 0.15)",
+                  }}
+                  src={user?.icon.replace(/\/thumb\//, "/original/")}
+                  onError={handleImgError}
+                  alt="profile_img"
+                />
+                {user.icon === "./images/blog/default-user.png" ? (
+                  <Camera onClick={() => setIsModalVisible(true)} />
+                ) : (
+                  <Close
+                    onClick={() =>
+                      dispatch({
+                        type: REMOVE_ICON_REQUEST,
+                        data: user.id,
+                      })
+                    }
+                    icon={faTrashAlt}
+                  />
+                )}
+              </div>
+            </Col>
+            <WelcomeTable />
+            <RecentTableView />
+            <RecentTableComment />
+          </Row>
+          <Slider className="profile_table" {...settings}>
+            <WelcomeTable visible={true} />
+            <RecentTableView visible={true} />
+            <RecentTableComment visible={true} />
+          </Slider>
+        </>
+      )}
 
       <Modal
         title="Icon Upload 🖼️"

@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Col, Divider, Input, message, Row } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
+import { ReactTitle } from "react-meta-tags";
 import Slider from "react-slick";
 import styled from "styled-components";
 import ArticleColumn from "../_common/ArticleColumn";
@@ -238,6 +239,7 @@ function BlogClassPage() {
   }, [quizAnswer]);
   return (
     <>
+      <ReactTitle title="Noah World - Korean Class" />
       {user && <HeaderProfile />}
       <MainPoster />
       <SmallPoster />

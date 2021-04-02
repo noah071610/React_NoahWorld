@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Divider } from "antd";
 import React from "react";
+import MetaTags from "react-meta-tags";
 import ArticleAside from "./_common/ArticleAside";
 import ArticleColumn from "./_common/ArticleColumn";
 import ArticleRow from "./_common/ArticleRow";
@@ -67,6 +68,12 @@ function BlogMainPage() {
   }, []);
   return (
     <>
+      <MetaTags>
+        <meta name="description" content="Welcome to Noah world!" />
+        <meta property="og:title" content="Noah world - Main page." />
+        <meta property="og:image" content={"./images/blog/logo_icon.png"} />
+        <meta property="og:url" content={`https://noahworld.site`} />
+      </MetaTags>
       {user && <Profile />}
       <div className="blog">
         <h2 className="blog_category_header header_small_on">

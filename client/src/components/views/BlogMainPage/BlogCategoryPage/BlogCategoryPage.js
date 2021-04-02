@@ -1,5 +1,6 @@
 import { Col, Divider, Row } from "antd";
 import React, { useEffect } from "react";
+import { ReactTitle } from "react-meta-tags";
 import { useDispatch, useSelector } from "react-redux";
 import ArticleColumn from "../_common/ArticleColumn";
 import ArticleRow from "../_common/ArticleRow";
@@ -65,6 +66,7 @@ function BlogCategoryPage() {
 
   return (
     <>
+      <ReactTitle title={category === "tech" ? "Noah World - Tech" : "Noah World - Daily"} />
       {user && <Profile />}
       {(techPosts || dailyPosts) && (
         <div>
