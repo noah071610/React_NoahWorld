@@ -174,7 +174,7 @@ router.post("/signUp", async (req, res, next) => {
       email: req.body.email,
       name: req.body.name,
       password: hashedPassword,
-      icon: "default-user.png",
+      icon: "./images/blog/default-user.png",
     });
     res.status(200).send({ success: true, message: "Save your ID well! Let`s Login :)" });
   } catch (error) {

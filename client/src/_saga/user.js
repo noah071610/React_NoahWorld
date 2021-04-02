@@ -1,9 +1,11 @@
 import { all, call, delay, fork, put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import {
+  ADD_ICON_CLEAR,
   ADD_ICON_FAILURE,
   ADD_ICON_REQUEST,
   ADD_ICON_SUCCESS,
+  ADD_ICON_URL_CLEAR,
   ADD_ICON_URL_FAILURE,
   ADD_ICON_URL_REQUEST,
   ADD_ICON_URL_SUCCESS,
@@ -26,6 +28,7 @@ import {
   LOG_OUT_FAILURE,
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
+  REMOVE_ICON_CLEAR,
   REMOVE_ICON_FAILURE,
   REMOVE_ICON_REQUEST,
   REMOVE_ICON_SUCCESS,
@@ -126,6 +129,10 @@ function* addIcon(action) {
       type: ADD_ICON_SUCCESS,
       data: result.data,
     });
+    yield delay(3000);
+    yield put({
+      type: ADD_ICON_CLEAR,
+    });
   } catch (err) {
     yield put({
       type: ADD_ICON_FAILURE,
@@ -145,6 +152,10 @@ function* addIconUrl(action) {
       type: ADD_ICON_URL_SUCCESS,
       data: result.data,
     });
+    yield delay(3000);
+    yield put({
+      type: ADD_ICON_URL_CLEAR,
+    });
   } catch (err) {
     yield put({
       type: ADD_ICON_URL_FAILURE,
@@ -163,6 +174,10 @@ function* removeIcon(action) {
     yield put({
       type: REMOVE_ICON_SUCCESS,
       data: result.data,
+    });
+    yield delay(3000);
+    yield put({
+      type: REMOVE_ICON_CLEAR,
     });
   } catch (err) {
     yield put({

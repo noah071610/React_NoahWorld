@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { CameraFilled, CloseCircleOutlined } from "@ant-design/icons";
+import { CameraFilled, DeleteOutlined } from "@ant-design/icons";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Col, Input, Row } from "antd";
+import { Col, Input, message, Row } from "antd";
 import {
   ADD_ICON_REQUEST,
   ADD_ICON_URL_REQUEST,
@@ -31,8 +31,7 @@ const Camera = styled(CameraFilled)`
     color: ${BLUE_COLOR};
   }
 `;
-
-const CloseCircle = styled(CloseCircleOutlined)`
+const Close = styled(DeleteOutlined)`
   position: absolute;
   bottom: 0;
   right: 0;
@@ -47,7 +46,7 @@ const CloseCircle = styled(CloseCircleOutlined)`
 `;
 
 function HeaderProfile() {
-  const { user } = useSelector((state) => state.user);
+  const { user, addIconDone, addIconUrlDone, removeIconDone } = useSelector((state) => state.user);
   const history = useHistory();
   const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -61,6 +60,19 @@ function HeaderProfile() {
       setImageForm(null);
     }
   }, [url]);
+
+  useEffect(() => {
+    if (addIconDone || addIconUrlDone) {
+      message.success("Added your own icon 👍");
+    }
+    if (removeIconDone) {
+      message.success("removed your icon.");
+    }
+    setUrl("");
+    setImageInputValue(null);
+    setImageForm(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addIconDone, addIconUrlDone, removeIconDone]);
   const handleOk = () => {
     if (imageForm) {
       dispatch({
@@ -121,7 +133,7 @@ function HeaderProfile() {
             style={{
               position: "relative",
               width: "200px",
-              height: "100%",
+              height: "200px",
               margin: "0 auto",
             }}
           >
@@ -136,8 +148,8 @@ function HeaderProfile() {
               onError={handleImgError}
               alt="profile_img"
             />
-            {user?.icon !== "default-user.png" || !imageError ? (
-              <CloseCircle
+            {user?.icon !== "./images/blog/default-user.png" || !imageError ? (
+              <Close
                 onClick={() =>
                   dispatch({
                     type: REMOVE_ICON_REQUEST,

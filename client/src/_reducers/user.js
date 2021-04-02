@@ -67,14 +67,17 @@ export const LOAD_INFO_FAILURE = "LOAD_INFO_FAILURE";
 export const ADD_ICON_REQUEST = "ADD_ICON_REQUEST";
 export const ADD_ICON_SUCCESS = "ADD_ICON_SUCCESS";
 export const ADD_ICON_FAILURE = "ADD_ICON_FAILURE";
+export const ADD_ICON_CLEAR = "ADD_ICON_CLEAR";
 
 export const ADD_ICON_URL_REQUEST = "ADD_ICON_URL_REQUEST";
 export const ADD_ICON_URL_SUCCESS = "ADD_ICON_URL_SUCCESS";
 export const ADD_ICON_URL_FAILURE = "ADD_ICON_URL_FAILURE";
+export const ADD_ICON_URL_CLEAR = "ADD_ICON_URL_CLEAR";
 
 export const REMOVE_ICON_REQUEST = "REMOVE_ICON_REQUEST";
 export const REMOVE_ICON_SUCCESS = "REMOVE_ICON_SUCCESS";
 export const REMOVE_ICON_FAILURE = "REMOVE_ICON_FAILURE";
+export const REMOVE_ICON_CLEAR = "REMOVE_ICON_CLEAR";
 
 export const CHANGE_PASSWORD_REQUEST = "CHANGE_PASSWORD_REQUEST";
 export const CHANGE_PASSWORD_SUCCESS = "CHANGE_PASSWORD_SUCCESS";
@@ -176,6 +179,11 @@ const reducer = (state = initialState, action) =>
         draft.addIconLoading = false;
         draft.addIconError = action.error;
         break;
+      case ADD_ICON_CLEAR:
+        draft.addIconLoading = false;
+        draft.addIconDone = false;
+        draft.addIconError = null;
+        break;
       case ADD_ICON_URL_REQUEST:
         draft.addIconUrlLoading = true;
         draft.addIconUrlError = null;
@@ -190,6 +198,11 @@ const reducer = (state = initialState, action) =>
         draft.addIconUrlLoading = false;
         draft.addIconUrlError = action.error;
         break;
+      case ADD_ICON_URL_CLEAR:
+        draft.addIconUrlLoading = false;
+        draft.addIconUrlDone = false;
+        draft.addIconUrlError = null;
+        break;
       case REMOVE_ICON_REQUEST:
         draft.removeIconLoading = true;
         draft.removeIconError = null;
@@ -198,11 +211,16 @@ const reducer = (state = initialState, action) =>
       case REMOVE_ICON_SUCCESS:
         draft.removeIconLoading = false;
         draft.removeIconDone = true;
-        draft.user.icon = "default-user.png";
+        draft.user.icon = "./images/blog/default-user.png";
         break;
       case REMOVE_ICON_FAILURE:
         draft.removeIconLoading = false;
         draft.removeIconError = action.error;
+        break;
+      case REMOVE_ICON_CLEAR:
+        draft.removeIconLoading = false;
+        draft.removeIconDone = false;
+        draft.removeIconError = null;
         break;
       case CONFIRM_PASSWORD_REQUEST:
         draft.confirmPasswordLoading = true;
