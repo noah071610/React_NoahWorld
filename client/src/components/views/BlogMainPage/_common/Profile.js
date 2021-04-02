@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { CameraFilled, DeleteOutlined } from "@ant-design/icons";
+import { CameraFilled } from "@ant-design/icons";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -17,6 +17,8 @@ import Modal from "antd/lib/modal/Modal";
 import styled from "styled-components";
 import { BLUE_COLOR } from "../../../config";
 import useInput from "../../../../_hooks/useInput";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Camera = styled(CameraFilled)`
   position: absolute;
@@ -31,7 +33,7 @@ const Camera = styled(CameraFilled)`
     color: ${BLUE_COLOR};
   }
 `;
-const Close = styled(DeleteOutlined)`
+const Close = styled(FontAwesomeIcon)`
   position: absolute;
   bottom: 0;
   right: 0;
@@ -52,7 +54,6 @@ function HeaderProfile() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageForm, setImageForm] = useState(null);
   const [imageInputValue, setImageInputValue] = useState(null);
-  const [imageError, setImageError] = useState(false);
   const [url, onChangeUrl, setUrl] = useInput("");
 
   useEffect(() => {
@@ -63,10 +64,10 @@ function HeaderProfile() {
 
   useEffect(() => {
     if (addIconDone || addIconUrlDone) {
-      message.success("Added your own icon 👍");
+      message.success("Successfully added your own icon 👍");
     }
     if (removeIconDone) {
-      message.success("removed your icon.");
+      message.success("Successfully removed your icon.");
     }
     setUrl("");
     setImageInputValue(null);
@@ -123,7 +124,6 @@ function HeaderProfile() {
 
   const handleImgError = (e) => {
     e.target.src = "./images/blog/default-user.png";
-    setImageError(true);
   };
   return (
     <>
@@ -148,7 +148,7 @@ function HeaderProfile() {
               onError={handleImgError}
               alt="profile_img"
             />
-            {user?.icon !== "./images/blog/default-user.png" || !imageError ? (
+            {user?.icon !== "./images/blog/default-user.png" ? (
               <Close
                 onClick={() =>
                   dispatch({
@@ -156,6 +156,7 @@ function HeaderProfile() {
                     data: user.id,
                   })
                 }
+                icon={faTrashAlt}
               />
             ) : (
               <Camera onClick={() => setIsModalVisible(true)} />
