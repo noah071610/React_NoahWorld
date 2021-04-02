@@ -27,8 +27,11 @@ const upload = multer({
 });
 
 router.post("/icon", upload.single("image"), async (req, res, next) => {
-  User.update({ icon: req.file.location }, { where: { id: req.body.id } });
-  res.json(req.file.location);
+  User.update(
+    { icon: req.file.location.replace(/\/original\//, "/thumb/") },
+    { where: { id: req.body.id } }
+  );
+  res.json(req.file.location.replace(/\/original\//, "/thumb/"));
 });
 
 router.get("/", async (req, res, next) => {

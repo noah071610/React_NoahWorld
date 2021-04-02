@@ -3,7 +3,6 @@ import styled from "styled-components";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useHistory } from "react-router";
-import { BACKEND_URL } from "../../../config";
 dayjs.extend(relativeTime);
 dayjs.locale("kor");
 

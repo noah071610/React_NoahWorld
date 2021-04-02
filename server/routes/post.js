@@ -34,15 +34,19 @@ const upload = multer({
 });
 
 router.post("/uploadfiles", upload.any, (req, res) => {
-  res.json({ success: true, url: res.req.file.path, fileName: res.req.file.location });
+  res.json({
+    success: true,
+    url: res.req.file.path,
+    fileName: res.req.file.location.replace(/\/original\//, "/thumb/"),
+  });
 });
 
 router.post("/images", upload.single("image"), async (req, res, next) => {
-  res.json(req.file.location);
+  res.json(req.file.location.replace(/\/original\//, "/thumb/"));
 });
 
 router.post("/image", upload.single("image"), async (req, res, next) => {
-  res.json(req.file.location);
+  res.json(req.file.location.replace(/\/original\//, "/thumb/"));
 });
 
 router.get("/class", async (req, res) => {
