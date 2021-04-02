@@ -1,6 +1,9 @@
+noahworld
 /node_modules
 /build
 .vscode
+
+noahworld.pem
 
 # Logs
 logs
