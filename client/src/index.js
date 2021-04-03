@@ -7,10 +7,15 @@ import { applyMiddleware, compose, createStore } from "redux";
 import rootReducer from "./_reducers";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./_saga";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(rootReducer, composeEnhancer(applyMiddleware(sagaMiddleware)));
+const middlewares = [sagaMiddleware];
+const enhancer =
+  process.env.NODE_ENV === "production"
+    ? compose(applyMiddleware(...middlewares))
+    : composeWithDevTools(applyMiddleware(...middlewares));
+const store = createStore(rootReducer, enhancer);
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(

@@ -7,7 +7,8 @@ import userSaga from "./user";
 import commentSaga from "./comment";
 import { BACKEND_URL } from "../components/config";
 
-axios.defaults.baseURL = BACKEND_URL;
+axios.defaults.baseURL =
+  process.env.NODE_ENV === "production" ? BACKEND_URL : "http://localhost:5000";
 axios.defaults.withCredentials = true;
 
 export default function* rootSaga() {

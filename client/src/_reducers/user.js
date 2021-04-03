@@ -3,10 +3,15 @@ import produce from "../util/produce";
 const initialState = {
   user: null,
   imagePath: null,
+  confirmPassword: false,
+
   logInLoading: false,
   logInDone: false,
   logInError: null,
-  confirmPassword: false,
+
+  logInGoogleLoading: false,
+  logInGoogleDone: false,
+  logInGoogleError: null,
 
   logOutLoading: false,
   logOutDone: false,
@@ -49,6 +54,11 @@ export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
 export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
 export const LOG_IN_FAILURE = "LOG_IN_FAILURE";
 export const LOG_IN_CLEAR = "LOG_IN_CLEAR";
+
+export const LOG_IN_GOOGLE_REQUEST = "LOG_IN_GOOGLE_REQUEST";
+export const LOG_IN_GOOGLE_SUCCESS = "LOG_IN_GOOGLE_SUCCESS";
+export const LOG_IN_GOOGLE_FAILURE = "LOG_IN_GOOGLE_FAILURE";
+export const LOG_IN_GOOGLE_CLEAR = "LOG_IN_GOOGLE_CLEAR";
 
 export const LOG_OUT_REQUEST = "LOG_OUT_REQUEST";
 export const LOG_OUT_SUCCESS = "LOG_OUT_SUCCESS";
@@ -114,6 +124,24 @@ const reducer = (state = initialState, action) =>
       case LOG_IN_CLEAR:
         draft.logInError = null;
         draft.logInDone = false;
+        break;
+      case LOG_IN_GOOGLE_REQUEST:
+        draft.logInGoogleLoading = true;
+        draft.logInGoogleError = null;
+        draft.logInGoogleDone = false;
+        break;
+      case LOG_IN_GOOGLE_SUCCESS:
+        draft.logInGoogleLoading = false;
+        draft.user = action.data;
+        draft.logInGoogleDone = true;
+        break;
+      case LOG_IN_GOOGLE_FAILURE:
+        draft.logInGoogleLoading = false;
+        draft.logInGoogleError = action.error;
+        break;
+      case LOG_IN_GOOGLE_CLEAR:
+        draft.logInGoogleError = null;
+        draft.logInGoogleDone = false;
         break;
       case LOG_OUT_REQUEST:
         draft.logOutLoading = true;

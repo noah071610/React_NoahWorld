@@ -1,11 +1,13 @@
 import { faGithub, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ReactTitle } from "react-meta-tags";
 import React from "react";
 import { Link } from "react-router-dom";
 
 function BlogAboutPage() {
   return (
     <>
+      <ReactTitle title="Noah World - Aboutme" />
       <h1 className="about_intro">Hello stranger! Great to meet you.</h1>
       <div
         style={{

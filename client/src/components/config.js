@@ -1,7 +1,7 @@
 import { faAddressCard, faEnvelope, faImages, faLaptop } from "@fortawesome/free-solid-svg-icons";
 
 // Config
-export const BACKEND_URL = "http://api.noahworld.site";
+export const BACKEND_URL = "https://api.noahworld.site";
 
 // Color
 

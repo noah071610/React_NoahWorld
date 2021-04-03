@@ -152,9 +152,9 @@ function BlogPostPage() {
       {post && (
         <div>
           <MetaTags>
-            <title>{"Noah World - " + post?.post.title.slice(0, 7) + "..."}</title>
+            <title>{"Noah World - " + post?.title.slice(0, 7) + "..."}</title>
             <meta name="description" content="Welcome to Noah world!" />
-            <meta property="og:title" content={post?.post.title.slice(0, 10)} />
+            <meta property="og:title" content={post?.title.slice(0, 10)} />
             <meta
               property="og:image"
               content={

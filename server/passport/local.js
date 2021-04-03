@@ -15,7 +15,7 @@ module.exports = () => {
           const user = await User.findOne({
             where: { email },
           });
-          if(!user){
+          if (!user) {
             return done(null, false, { reason: "Login Error : Uncorrect ID" });
           }
           const result = await bcrypt.compare(password, user.password);

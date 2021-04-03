@@ -22,6 +22,10 @@ import {
   LOAD_INFO_SUCCESS,
   LOG_IN_CLEAR,
   LOG_IN_FAILURE,
+  LOG_IN_GOOGLE_CLEAR,
+  LOG_IN_GOOGLE_FAILURE,
+  LOG_IN_GOOGLE_REQUEST,
+  LOG_IN_GOOGLE_SUCCESS,
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
   LOG_OUT_CLEAR,
@@ -60,6 +64,33 @@ function* logIn(action) {
   } catch (err) {
     yield put({
       type: LOG_IN_FAILURE,
+      error: err.response.data,
+    });
+    yield delay(3000);
+    yield put({
+      type: LOG_IN_CLEAR,
+    });
+  }
+}
+
+function logInGoogleAPI(data) {
+  return axios.post("/api/user/logIn/google", data);
+}
+
+function* logInGoogle(action) {
+  try {
+    const result = yield call(logInGoogleAPI, action.data);
+    yield put({
+      type: LOG_IN_GOOGLE_SUCCESS,
+      data: result.data,
+    });
+    yield delay(3000);
+    yield put({
+      type: LOG_IN_GOOGLE_CLEAR,
+    });
+  } catch (err) {
+    yield put({
+      type: LOG_IN_GOOGLE_FAILURE,
       error: err.response.data,
     });
     yield delay(3000);
@@ -278,6 +309,9 @@ function* withdrawal(action) {
 function* watchLogIn() {
   yield takeLatest(LOG_IN_REQUEST, logIn);
 }
+function* watchLogInGoogle() {
+  yield takeLatest(LOG_IN_GOOGLE_REQUEST, logInGoogle);
+}
 function* watchLogOut() {
   yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
@@ -309,6 +343,7 @@ function* watchWithdrawal() {
 export default function* userSaga() {
   yield all([
     fork(watchLogIn),
+    fork(watchLogInGoogle),
     fork(watchSignUp),
     fork(watchAddIcon),
     fork(watchAddIconUrl),

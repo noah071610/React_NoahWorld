@@ -3,7 +3,6 @@ import { Form, Input, Button, Divider, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { SIGN_UP_REQUEST } from "../../../../../_reducers/user";
 import { ON_SIGN_UP_PAGE } from "../../../../../_reducers/blog";
-
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
   required: "${name} is required!",
@@ -41,7 +40,6 @@ function BlogSignUpSection({ onClickLogin }) {
       });
     }
   }, [dispatch, signUpDone]);
-
   return (
     <>
       <div className="login_title" style={{ margin: "3rem 0" }}>
@@ -66,7 +64,7 @@ function BlogSignUpSection({ onClickLogin }) {
         </Form.Item>
         <Divider orientation="left">User name</Divider>
         <Form.Item name="Name" rules={[{ required: true, max: 15 }]}>
-          <Input />
+          <Input value="ddd" />
         </Form.Item>
         <Divider orientation="left">Password</Divider>
         <Form.Item name="Password" rules={[{ required: true }]}>

@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const passportConfig = require("./passport");
 const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const hpp = require("hpp");
@@ -64,7 +65,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(helmet());
   app.use(
     cors({
-      origin: "http://noahworld.site",
+      origin: "https://noahworld.site",
       credentials: true,
     })
   );
@@ -74,6 +75,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(
     cors({
       origin: true,
+      secure: true,
       credentials: true,
     })
   );
@@ -103,7 +105,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const port = process.env.NODE_ENV === "production" ? 80 : 5000;
+const port = 5000;
 
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`);

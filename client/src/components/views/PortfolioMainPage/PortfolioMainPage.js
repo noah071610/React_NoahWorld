@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { CardContents, SUB_COLOR } from "../../config";
+import { ReactTitle } from "react-meta-tags";
 import Col from "antd/lib/col";
 import Row from "antd/lib/row";
 import CardContent from "./CardContent";
@@ -112,6 +113,7 @@ const PortfolioMainPage = ({ mobileSize }) => {
   const pageComponent = () => {
     return (
       <PageWrapper>
+        <ReactTitle title="JANG HYUN SOO - Portfolio" />
         <section id="aboutme">
           <div className="space" />
           <Articles>
