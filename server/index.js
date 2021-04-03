@@ -9,7 +9,6 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const passportConfig = require("./passport");
 const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const hpp = require("hpp");
@@ -65,7 +64,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(helmet());
   app.use(
     cors({
-      origin: "https://noahworld.site",
+      origin: true,
       credentials: true,
     })
   );
