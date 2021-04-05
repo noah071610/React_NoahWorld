@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { CameraFilled } from "@ant-design/icons";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Col, Input, message, Row } from "antd";
@@ -19,6 +21,7 @@ import { BLUE_COLOR } from "../../../config";
 import useInput from "../../../../_hooks/useInput";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import toBlob from "canvas-to-blob";
 
 const Camera = styled(CameraFilled)`
   position: absolute;
@@ -52,15 +55,13 @@ function HeaderProfile() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [imageForm, setImageForm] = useState(null);
-  const [imageInputValue, setImageInputValue] = useState(null);
   const [url, onChangeUrl, setUrl] = useInput("");
-
-  useEffect(() => {
-    if (url) {
-      setImageForm(null);
-    }
-  }, [url]);
+  const [upImg, setUpImg] = useState("");
+  const imgRef = useRef(null);
+  const previewCanvasRef = useRef(null);
+  const [completedCrop, setCompletedCrop] = useState(null);
+  const [blob, setBlob] = useState(null);
+  const [crop, setCrop] = useState({ unit: "px", width: 200, aspect: 1 / 1 });
 
   useEffect(() => {
     if (addIconDone || addIconUrlDone) {
@@ -69,41 +70,38 @@ function HeaderProfile() {
     if (removeIconDone) {
       message.success("Successfully removed your icon.");
     }
-    setUrl("");
-    setImageInputValue(null);
-    setImageForm(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addIconDone, addIconUrlDone, removeIconDone]);
   const handleOk = () => {
-    if (imageForm) {
-      dispatch({
-        type: ADD_ICON_REQUEST,
-        data: imageForm,
-      });
-    } else if (url && !imageForm) {
-      dispatch({
-        type: ADD_ICON_URL_REQUEST,
-        data: { url, UserId: user.id },
-      });
-    }
+    const dd = new FormData();
+    dd.append("image", blob);
+    dd.append("id", user.id);
+    dispatch({
+      type: ADD_ICON_REQUEST,
+      data: dd,
+    });
+    // if (imageForm) {
+    //   dispatch({
+    //     type: ADD_ICON_REQUEST,
+    //     data: imageForm,
+    //   });
+    // } else if (url && !imageForm) {
+    //   dispatch({
+    //     type: ADD_ICON_URL_REQUEST,
+    //     data: { url, UserId: user.id },
+    //   });
+    // }
     setIsModalVisible(false);
+    setUrl("");
+    setUpImg(null);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    setImageForm(null);
-    setImageInputValue(null);
     setUrl("");
+    setUpImg(null);
   };
 
-  const imageInput = useRef();
-  const onChangeImages = (e) => {
-    const imageFormData = new FormData();
-    imageFormData.append("image", e.target.files[0]);
-    imageFormData.append("id", user.id);
-    setImageForm(imageFormData);
-    setUrl("");
-  };
   useEffect(() => {
     if (!user) {
       return;
@@ -125,6 +123,61 @@ function HeaderProfile() {
   const handleImgError = (e) => {
     e.target.src = "/images/blog/default-user.png";
   };
+
+  const onSelectFile = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setUpImg(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const onLoad = useCallback((img) => {
+    imgRef.current = img;
+  }, []);
+
+  useEffect(() => {
+    if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
+      return;
+    }
+
+    const image = imgRef.current;
+    const canvas = previewCanvasRef.current;
+    const crop = completedCrop;
+
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    const ctx = canvas.getContext("2d");
+    const pixelRatio = window.devicePixelRatio;
+
+    canvas.width = crop.width * pixelRatio;
+    canvas.height = crop.height * pixelRatio;
+
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.imageSmoothingQuality = "high";
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width,
+      crop.height
+    );
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(
+        (blob) => {
+          setBlob(blob);
+        },
+        "image/png",
+        1
+      );
+    });
+  }, [completedCrop]);
+
   return (
     <>
       {user && (
@@ -188,19 +241,44 @@ function HeaderProfile() {
           style={{ marginBottom: "1.5rem" }}
           type="file"
           accept="image/*"
-          multiple
-          value={imageInputValue}
           disabled={url ? true : false}
-          ref={imageInput}
-          onChange={onChangeImages}
+          onChange={onSelectFile}
         />
         <h3>Set icon by using URL</h3>
         <Input
-          disabled={imageForm ? true : false}
+          disabled={upImg ? true : false}
           value={url}
           onChange={onChangeUrl}
           placeholder="https://"
         />
+
+        {(url || upImg) && (
+          <>
+            <h3>Crop the image for icon size.</h3>
+            <ReactCrop
+              crossorigin="anonymous"
+              style={{ width: "100%" }}
+              imageStyle={{ width: "100%" }}
+              src={upImg || url}
+              onImageLoaded={onLoad}
+              crop={crop}
+              onChange={(c) => setCrop(c)}
+              onComplete={(c) => setCompletedCrop(c)}
+            />
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <canvas
+                ref={previewCanvasRef}
+                // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+                style={{
+                  width: "50%",
+                  height: "50%",
+                  borderRadius: "50%",
+                }}
+              />
+            </div>
+            <h2 style={{ textAlign: "center" }}>{user?.name}</h2>
+          </>
+        )}
       </Modal>
     </>
   );

@@ -9,28 +9,48 @@ const saltRounds = 10;
 const multerS3 = require("multer-s3");
 const AWS = require("aws-sdk");
 
-AWS.config.update({
-  accessKeyId: process.env.S3_ACCESS_KEY_ID,
-  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
-  region: "ap-northeast-2",
-});
+// AWS.config.update({
+//   accessKeyId: process.env.S3_ACCESS_KEY_ID,
+//   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+//   region: "ap-northeast-2",
+// });
+// const upload = multer({
+//   storage: multerS3({
+//     s3: new AWS.S3(),
+//     bucket: "noah-world",
+//     key(req, file, cb) {
+//       cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
+//     },
+//   }),
+//   limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
+// });
+
+// router.post("/icon", upload.single("image"), async (req, res, next) => {
+//   User.update(
+//     { icon: req.file.location.replace(/\/original\//, "/thumb/") },
+//     { where: { id: req.body.id } }
+//   );
+//   res.json(req.file.location.replace(/\/original\//, "/thumb/"));
+// });
+
 const upload = multer({
-  storage: multerS3({
-    s3: new AWS.S3(),
-    bucket: "noah-world",
-    key(req, file, cb) {
-      cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
+  storage: multer.diskStorage({
+    destination(req, file, done) {
+      done(null, "./server/uploads");
+    },
+    filename(req, file, done) {
+      const ext = path.extname(file.originalname);
+      const basename = path.basename(file.originalname, ext);
+      done(null, basename + "_icon_" + new Date().getTime() + ext);
     },
   }),
   limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
 });
 
 router.post("/icon", upload.single("image"), async (req, res, next) => {
-  User.update(
-    { icon: req.file.location.replace(/\/original\//, "/thumb/") },
-    { where: { id: req.body.id } }
-  );
-  res.json(req.file.location.replace(/\/original\//, "/thumb/"));
+  const path = "http://localhost:5000/" + req.file.filename;
+  User.update({ icon: path }, { where: { id: req.body.id } });
+  res.json(path);
 });
 
 router.post("/icon/url", async (req, res, next) => {

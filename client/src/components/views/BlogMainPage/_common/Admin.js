@@ -36,9 +36,15 @@ function Admin() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { postEditOn } = useSelector((state) => state.blog);
-  const { post, uploadImagesDone, imagePath, PostImagePath, uploadPostImageDone } = useSelector(
-    (state) => state.post
-  );
+  const {
+    post,
+    uploadImagesDone,
+    imagePath,
+    PostImagePath,
+    uploadPostImageDone,
+    addPostDone,
+    editPostDone,
+  } = useSelector((state) => state.post);
   const [radioValue, setRadioValue] = useState("tech");
   const [typeValue, setTypeValue] = useState("word");
   const [password, onChangePassword, setPassword] = useInput();
@@ -154,9 +160,6 @@ function Admin() {
     }
     setIsModalVisible(false);
     setQuizForm(false);
-    message.success("Post added or Edited");
-    history.push("/");
-    editorRef.current.getInstance().setHtml("");
   };
 
   const handleCancel = () => {
@@ -181,6 +184,13 @@ function Admin() {
     }
   }, [uploadPostImageDone]);
 
+  useEffect(() => {
+    if (addPostDone || editPostDone) {
+      message.success("Post added or Edited");
+      history.push("/");
+      editorRef.current.getInstance().setHtml("");
+    }
+  }, [addPostDone, editPostDone]);
   return (
     <>
       <Profile />
