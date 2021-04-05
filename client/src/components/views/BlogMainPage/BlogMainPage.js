@@ -69,6 +69,7 @@ function BlogMainPage() {
   return (
     <>
       <MetaTags>
+        <title>Noah World</title>
         <meta name="description" content="Welcome to Noah world!" />
         <meta property="og:title" content="Noah world - Main page." />
         <meta property="og:image" content={"./images/blog/logo_icon.png"} />

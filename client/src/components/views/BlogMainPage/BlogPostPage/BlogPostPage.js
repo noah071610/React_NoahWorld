@@ -20,6 +20,8 @@ import styled from "styled-components";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { RED_COLOR } from "../../../config";
 import { LOAD_INFO_REQUEST } from "../../../../_reducers/user";
+import Slider from "react-slick";
+import ArticleColumn from "../_common/ArticleColumn";
 dayjs.locale("kor");
 
 const Heart = styled.a`
@@ -66,6 +68,22 @@ function BlogPostPage() {
   const { user } = useSelector((state) => state.user);
   const [Fullcontent, setFullcontent] = useState("");
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 2,
+    responsive: [
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
   useEffect(() => {
     const tagContent =
       post &&
@@ -147,6 +165,11 @@ function BlogPostPage() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleImgError = (e) => {
+    e.target.src = "/images/blog/noImage.gif";
+  };
+
   return (
     <>
       {post && (
@@ -181,18 +204,23 @@ function BlogPostPage() {
           <div style={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
             <div className="blog_post_article" style={{ width: "850px" }}>
               <div className="tui-editor-contents" style={{ marginBottom: "3rem" }}>
-                <img
-                  alt={post.title}
-                  style={{ width: "100%" }}
-                  src={
-                    post.thumbnail
-                      ? post.thumbnail
-                      : post.imagePath
-                      ? post.imagePath.replace(/\/thumb\//, "/original/")
-                      : "images/blog/noImage.gif"
-                  }
-                />
-                <Divider style={{ margin: "3rem 0" }} />
+                {post.thumbnail || post.imagePath ? (
+                  <>
+                    <img
+                      alt={post.title}
+                      style={{ width: "100%" }}
+                      src={
+                        post.thumbnail
+                          ? post.thumbnail
+                          : post.imagePath
+                          ? post.imagePath.replace(/\/thumb\//, "/original/")
+                          : "/images/blog/noImage.gif"
+                      }
+                      onError={handleImgError}
+                    />
+                    <Divider style={{ margin: "3rem 0" }} />
+                  </>
+                ) : null}
                 {Fullcontent && parse(Fullcontent)}
               </div>
               <h4 style={{ fontSize: "1.5rem", fontWeight: "bold" }}>

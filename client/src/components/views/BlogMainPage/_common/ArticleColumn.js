@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 dayjs.extend(relativeTime);
 dayjs.locale("kor");
 
-function ArticleColumn({ article }) {
+function ArticleColumn({ article, nocontent }) {
   const history = useHistory();
   const onClickArticle = (e) => {
     if (e.target.className === "hashtag") {
@@ -23,7 +23,7 @@ function ArticleColumn({ article }) {
       .replace(/(#youtube:.*)/g, "(Youtube Video Link)")
       .replace(/&.*;/gi, "");
   const handleImgError = (e) => {
-    e.target.src = "images/blog/noImage.gif";
+    e.target.src = "/images/blog/noImage.gif";
   };
   return (
     <>
@@ -31,6 +31,7 @@ function ArticleColumn({ article }) {
         <article onClick={onClickArticle} className="article article_column">
           <div style={{ marginBottom: "1rem", width: "100%", overflow: "hidden" }}>
             <img
+              style={nocontent ? { height: "140px" } : null}
               className="article_img"
               alt={article.title}
               src={
@@ -38,39 +39,45 @@ function ArticleColumn({ article }) {
                   ? article.thumbnail
                   : article.imagePath
                   ? `${article.imagePath}`
-                  : "images/blog/noImage.gif"
+                  : "/images/blog/noImage.gif"
               }
               onError={handleImgError}
             />
           </div>
           <div>
-            <h2 className="article_header">{article.title}</h2>
-            <ul>
-              {article.Hashtags &&
-                article.Hashtags.map((v, i) => {
-                  return (
-                    <li key={i}>
-                      <Link
-                        className="hashtag"
-                        onClick={() => window.scrollTo({ top: 0 })}
-                        to={`/hashtag/${v.name}`}
-                      >
-                        #{v.name}
-                      </Link>
-                    </li>
-                  );
-                })}
-            </ul>
-            <p
-              style={
-                article.Hashtags?.length > 0
-                  ? null
-                  : { height: "5.6rem", WebkitLineClamp: 4, marginBottom: "1.7rem" }
-              }
-              className="article_desc"
-            >
-              {contentWithoutHTML}
-            </p>
+            <h2 style={nocontent ? { height: "2rem" } : null} className="article_header">
+              {article.title}
+            </h2>
+            {nocontent ? null : (
+              <>
+                <ul>
+                  {article.Hashtags &&
+                    article.Hashtags.map((v, i) => {
+                      return (
+                        <li key={i}>
+                          <Link
+                            className="hashtag"
+                            onClick={() => window.scrollTo({ top: 0 })}
+                            to={`/hashtag/${v.name}`}
+                          >
+                            #{v.name}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                </ul>
+                <p
+                  style={
+                    article.Hashtags?.length > 0
+                      ? null
+                      : { height: "5.6rem", WebkitLineClamp: 4, marginBottom: "1.7rem" }
+                  }
+                  className="article_desc"
+                >
+                  {contentWithoutHTML}
+                </p>
+              </>
+            )}
           </div>
           <ul className="article_footer">
             <li>

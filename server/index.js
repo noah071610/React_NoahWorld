@@ -42,7 +42,6 @@ app.use(
     cookie: {
       httpOnly: true,
       expires: expiryDate,
-      domain: process.env.NODE_ENV === "production" && ".noahworld.site",
     },
   })
 );
@@ -64,7 +63,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(helmet());
   app.use(
     cors({
-      origin: true,
+      origin: true, //have to change
       credentials: true,
     })
   );
@@ -74,7 +73,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(
     cors({
       origin: true,
-      secure: true,
+      // secure: true, have to change
       credentials: true,
     })
   );
@@ -94,6 +93,16 @@ app.use("/api/user", require("./routes/user"));
 app.use("/api/comment", require("./routes/comment"));
 app.use("/api/search", require("./routes/search"));
 app.use("/api/quiz", require("./routes/quiz"));
+
+app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "http://localhost:3000/" }),
+  function (req, res) {
+    res.redirect("http://localhost:3000/");
+  }
+);
 
 app.use("/", express.static(path.join(__dirname, "uploads")));
 

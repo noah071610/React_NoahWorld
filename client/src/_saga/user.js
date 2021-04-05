@@ -73,16 +73,15 @@ function* logIn(action) {
   }
 }
 
-function logInGoogleAPI(data) {
-  return axios.post("/api/user/logIn/google", data);
+function logInGoogleAPI() {
+  return axios.get("/auth/google");
 }
 
 function* logInGoogle(action) {
   try {
-    const result = yield call(logInGoogleAPI, action.data);
+    yield call(logInGoogleAPI);
     yield put({
       type: LOG_IN_GOOGLE_SUCCESS,
-      data: result.data,
     });
     yield delay(3000);
     yield put({
@@ -91,7 +90,7 @@ function* logInGoogle(action) {
   } catch (err) {
     yield put({
       type: LOG_IN_GOOGLE_FAILURE,
-      error: err.response.data,
+      error: err.response,
     });
     yield delay(3000);
     yield put({

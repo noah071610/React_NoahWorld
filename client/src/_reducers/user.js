@@ -132,8 +132,8 @@ const reducer = (state = initialState, action) =>
         break;
       case LOG_IN_GOOGLE_SUCCESS:
         draft.logInGoogleLoading = false;
-        draft.user = action.data;
         draft.logInGoogleDone = true;
+        draft.user = action.data.data;
         break;
       case LOG_IN_GOOGLE_FAILURE:
         draft.logInGoogleLoading = false;
@@ -239,7 +239,7 @@ const reducer = (state = initialState, action) =>
       case REMOVE_ICON_SUCCESS:
         draft.removeIconLoading = false;
         draft.removeIconDone = true;
-        draft.user.icon = "./images/blog/default-user.png";
+        draft.user.icon = "/images/blog/default-user.png";
         break;
       case REMOVE_ICON_FAILURE:
         draft.removeIconLoading = false;

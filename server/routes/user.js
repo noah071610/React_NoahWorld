@@ -39,7 +39,10 @@ router.post("/icon/url", async (req, res, next) => {
 });
 
 router.delete("/icon/:UserId", async (req, res, next) => {
-  User.update({ icon: "default-user.png" }, { where: { id: parseInt(req.params.UserId, 10) } });
+  User.update(
+    { icon: "/images/blog/default-user.png" },
+    { where: { id: parseInt(req.params.UserId, 10) } }
+  );
   res.send({ success: true });
 });
 
@@ -158,7 +161,6 @@ router.post("/logOut", async (req, res, next) => {
 router.post("/signUp", async (req, res, next) => {
   try {
     const salt = await bcrypt.genSalt(saltRounds);
-
     const exUser = await User.findOne({
       where: {
         email: req.body.email,
@@ -169,12 +171,17 @@ router.post("/signUp", async (req, res, next) => {
         .status(403)
         .send({ success: false, message: "Your E-mail is already used, please Check one`s again" });
     }
+    if (req.body.password.length > 9) {
+      return res
+        .status(403)
+        .send({ success: false, message: "Password have to be longer then 9 letters" });
+    }
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     await User.create({
       email: req.body.email,
       name: req.body.name,
       password: hashedPassword,
-      icon: "./images/blog/default-user.png",
+      icon: req.body.icon ? req.body.icon : "/images/blog/default-user.png",
     });
     res.status(200).send({ success: true, message: "Save your ID well! Let`s Login :)" });
   } catch (error) {

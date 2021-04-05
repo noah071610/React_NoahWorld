@@ -10,7 +10,7 @@ const validateMessages = {
     email: "This is not a valid ${name}!",
   },
   number: {
-    range: "${name} must be under the ${max} strings",
+    range: "${name} must be under the ${min} strings",
   },
 };
 
@@ -67,7 +67,7 @@ function BlogSignUpSection({ onClickLogin }) {
           <Input value="ddd" />
         </Form.Item>
         <Divider orientation="left">Password</Divider>
-        <Form.Item name="Password" rules={[{ required: true }]}>
+        <Form.Item name="Password" rules={[{ required: true, min: 9 }]}>
           <Input.Password />
         </Form.Item>
         <Divider orientation="left">Confirm Password</Divider>

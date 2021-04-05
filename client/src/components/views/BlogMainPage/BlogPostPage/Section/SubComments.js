@@ -106,7 +106,7 @@ function SubComments({ subComment, CommentId }) {
   }, [dispatch, CommentId, SubCommentId, editText]);
 
   const handleImgError = (e) => {
-    e.target.src = `default-user.png`;
+    e.target.src = `/images/blog/default-user.png`;
   };
 
   return (

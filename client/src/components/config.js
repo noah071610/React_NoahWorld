@@ -78,7 +78,7 @@ export const skills = [
     name: "CSS",
     src: "https://img.icons8.com/color/144/000000/css3.png",
     desc:
-      "SCSS와 같은 전처리기 사용이 가능하며 다채로운 애니메이션과 더불어 브라우저 렌딩 특성을 파악해 최적화를 보장합니다.",
+      "SCSS와 같은 전처리기 사용이 가능하며 다채로운 애니메이션과 더불어 브라우저 렌딩 특성을 파악하고 적용합니다.",
     level: true,
   },
   {
@@ -90,7 +90,8 @@ export const skills = [
   {
     name: "React",
     src: "https://img.icons8.com/color/144/000000/react-native.png",
-    desc: "React 와 Hooks 문법, Redux와 Router 적용, jsx 와 SPA 의 특성을 이해합니다.",
+    desc:
+      "React 와 Hooks 문법, React-Router 적용, Redux와 비동기를 위한 saga 및 dev-tools 그리고 jsx와 SPA 의 특성을 이해합니다.",
     level: true,
   },
   {
@@ -155,6 +156,16 @@ export const sub_skills = [
       "https://leolanchas.com/wp-content/uploads/2013/07/0d184ee3-fd8d-4b94-acf4-b4e686e57375.png",
     level: true,
   },
+  {
+    name: "AWS",
+    src:
+      "https://images.squarespace-cdn.com/content/v1/52ca3b73e4b04a45ef2c5cb6/1551884861331-C9U2RHJQLOPL9F332X5O/ke17ZwdGBToddI8pDm48kK6x8IOhzX_rTtQGKY1qp-hZw-zPPgdn4jUwVcJE1ZvWhcwhEtWJXoshNdA9f1qD7XaGPskfQtVutuSA2B-JW6wkqqV024XP-059DP6wRYqYVUGMzsBxTo2UlkZq10GTrg/AWS_blog_01.PNG",
+    level: true,
+  },
+  {
+    name: "Ubuntu",
+    src: "https://findicons.com/files/icons/1008/quiet/256/ubuntu.png",
+  },
 ];
 
 export const eng_desc = (
@@ -175,14 +186,14 @@ export const languages = [
     name: "English",
     src: "https://img.icons8.com/color/96/000000/usa-circular.png",
     popup: true,
-    licenseKor: "영어",
+    licenseKor: "2020년 영어",
     content: eng_desc,
   },
   {
     name: "Japanese",
     src: "https://img.icons8.com/color/96/000000/japan-circular.png",
     popup: true,
-    licenseKor: "일본어",
+    licenseKor: "2019년 일본어",
     content: jap_desc,
   },
 ];

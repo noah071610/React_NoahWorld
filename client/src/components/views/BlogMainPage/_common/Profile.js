@@ -123,7 +123,7 @@ function HeaderProfile() {
   };
 
   const handleImgError = (e) => {
-    e.target.src = "./images/blog/default-user.png";
+    e.target.src = "/images/blog/default-user.png";
   };
   return (
     <>
@@ -150,7 +150,7 @@ function HeaderProfile() {
                   onError={handleImgError}
                   alt="profile_img"
                 />
-                {user.icon === "./images/blog/default-user.png" ? (
+                {user?.icon === "/images/blog/default-user.png" ? (
                   <Camera onClick={() => setIsModalVisible(true)} />
                 ) : (
                   <Close
