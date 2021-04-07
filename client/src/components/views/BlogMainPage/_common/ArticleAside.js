@@ -17,7 +17,7 @@ function ArticleAside({ article, type }) {
     history.push(`/${article.category}/post/${article.id}`);
   };
   const handleImgError = (e) => {
-    e.target.src = "images/blog/noImage.gif";
+    e.target.src = "/images/blog/noImage.gif";
   };
   return (
     <>
@@ -32,8 +32,8 @@ function ArticleAside({ article, type }) {
                 article.thumbnail
                   ? article.thumbnail
                   : article.imagePath
-                  ? `${article.imagePath}`
-                  : "images/blog/noImage.gif"
+                  ? article.imagePath
+                  : "/images/blog/noImage.gif"
               }
               onError={handleImgError}
             />

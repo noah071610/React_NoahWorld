@@ -66,9 +66,10 @@ function ArticleRow({ article }) {
             <p
               style={{
                 width: "100%",
-                maxHeight: "4rem",
+                height: "7rem",
                 overflow: "hidden",
                 margin: 0,
+                WebkitLineClamp: 5,
               }}
               className="article_desc"
             >

@@ -9,6 +9,26 @@ $BG_COLOR: rgb(247, 247, 247);
 @import url("https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@100&display=swap");
 // global
+
+*::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+  background: rgb(185, 185, 185);
+}
+
+/* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+  background: rgb(153, 153, 153);
+}
+
 html,
 body,
 div,
@@ -863,6 +883,13 @@ h1 {
     &_header {
       font-size: 1.2rem;
       margin: 0 0 0.5rem 0;
+      display: -webkit-box;
+      word-wrap: break-word;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 2rem;
     }
   }
   //detail
@@ -879,11 +906,11 @@ h1 {
     margin: 0 0 1rem 0;
     display: -webkit-box;
     word-wrap: break-word;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: 4rem;
+    height: 2rem;
   }
 
   &_desc {
@@ -1465,7 +1492,7 @@ h1 {
   }
   .article_header {
     font-size: 1rem;
-    height: 3rem;
+    height: 1.6rem;
   }
   .slide_menu {
     li {

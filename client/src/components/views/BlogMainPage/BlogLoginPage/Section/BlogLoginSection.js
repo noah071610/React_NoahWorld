@@ -127,7 +127,7 @@ function BlogLoginSection({ onClickSignUp }) {
         <a href="http://localhost:5000/auth/google">
           <div>
             <img alt="google" src="https://img.icons8.com/color/144/000000/google-logo.png" />
-            <h3 style={{ margin: "0 0 0 1rem" }}>Sign in with Google</h3>
+            <h3 style={{ margin: "0 0 0 1rem", fontWeight: "normal" }}>Sign in with Google</h3>
           </div>
         </a>
       </GoogleBtn>

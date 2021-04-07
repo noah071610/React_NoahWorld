@@ -9,6 +9,10 @@ import "antd/dist/antd.css";
 import PageWrapper from "./views/BlogMainPage/_common/PageWrapper";
 import LoadingPage from "./views/BlogMainPage/Section/LoadingPage";
 import "highlight.js/styles/github.css";
+import "codemirror/lib/codemirror.css";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import "highlight.js/styles/github.css";
+import "tui-color-picker/dist/tui-color-picker.css";
 
 const BlogMainPage = lazy(() => import("./views/BlogMainPage/BlogMainPage"));
 const BlogCategoryPage = lazy(() =>

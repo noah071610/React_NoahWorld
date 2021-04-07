@@ -25,11 +25,23 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import Scrollspy from "react-scrollspy";
+import styled from "styled-components";
 import useInput from "../../../../_hooks/useInput";
 import useToggle from "../../../../_hooks/useToggle";
 import { ON_SLIDE_MENU, POST_EDIT_ON, SEARCH_KEYWORD_REQUEST } from "../../../../_reducers/blog";
 import { REMOVE_POST_REQUEST } from "../../../../_reducers/post";
 import { LOG_OUT_REQUEST } from "../../../../_reducers/user";
+
+const PostTitle = styled.h4`
+  display: -webkit-box;
+  word-wrap: break-word;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 1rem;
+`;
+
 export function BlogHeader() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -265,7 +277,7 @@ export function BlogSmallHeader() {
               onClick={onClickSlideTitle}
               style={{ display: "flex", alignItems: "center", width: "100%", height: "70px" }}
             >
-              {post?.title}
+              <PostTitle>{post?.title}</PostTitle>
               <FontAwesomeIcon
                 style={{
                   marginLeft: "1rem",
@@ -311,10 +323,10 @@ export function BlogSmallHeader() {
             </li>
             <Divider type="vertical" />
             <li style={{ margin: 0 }}>
-              {nextPost ? (
+              {nextPost[0] ? (
                 <Link
                   onClick={() => window.scrollTo({ top: 0 })}
-                  to={`/${post.category}/post/${nextPost.id}`}
+                  to={`/${post.category}/post/${nextPost[0].id}`}
                 >
                   <DoubleLeftOutlined />
                 </Link>
@@ -324,10 +336,10 @@ export function BlogSmallHeader() {
             </li>
             <Divider type="vertical" />
             <li style={{ margin: 0 }}>
-              {prevPost ? (
+              {prevPost[0] ? (
                 <Link
                   onClick={() => window.scrollTo({ top: 0 })}
-                  to={`/${post.category}/post/${prevPost.id}`}
+                  to={`/${post.category}/post/${prevPost[0].id}`}
                 >
                   <DoubleRightOutlined />
                 </Link>

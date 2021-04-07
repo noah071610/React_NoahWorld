@@ -130,6 +130,10 @@ function Footer() {
             message.error("Only for user who signed in.");
             return;
           }
+          if (user.googleId) {
+            message.error("Only for user who signed up with home-page directly.");
+            return;
+          }
           showModal();
           setChangePassword(true);
         }}

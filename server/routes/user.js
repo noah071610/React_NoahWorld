@@ -44,7 +44,7 @@ const upload = multer({
       done(null, basename + "_icon_" + new Date().getTime() + ext);
     },
   }),
-  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
+  limits: { fileSize: 20 * 1024 * 1024 },
 });
 
 router.post("/icon", upload.single("image"), async (req, res, next) => {

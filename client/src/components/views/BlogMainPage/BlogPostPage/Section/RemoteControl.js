@@ -50,7 +50,6 @@ function RemoteControl({ Fullcontent }) {
     let arr = [];
     contentHeaders.forEach((v, i) => {
       v.setAttribute("id", v.innerHTML);
-      v.style = "padding-top: 5rem;";
       arr.push(v.innerHTML);
     });
     setHeaders(arr);
@@ -63,9 +62,6 @@ function RemoteControl({ Fullcontent }) {
       </Timeline.Item>
     ));
   }, [headers]);
-
-  const nextPostContent = <h3 style={{ margin: 0 }}>{nextPost?.title}</h3>;
-  const prevPostContent = <h3 style={{ margin: 0 }}>{prevPost?.title}</h3>;
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -121,30 +117,26 @@ function RemoteControl({ Fullcontent }) {
         </li>
         <Divider type="vertical" />
         <li style={{ margin: 0 }}>
-          {nextPost ? (
-            <Popover content={nextPostContent} title="👈 Next Post ">
-              <Link
-                onClick={() => window.scrollTo({ top: 0 })}
-                to={`/${post.category}/post/${nextPost.id}`}
-              >
-                <DoubleLeftOutlined />
-              </Link>
-            </Popover>
+          {prevPost[0] ? (
+            <Link
+              onClick={() => window.scrollTo({ top: 0 })}
+              to={`/${post.category}/post/${prevPost[0].id}`}
+            >
+              <DoubleLeftOutlined />
+            </Link>
           ) : (
             <DoubleLeftOutlined style={{ color: "rgba(0,0,0,0.2)" }} />
           )}
         </li>
         <Divider type="vertical" />
         <li style={{ margin: 0 }}>
-          {prevPost ? (
-            <Popover content={prevPostContent} title="Previous Post 👉">
-              <Link
-                onClick={() => window.scrollTo({ top: 0 })}
-                to={`/${post.category}/post/${prevPost.id}`}
-              >
-                <DoubleRightOutlined />
-              </Link>
-            </Popover>
+          {nextPost[0] ? (
+            <Link
+              onClick={() => window.scrollTo({ top: 0 })}
+              to={`/${post.category}/post/${nextPost[0].id}`}
+            >
+              <DoubleRightOutlined />
+            </Link>
           ) : (
             <DoubleRightOutlined style={{ color: "rgba(0,0,0,0.2)" }} />
           )}

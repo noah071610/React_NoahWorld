@@ -12,10 +12,6 @@ import Profile from "./Profile";
 import Form from "antd/lib/form/Form";
 import { Button, Radio, Modal, Input, message } from "antd";
 import useInput from "../../../../_hooks/useInput";
-import "codemirror/lib/codemirror.css";
-import "@toast-ui/editor/dist/toastui-editor.css";
-import "highlight.js/styles/github.css";
-import "tui-color-picker/dist/tui-color-picker.css";
 import {
   ADD_POST_REQUEST,
   EDIT_POST_REQUEST,

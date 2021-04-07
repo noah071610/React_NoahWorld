@@ -7,11 +7,7 @@ import "react-image-crop/dist/ReactCrop.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Col, Input, message, Row } from "antd";
-import {
-  ADD_ICON_REQUEST,
-  ADD_ICON_URL_REQUEST,
-  REMOVE_ICON_REQUEST,
-} from "../../../../_reducers/user";
+import { ADD_ICON_REQUEST, REMOVE_ICON_REQUEST } from "../../../../_reducers/user";
 import { LOAD_RECENT_POSTS_REQUEST } from "../../../../_reducers/post";
 import { RecentTableComment, RecentTableView, WelcomeTable } from "./Components";
 import Slider from "react-slick";
@@ -21,7 +17,6 @@ import { BLUE_COLOR } from "../../../config";
 import useInput from "../../../../_hooks/useInput";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import toBlob from "canvas-to-blob";
 
 const Camera = styled(CameraFilled)`
   position: absolute;

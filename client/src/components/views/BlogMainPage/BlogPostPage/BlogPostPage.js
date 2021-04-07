@@ -13,15 +13,14 @@ import {
   LOAD_POST_REQUEST,
   UNLIKE_POST_REQUEST,
 } from "../../../../_reducers/post";
-import dayjs from "dayjs";
 import RemoteControl from "./Section/RemoteControl";
 import CommentForm from "./Section/CommentForm";
 import styled from "styled-components";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { RED_COLOR } from "../../../config";
 import { LOAD_INFO_REQUEST } from "../../../../_reducers/user";
-import Slider from "react-slick";
-import ArticleColumn from "../_common/ArticleColumn";
+import ArticlePost from "../_common/ArticlePost";
+import dayjs from "dayjs";
 dayjs.locale("kor");
 
 const Heart = styled.a`
@@ -64,26 +63,12 @@ function BlogPostPage() {
     addSubCommentDone,
     removeSubCommentDone,
     editSubCommentDone,
+    prevPost,
+    nextPost,
   } = useSelector((state) => state.post);
   const { user } = useSelector((state) => state.user);
   const [Fullcontent, setFullcontent] = useState("");
 
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 2,
-    responsive: [
-      {
-        breakpoint: 992,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
   useEffect(() => {
     const tagContent =
       post &&
@@ -223,7 +208,7 @@ function BlogPostPage() {
                 ) : null}
                 {Fullcontent && parse(Fullcontent)}
               </div>
-              <h4 style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+              <h4 style={{ margin: "5rem 0 1rem 0", fontSize: "1.5rem", fontWeight: "bold" }}>
                 Do you like this Post?{" "}
                 {liked ? (
                   <HeartLiked onClick={onClickUnlike}>
@@ -237,6 +222,33 @@ function BlogPostPage() {
                 <span style={{ fontSize: "1rem" }}>{post.PostLikers.length}</span>
               </h4>
               <CommentForm />
+              <h4 style={{ margin: "3rem 0 1rem 0", fontSize: "1.5rem", fontWeight: "bold" }}>
+                Another {post?.category.toUpperCase()} Posts
+              </h4>
+              <div
+                style={{
+                  overflow: "auto",
+                  height: "280px",
+                }}
+              >
+                <div
+                  style={{
+                    padding: "0.5rem",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <span>Title</span>
+                  <span>Date</span>
+                </div>
+                {prevPost?.map((v, i) => (
+                  <ArticlePost post={v} />
+                ))}
+                {nextPost?.map((v, i) => (
+                  <ArticlePost post={v} />
+                ))}
+              </div>
             </div>
             <RemoteControl Fullcontent={Fullcontent} />
           </div>

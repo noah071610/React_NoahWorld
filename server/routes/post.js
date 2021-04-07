@@ -207,14 +207,16 @@ router.get("/onePost/:postId/:UserId", async (req, res) => {
 
 router.get("/sidePosts/:id/:category", async (req, res) => {
   try {
-    const prevPost = await Post.findOne({
+    const prevPost = await Post.findAll({
       order: [["id", "DESC"]],
       where: { id: { [Op.lt]: req.params.id }, category: req.params.category },
       attributes: ["id", "title"],
+      limit: 5,
     });
-    const nextPost = await Post.findOne({
+    const nextPost = await Post.findAll({
       where: { id: { [Op.gt]: req.params.id }, category: req.params.category },
       attributes: ["id", "title"],
+      limit: 5,
     });
     res.status(200).json({ prevPost, nextPost });
   } catch (error) {
@@ -433,7 +435,6 @@ router.post("/", async (req, res) => {
       .replace(/([:'\\\/#-=`\|~+%\^&;]#[^\s#+^<]+)/g, "")
       .replace(/(#youtube:[^\s#+^<]+)/g, "")
       .match(/(#[^\s#+^<]+)/g);
-    console.log(hashtags);
     const post = await Post.create({
       hit: 0,
       thumbnail: req.body.thumbnail,
@@ -524,12 +525,13 @@ router.post("/delete", async (req, res, next) => {
     await Post.destroy({
       where: { id: req.body.PostId },
     });
-    req.body.tags &&
+    if (req.body.tags) {
       req.body.tags.map((v) => {
         Hashtag.destroy({
           where: { name: v.name },
         });
       });
+    }
     res.status(200).send({ success: true });
   } catch (error) {
     console.error(error);
