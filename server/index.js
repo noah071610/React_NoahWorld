@@ -42,6 +42,7 @@ app.use(
     cookie: {
       httpOnly: true,
       expires: expiryDate,
+      //domain have to change
     },
   })
 );
@@ -64,6 +65,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(
     cors({
       origin: true, //have to change
+      // secure: true, have to change
       credentials: true,
     })
   );
@@ -73,7 +75,6 @@ if (process.env.NODE_ENV === "production") {
   app.use(
     cors({
       origin: true,
-      // secure: true, have to change
       credentials: true,
     })
   );
@@ -98,9 +99,9 @@ app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "em
 
 app.get(
   "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "http://localhost:3000/" }),
+  passport.authenticate("google", { failureRedirect: "http://localhost:3000/" }), //have to change
   function (req, res) {
-    res.redirect("http://localhost:3000/");
+    res.redirect("http://localhost:3000/"); //have to change
   }
 );
 
@@ -113,7 +114,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const port = 5000;
+const port = 5000; //have to change
 
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`);

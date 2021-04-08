@@ -49,7 +49,7 @@ function RemoteControl({ Fullcontent }) {
     );
     let arr = [];
     contentHeaders.forEach((v, i) => {
-      v.setAttribute("id", v.innerHTML);
+      v.setAttribute("id", i);
       arr.push(v.innerHTML);
     });
     setHeaders(arr);
@@ -58,7 +58,7 @@ function RemoteControl({ Fullcontent }) {
   const timelineLists = useCallback(() => {
     return headers.map((v, i) => (
       <Timeline.Item color="gray" key={i} style={{ width: "100%" }}>
-        <a href={`#${v}`}>{v}</a>
+        <a href={`#${i}`}>{v}</a>
       </Timeline.Item>
     ));
   }, [headers]);

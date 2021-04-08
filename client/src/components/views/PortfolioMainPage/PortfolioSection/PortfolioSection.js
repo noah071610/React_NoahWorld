@@ -97,7 +97,7 @@ const PortfolioDesc = styled.div`
 `;
 
 function PortfolioSection({ id }) {
-  const [PortfolioNumber, setPortfolioNumber] = useState(0);
+  const [PortfolioNumber, setPortfolioNumber] = useState(2);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
@@ -113,7 +113,7 @@ function PortfolioSection({ id }) {
   let slides = [
     <PortfolioCard options={options}>
       <Link style={{ cursor: "unset" }} to="/portfolio/1">
-        <CardImg src="images/portfolio/portfolio1_main.png" alt="game" />
+        <CardImg src="images/portfolio/portfolio1_main.png" alt="portfolio" />
         <CardTitle className="card_title">
           {portfolios && (
             <>
@@ -138,21 +138,80 @@ function PortfolioSection({ id }) {
       </Link>
     </PortfolioCard>,
     <PortfolioCard options={options}>
-      <CardImg src="images/game.jpg" alt="game" />
+      <Link style={{ cursor: "unset" }} to="/portfolio/2">
+        <CardImg src="/images/blog/logo_cha.png" alt="portfolio2" />
+        <CardTitle className="card_title">
+          {portfolios && (
+            <>
+              <h2 style={{ marginBottom: "1rem 0", color: "black" }}>
+                {portfolios[2].name}{" "}
+                <FontAwesomeIcon className="portfolio_search" icon={faSearch} />{" "}
+              </h2>
+              <p>
+                {portfolios[2].date}
+                <br />
+                {portfolios[2].tags.map((tag, i) => {
+                  return (
+                    <span key={i} className="tag">
+                      {tag}
+                    </span>
+                  );
+                })}
+              </p>
+            </>
+          )}
+        </CardTitle>
+      </Link>
     </PortfolioCard>,
     <PortfolioCard options={options}>
-      <CardImg src="images/game.jpg" alt="game" />
-    </PortfolioCard>,
-    <PortfolioCard options={options}>
-      <CardImg src="images/game.jpg" alt="game" />
-    </PortfolioCard>,
-    <PortfolioCard options={options}>
-      <CardImg src="images/game.jpg" alt="game" />
+      <Link style={{ cursor: "unset" }} to="/portfolio/2">
+        <CardImg src="/images/blog/logo_poster.png" alt="portfolio2" />
+        <CardTitle className="card_title">
+          {portfolios && (
+            <>
+              <h2 style={{ marginBottom: "1rem 0", color: "black" }}>
+                {portfolios[1].name}{" "}
+                <FontAwesomeIcon className="portfolio_search" icon={faSearch} />{" "}
+              </h2>
+              <p>
+                {portfolios[1].date}
+                <br />
+                {portfolios[1].tags.map((tag, i) => {
+                  return (
+                    <span key={i} className="tag">
+                      {tag}
+                    </span>
+                  );
+                })}
+              </p>
+            </>
+          )}
+        </CardTitle>
+      </Link>
     </PortfolioCard>,
   ];
   const portfolioDescComponent = (PortfolioNumber) => {
     switch (PortfolioNumber) {
       case 0:
+        return (
+          <PortfolioDesc>
+            <Link
+              to="/portfolio/2"
+              onClick={() => {
+                window.scrollTo({
+                  top: 0,
+                });
+              }}
+            >
+              <h2 className="mobile_port_title">Noah world - Blog </h2>
+            </Link>
+            <span className="tag">#React</span>
+            <span className="tag">#Nodejs</span>
+            <span className="tag">#Mysql</span>
+            <span className="tag">#AWS</span>
+          </PortfolioDesc>
+        );
+      case 1:
         return (
           <PortfolioDesc>
             <Link
@@ -170,9 +229,23 @@ function PortfolioSection({ id }) {
             <span className="tag">#React</span>
           </PortfolioDesc>
         );
-      case 1:
-        return <h2>ss </h2>;
 
+      case 2:
+        return (
+          <PortfolioDesc>
+            <Link
+              to="/portfolio/3"
+              onClick={() => {
+                window.scrollTo({
+                  top: 0,
+                });
+              }}
+            >
+              <h2 className="mobile_port_title">Noah world - Blog </h2>
+            </Link>
+            <span className="tag">#React</span>
+          </PortfolioDesc>
+        );
       default:
         break;
     }

@@ -13,6 +13,10 @@ import {
   CHANGE_PASSWORD_FAILURE,
   CHANGE_PASSWORD_REQUEST,
   CHANGE_PASSWORD_SUCCESS,
+  CHANGE_NAME_CLEAR,
+  CHANGE_NAME_FAILURE,
+  CHANGE_NAME_REQUEST,
+  CHANGE_NAME_SUCCESS,
   CONFIRM_PASSWORD_CLEAR,
   CONFIRM_PASSWORD_FAILURE,
   CONFIRM_PASSWORD_REQUEST,
@@ -282,6 +286,29 @@ function* changePassword(action) {
   }
 }
 
+function changeNameAPI(data) {
+  return axios.post(`api/user/name`, data);
+}
+
+function* changeName(action) {
+  try {
+    const result = yield call(changeNameAPI, action.data);
+    yield put({
+      type: CHANGE_NAME_SUCCESS,
+      data: result.data,
+    });
+    yield delay(3000);
+    yield put({
+      type: CHANGE_NAME_CLEAR,
+    });
+  } catch (err) {
+    yield put({
+      type: CHANGE_NAME_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function withdrawalAPI(data) {
   return axios.delete(`api/user/${data}`);
 }
@@ -335,6 +362,9 @@ function* watchConfirmPassword() {
 function* watchChangePassword() {
   yield takeLatest(CHANGE_PASSWORD_REQUEST, changePassword);
 }
+function* watchChangeName() {
+  yield takeLatest(CHANGE_NAME_REQUEST, changeName);
+}
 function* watchWithdrawal() {
   yield takeLatest(WITHDRWAL_REQUEST, withdrawal);
 }
@@ -351,6 +381,7 @@ export default function* userSaga() {
     fork(watchLoadInfo),
     fork(watchConfirmPassword),
     fork(watchChangePassword),
+    fork(watchChangeName),
     fork(watchWithdrawal),
   ]);
 }

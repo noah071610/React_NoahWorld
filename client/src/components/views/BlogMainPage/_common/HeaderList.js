@@ -39,7 +39,8 @@ const PostTitle = styled.h4`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 1rem;
+  height: 1.2rem;
+  margin-bottom: 0.2rem;
 `;
 
 export function BlogHeader() {

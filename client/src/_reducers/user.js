@@ -48,6 +48,10 @@ const initialState = {
   changePasswordLoading: false,
   changePasswordDone: false,
   changePasswordError: null,
+
+  changeNameLoading: false,
+  changeNameDone: false,
+  changeNameError: null,
 };
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
@@ -93,6 +97,11 @@ export const CHANGE_PASSWORD_REQUEST = "CHANGE_PASSWORD_REQUEST";
 export const CHANGE_PASSWORD_SUCCESS = "CHANGE_PASSWORD_SUCCESS";
 export const CHANGE_PASSWORD_FAILURE = "CHANGE_PASSWORD_FAILURE";
 export const CHANGE_PASSWORD_CLEAR = "CHANGE_PASSWORD_CLEAR";
+
+export const CHANGE_NAME_REQUEST = "CHANGE_NAME_REQUEST";
+export const CHANGE_NAME_SUCCESS = "CHANGE_NAME_SUCCESS";
+export const CHANGE_NAME_FAILURE = "CHANGE_NAME_FAILURE";
+export const CHANGE_NAME_CLEAR = "CHANGE_NAME_CLEAR";
 
 export const WITHDRWAL_REQUEST = "WITHDRWAL_REQUEST";
 export const WITHDRWAL_SUCCESS = "WITHDRWAL_SUCCESS";
@@ -286,6 +295,25 @@ const reducer = (state = initialState, action) =>
         draft.changePasswordLoading = false;
         draft.changePasswordDone = false;
         draft.changePasswordError = null;
+        break;
+      case CHANGE_NAME_REQUEST:
+        draft.changeNameLoading = true;
+        draft.changeNameError = null;
+        draft.changeNameDone = false;
+        break;
+      case CHANGE_NAME_SUCCESS:
+        draft.changeNameLoading = false;
+        draft.changeNameDone = true;
+        draft.user.name = action.data.newName;
+        break;
+      case CHANGE_NAME_FAILURE:
+        draft.changeNameLoading = false;
+        draft.changeNameError = action.error;
+        break;
+      case CHANGE_NAME_CLEAR:
+        draft.changeNameLoading = false;
+        draft.changeNameDone = false;
+        draft.changeNameError = null;
         break;
       case WITHDRWAL_REQUEST:
         draft.withdrawalLoading = true;

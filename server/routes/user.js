@@ -148,6 +148,16 @@ router.post("/confirm", async (req, res, next) => {
   }
 });
 
+router.post("/name", async (req, res, next) => {
+  await User.update(
+    { name: req.body.newName },
+    {
+      where: { id: parseInt(req.body.UserId, 10) },
+    }
+  );
+  res.status(202).json({ newName: req.body.newName });
+});
+
 router.post("/password", async (req, res, next) => {
   const salt = await bcrypt.genSalt(saltRounds);
   const mynewPassword = await bcrypt.hash(req.body.newPassword, salt);

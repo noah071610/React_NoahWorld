@@ -68,7 +68,7 @@ const PortfolioPostPage = ({ mobileSize }) => {
             />
           )}
           <h2 data-aos="fade-down" data-aos-duration="500" style={{ marginTop: "2rem" }}>
-            반응형 웹 포트폴리오
+            {portfolio.name}
             {portfolio.git && (
               <GitLink href={portfolio.git} target="_blank" rel="noreferrer">
                 <Icon icon={faGithub} />

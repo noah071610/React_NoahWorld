@@ -225,7 +225,7 @@ function Admin() {
           placeholder="Welcome Noah!"
           height="600px"
           initialValue={postEditOn && postEditOn ? post.content : null}
-          initialEditType="wysiwyg"
+          initialEditType="markdown"
           useCommandShortcut={true}
           usageStatistics={false}
           ref={editorRef}

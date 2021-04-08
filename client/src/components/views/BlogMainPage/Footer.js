@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import useInput from "../../../_hooks/useInput";
 import {
+  CHANGE_NAME_REQUEST,
   CHANGE_PASSWORD_REQUEST,
   CONFIRM_PASSWORD_REQUEST,
   CONFIRM_PASSWORD_SUCCESS,
@@ -28,12 +29,16 @@ function Footer() {
     changePasswordError,
     withdrawalDone,
     withdrawalError,
+    changeNameDone,
+    changeNameError,
   } = useSelector((state) => state.user);
   const history = useHistory();
   const [password, onChangePassword] = useInput();
   const [newPassword, onChangeNewPassword] = useInput();
+  const [newName, onChangeNewName] = useInput(user?.name);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [changePassword, setChangePassword] = useState(null);
+  const [changeNickname, setChangeNickname] = useState(null);
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -46,6 +51,8 @@ function Footer() {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    setChangePassword(false);
+    setChangeNickname(false);
   };
 
   const onSubmitChangePassword = () => {
@@ -58,6 +65,13 @@ function Footer() {
     });
   };
 
+  const onsubmitChangeName = () => {
+    dispatch({
+      type: CHANGE_NAME_REQUEST,
+      data: { newName, UserId: user.id },
+    });
+  };
+
   const onSubmitWithdrawal = () => {
     dispatch({
       type: WITHDRWAL_REQUEST,
@@ -67,15 +81,29 @@ function Footer() {
       type: LOG_OUT_REQUEST,
     });
   };
+
   useEffect(() => {
     if (changePasswordDone) {
       setIsModalVisible(false);
       message.success("Change your password well!");
       history.push("/");
+      setChangePassword(false);
       return;
     }
     if (changePasswordError) {
       message.error("Unexpected Error! please try again or feedback to us");
+      setChangePassword(false);
+      return;
+    }
+    if (changeNameDone) {
+      message.success("Change your nickname well!");
+      setIsModalVisible(false);
+      setChangeNickname(false);
+      return;
+    }
+    if (changeNameError) {
+      message.error("Unexpected Error! please try again or feedback to us");
+      setChangeNickname(false);
       return;
     }
     if (withdrawalDone) {
@@ -99,6 +127,8 @@ function Footer() {
     confirmPasswordError,
     withdrawalDone,
     withdrawalError,
+    changeNameDone,
+    changeNameError,
   ]);
 
   const social_content = (
@@ -140,6 +170,18 @@ function Footer() {
         }}
       >
         <li>- Change Password</li>
+      </a>
+      <a
+        onClick={() => {
+          if (!user) {
+            message.error("Only for user who signed in.");
+            return;
+          }
+          showModal();
+          setChangeNickname(true);
+        }}
+      >
+        <li>- Change Nickname</li>
       </a>
     </ul>
   );
@@ -206,6 +248,8 @@ function Footer() {
           confirmPassword
             ? changePassword
               ? onSubmitChangePassword
+              : changeNickname
+              ? onsubmitChangeName
               : onSubmitWithdrawal
             : handleOk
         }
@@ -242,6 +286,14 @@ function Footer() {
                 ]}
               >
                 <Input.Password />
+              </Form.Item>
+            </Form>
+          ) : changeNickname ? (
+            <Form name="nest-messages">
+              <p>Please write your new nickname.</p>
+              <br />
+              <Form.Item name="name" rules={[{ required: true }]}>
+                <Input value={newName} onChange={onChangeNewName} />
               </Form.Item>
             </Form>
           ) : (
