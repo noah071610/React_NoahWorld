@@ -35,7 +35,7 @@ function BlogAboutPage() {
         <h2 className="intro_me">I'm Jang Hyun Soo, Web-developer who love world 👍 </h2>
         <img
           style={{ width: "50%", margin: "2rem 0" }}
-          src="/images/blog/profile_travel.jpg"
+          src="/images/blog/profile_aboutme.jpg"
           alt="image_profile"
         />
         <ul className="blog_about_ul">

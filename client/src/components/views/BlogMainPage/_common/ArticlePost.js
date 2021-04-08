@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import { useHistory } from "react-router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/free-solid-svg-icons";
 dayjs.locale("kor");
 
 const Wrapper = styled.div`
@@ -17,10 +15,11 @@ const Wrapper = styled.div`
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
     h3 {
-      text-decoration: underline;
+      font-weight: bold;
     }
   }
   h3 {
+    font-weight: normal;
     font-size: 1rem;
   }
   ul {

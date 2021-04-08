@@ -206,7 +206,10 @@ export function WelcomeTable({ visible }) {
   const { user } = useSelector((state) => state.user);
   return (
     <WelcomeTableWrapper xs={visible ? 24 : 0} sm={8} lg={6}>
-      <h2 style={{ margin: "1rem 0" }}>Welcome {user && user.name} 😄 </h2>
+      <h2 style={{ margin: "1rem 0" }}>
+        Welcome&nbsp;
+        {user && user.name}&nbsp;😄
+      </h2>
       <Divider />
       <Row style={{ margin: "2rem 0" }}>
         <Col style={{ borderRight: "1px solid rgba(0,0,0,0.1)" }} span={8}>

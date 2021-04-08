@@ -120,6 +120,7 @@ export const UPLOAD_POST_IMAGE_CLEAR = "UPLOAD_POST_IMAGE_CLEAR";
 export const ADD_POST_REQUEST = "ADD_POST_REQUEST";
 export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
 export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
+export const ADD_POST_CLEAR = "ADD_POST_CLEAR";
 
 export const LOAD_POST_REQUEST = "LOAD_POST_REQUEST";
 export const LOAD_POST_SUCCESS = "LOAD_POST_SUCCESS";
@@ -218,6 +219,10 @@ const reducer = (state = initialState, action) =>
       case ADD_POST_FAILURE:
         draft.addPostLoading = false;
         draft.addPostError = action.error;
+        break;
+      case ADD_POST_CLEAR:
+        draft.addPostDone = false;
+        draft.addPostError = null;
         break;
       case LOAD_POSTS_REQUEST:
         draft.loadPostsLoading = true;

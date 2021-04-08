@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Divider, Input, message, Popover, Timeline } from "antd";
+import { Divider, Input, message, Timeline } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

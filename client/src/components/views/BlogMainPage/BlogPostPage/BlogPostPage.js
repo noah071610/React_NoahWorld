@@ -193,7 +193,7 @@ function BlogPostPage() {
                   <>
                     <img
                       alt={post.title}
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", marginBottom: "6rem" }}
                       src={
                         post.thumbnail
                           ? post.thumbnail
@@ -203,7 +203,6 @@ function BlogPostPage() {
                       }
                       onError={handleImgError}
                     />
-                    <Divider style={{ margin: "3rem 0" }} />
                   </>
                 ) : null}
                 {Fullcontent && parse(Fullcontent)}
@@ -222,13 +221,15 @@ function BlogPostPage() {
                 <span style={{ fontSize: "1rem" }}>{post.PostLikers.length}</span>
               </h4>
               <CommentForm />
-              <h4 style={{ margin: "3rem 0 1rem 0", fontSize: "1.5rem", fontWeight: "bold" }}>
-                Another {post?.category.toUpperCase()} Posts
+              <h4 style={{ margin: "5rem 0 1rem 0", fontSize: "1.5rem", fontWeight: "bold" }}>
+                More posts
               </h4>
               <div
                 style={{
                   overflow: "auto",
                   height: "280px",
+                  marginTop: "1rem",
+                  borderTop: "1px solid rgba(0, 0, 0, 0.1)",
                 }}
               >
                 <div
@@ -243,10 +244,10 @@ function BlogPostPage() {
                   <span>Date</span>
                 </div>
                 {prevPost?.map((v, i) => (
-                  <ArticlePost post={v} />
+                  <ArticlePost key={i} post={v} />
                 ))}
                 {nextPost?.map((v, i) => (
-                  <ArticlePost post={v} />
+                  <ArticlePost key={i} post={v} />
                 ))}
               </div>
             </div>

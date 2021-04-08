@@ -8,6 +8,7 @@ import useInput from "../../../_hooks/useInput";
 import {
   CHANGE_PASSWORD_REQUEST,
   CONFIRM_PASSWORD_REQUEST,
+  CONFIRM_PASSWORD_SUCCESS,
   LOG_OUT_REQUEST,
   WITHDRWAL_REQUEST,
 } from "../../../_reducers/user";
@@ -158,6 +159,15 @@ function Footer() {
       </Link>
     </ul>
   );
+
+  useEffect(() => {
+    if (user?.googleId) {
+      dispatch({
+        type: CONFIRM_PASSWORD_SUCCESS,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
   return (
     <footer className="blog_footer">
       <div className="blog_footer_wrapper">

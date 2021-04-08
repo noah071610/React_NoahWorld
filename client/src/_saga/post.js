@@ -34,6 +34,7 @@ import {
   LOAD_MORE_POSTS_SUCCESS,
   LOAD_MORE_POSTS_FAILURE,
   UPLOAD_IMAGES_REQUEST,
+  ADD_POST_CLEAR,
   UPLOAD_IMAGES_SUCCESS,
   UPLOAD_IMAGES_FAILURE,
   UPLOAD_IMAGES_CLEAR,
@@ -44,6 +45,7 @@ import {
   UPLOAD_POST_IMAGE_SUCCESS,
   UPLOAD_POST_IMAGE_CLEAR,
   UPLOAD_POST_IMAGE_FAILURE,
+  EDIT_POST_CLEAR,
 } from "../_reducers/post";
 
 function addPostAPI(data) {
@@ -56,6 +58,10 @@ function* addPost(action) {
     yield put({
       type: ADD_POST_SUCCESS,
       data: result.data,
+    });
+    yield delay(3000);
+    yield put({
+      type: ADD_POST_CLEAR,
     });
   } catch (err) {
     yield put({
@@ -232,14 +238,14 @@ function* uploadImages(action) {
       type: UPLOAD_IMAGES_SUCCESS,
       data: result.data,
     });
+    yield delay(3000);
+    yield put({
+      type: UPLOAD_IMAGES_CLEAR,
+    });
   } catch (err) {
     yield put({
       type: UPLOAD_IMAGES_FAILURE,
       error: err.response.data,
-    });
-    yield delay(3000);
-    yield put({
-      type: UPLOAD_IMAGES_CLEAR,
     });
   }
 }
@@ -304,6 +310,10 @@ function* editPost(action) {
     yield put({
       type: EDIT_POST_SUCCESS,
       data: result.data,
+    });
+    yield delay(3000);
+    yield put({
+      type: EDIT_POST_CLEAR,
     });
   } catch (err) {
     yield put({
