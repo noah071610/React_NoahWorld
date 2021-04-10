@@ -61,7 +61,7 @@ db.sequelize
   .catch(console.error);
 
 if (process.env.NODE_ENV === "production") {
-  app.enable("trust proxy");
+  app.enable("trust proxy", 1);
   app.use(morgan("combined"));
   app.use(hpp());
   app.use(helmet({ contentSecurityPolicy: false }));
@@ -102,9 +102,9 @@ app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "em
 
 app.get(
   "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "https://noahworld.site" }), //have to change
+  passport.authenticate("google", { failureRedirect: "https://noahworld.site" }),
   function (req, res) {
-    res.redirect("https://noahworld.site"); //have to change
+    res.redirect("https://noahworld.site");
   }
 );
 
