@@ -12,6 +12,8 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const hpp = require("hpp");
 
+app.disable("x-powered-by");
+
 dotenv.config();
 const app = express();
 
@@ -23,11 +25,11 @@ db.sequelize
   .catch(console.error);
 passportConfig();
 
+app.set("trust proxy", 1);
 if (process.env.NODE_ENV === "production") {
-  app.set("trust proxy");
   app.use(morgan("combined"));
   app.use(hpp());
-  app.use(helmet({ contentSecurityPolicy: false }));
+  app.use(helmet());
   app.use(
     cors({
       origin: "https://noahworld.site",
@@ -52,6 +54,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE));
 app.use(
   session({
+    name: process.env.COOKIE,
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE,
