@@ -37,9 +37,7 @@ function ArticleColumn({ article, nocontent }) {
               src={
                 article.thumbnail
                   ? article.thumbnail
-                  : article.imagePath
-                  ? `${article.imagePath}`
-                  : "/images/blog/noImage.gif"
+                  : article.imagePath.replace(/\/thumb\//, "/original/")
               }
               onError={handleImgError}
             />

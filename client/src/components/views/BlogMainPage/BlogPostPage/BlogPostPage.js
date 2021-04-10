@@ -194,13 +194,7 @@ function BlogPostPage() {
                     <img
                       alt={post.title}
                       style={{ width: "100%", marginBottom: "6rem" }}
-                      src={
-                        post.thumbnail
-                          ? post.thumbnail
-                          : post.imagePath
-                          ? post.imagePath.replace(/\/thumb\//, "/original/")
-                          : "/images/blog/noImage.gif"
-                      }
+                      src={post.thumbnail ? post.thumbnail : post.imagePath}
                       onError={handleImgError}
                     />
                   </>

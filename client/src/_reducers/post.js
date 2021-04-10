@@ -552,7 +552,6 @@ const reducer = (state = initialState, action) =>
       case UPLOAD_IMAGES_CLEAR:
         draft.uploadImagesLoading = false;
         draft.uploadImagesDone = false;
-        draft.imagePath = null;
         break;
       case UPLOAD_POST_IMAGE_REQUEST:
         draft.uploadPostImageLoading = true;
@@ -572,7 +571,6 @@ const reducer = (state = initialState, action) =>
       case UPLOAD_POST_IMAGE_CLEAR:
         draft.uploadPostImageLoading = false;
         draft.uploadPostImageDone = false;
-        draft.imagePath = null;
         break;
       case LOAD_RECENT_POSTS_REQUEST:
         draft.loadRecentPostsLoading = true;
