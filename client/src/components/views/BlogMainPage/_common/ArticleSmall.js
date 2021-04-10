@@ -43,7 +43,7 @@ function ArticleSmall({ post }) {
     >
       <img
         style={{ width: "110px", height: "80px" }}
-        src={post.thumbnail ? post.thumbnail : post.imagePath.replace(/\/thumb\//, "/original/")}
+        src={post?.thumbnail ? post.thumbnail : post.imagePath?.replace(/\/thumb\//, "/original/")}
         alt="ss"
       />
       <div>

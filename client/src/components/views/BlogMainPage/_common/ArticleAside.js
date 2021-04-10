@@ -29,11 +29,9 @@ function ArticleAside({ article, type }) {
               style={{ width: "100%", height: "150px", border: "0.3px solid rgba(0,0,0,0.1)" }}
               alt={article.title}
               src={
-                article.thumbnail
+                article?.thumbnail
                   ? article.thumbnail
-                  : article.imagePath
-                  ? article.imagePath
-                  : "/images/blog/noImage.gif"
+                  : article.imagePath?.replace(/\/thumb\//, "/original/")
               }
               onError={handleImgError}
             />

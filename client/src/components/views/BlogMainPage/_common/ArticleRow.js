@@ -36,9 +36,9 @@ function ArticleRow({ article }) {
               style={{ width: "100%", height: "300px", border: "0.3px solid rgba(0,0,0,0.1)" }}
               alt={article.title}
               src={
-                article.thumbnail
+                article?.thumbnail
                   ? article.thumbnail
-                  : article.imagePath.replace(/\/thumb\//, "/original/")
+                  : article.imagePath?.replace(/\/thumb\//, "/original/")
               }
               onError={handleImgError}
             />

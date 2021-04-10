@@ -35,9 +35,9 @@ function ArticleColumn({ article, nocontent }) {
               className="article_img"
               alt={article.title}
               src={
-                article.thumbnail
+                article?.thumbnail
                   ? article.thumbnail
-                  : article.imagePath.replace(/\/thumb\//, "/original/")
+                  : article.imagePath?.replace(/\/thumb\//, "/original/")
               }
               onError={handleImgError}
             />
