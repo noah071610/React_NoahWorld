@@ -26,6 +26,9 @@ const BlogAboutPage = lazy(() => import("./views/BlogMainPage/BlogAboutPage"));
 const BlogSearchPage = lazy(() => import("./views/BlogMainPage/BlogSearchPage/BlogSearchPage"));
 const BlogHashtagPage = lazy(() => import("./views/BlogMainPage/BlogSearchPage/BlogHashtagPage"));
 const NoMatch = lazy(() => import("./views/BlogMainPage/Section/NoMatch"));
+const PrivacyPolicy = lazy(() =>
+  import("./views/BlogMainPage/BlogLoginPage/Section/PrivacyPolicy")
+);
 
 const GlobalStyles = createGlobalStyle`
 
@@ -90,6 +93,7 @@ const App = () => {
               <Route exact path="/search/:keyword" component={BlogSearchPage} />
               <Route exact path="/hashtag/:keyword" component={BlogHashtagPage} />
               <Route exact path="/login" component={BlogLoginPage} />
+              <Route exact path="/login/policy" component={PrivacyPolicy} />
               <Route exact path="/admin" component={Admin} />
               <Route exact path="/:category/post/:id" component={BlogPostPage} />
               <Route exact path="/portfolio" component={PortfolioMainPage} />
