@@ -11,11 +11,11 @@ const passport = require("passport");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const hpp = require("hpp");
+const app = express();
 
 app.disable("x-powered-by");
 
 dotenv.config();
-const app = express();
 
 db.sequelize
   .sync()

@@ -102,7 +102,7 @@ function CommentForm() {
         <div>
           <img
             className="comment_img"
-            src={user?.icon ? user.icon : "/images/blog/default-user.png"}
+            src={user?.icon.replace(/\/thumb\//, "/original/")}
             alt="profile"
             onError={handleImgError}
           />
