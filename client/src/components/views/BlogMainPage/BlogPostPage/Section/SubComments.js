@@ -127,7 +127,11 @@ function SubComments({ subComment, CommentId }) {
                     height: "50px",
                     borderRadius: "50%",
                   }}
-                  src={subComment.User?.icon.replace(/\/thumb\//, "/original/")}
+                  src={
+                    subComment.User?.icon
+                      ? subComment.User.icon.replace(/\/thumb\//, "/original/")
+                      : "/images/blog/default-user.png"
+                  }
                   onError={handleImgError}
                   alt="profile"
                 />

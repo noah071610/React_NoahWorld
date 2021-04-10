@@ -65,7 +65,11 @@ function SubCommentForm({ CommentId }) {
             borderRadius: "50%",
             margin: "0 1rem",
           }}
-          src={user?.icon.replace(/\/thumb\//, "/original/")}
+          src={
+            user?.icon
+              ? user.icon.replace(/\/thumb\//, "/original/")
+              : "/images/blog/default-user.png"
+          }
           alt="profile"
           onError={handleImgError}
         />

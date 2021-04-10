@@ -178,7 +178,11 @@ function Comments({ comment }) {
                     height: "50px",
                     borderRadius: "50%",
                   }}
-                  src={comment.User?.icon.replace(/\/thumb\//, "/original/")}
+                  src={
+                    comment.User?.icon
+                      ? comment.User.icon.replace(/\/thumb\//, "/original/")
+                      : "/images/blog/default-user.png"
+                  }
                   alt="profile"
                   onError={handleImgError}
                 />

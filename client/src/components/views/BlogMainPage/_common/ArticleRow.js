@@ -38,7 +38,9 @@ function ArticleRow({ article }) {
               src={
                 article?.thumbnail
                   ? article.thumbnail
-                  : article.imagePath?.replace(/\/thumb\//, "/original/")
+                  : article.imagePath
+                  ? article.imagePath.replace(/\/thumb\//, "/original/")
+                  : "/images/blog/noImage.gif"
               }
               onError={handleImgError}
             />

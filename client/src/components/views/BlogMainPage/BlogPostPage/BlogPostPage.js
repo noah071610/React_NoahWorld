@@ -166,7 +166,7 @@ function BlogPostPage() {
             <meta
               property="og:image"
               content={
-                post.thumbnail ? post.thumbnail : post.imagePath || "./images/blog/logo_icon.png"
+                post.thumbnail ? post.thumbnail : post.imagePath || "/images/blog/logo_icon.png"
               }
             />
             <meta property="og:url" content={`https://noahworld.site/${post?.id}`} />
@@ -189,12 +189,12 @@ function BlogPostPage() {
           <div style={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
             <div className="blog_post_article" style={{ width: "850px" }}>
               <div className="tui-editor-contents" style={{ marginBottom: "3rem" }}>
-                {post.thumbnail || post.imagePath ? (
+                {post?.thumbnail || post?.imagePath ? (
                   <>
                     <img
                       alt={post.title}
                       style={{ width: "100%", marginBottom: "6rem" }}
-                      src={post.thumbnail ? post.thumbnail : post.imagePath}
+                      src={post?.thumbnail ? post.thumbnail : post.imagePath}
                       onError={handleImgError}
                     />
                   </>
