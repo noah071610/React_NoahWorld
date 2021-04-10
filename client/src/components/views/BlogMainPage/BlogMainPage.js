@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Divider } from "antd";
 import React from "react";
+import { Divider } from "antd";
 import MetaTags from "react-meta-tags";
 import ArticleAside from "./_common/ArticleAside";
 import ArticleColumn from "./_common/ArticleColumn";

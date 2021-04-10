@@ -22,7 +22,7 @@ const upload = multer({
       cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
     },
   }),
-  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
+  limits: { fileSize: 20 * 1024 * 1024 },
 });
 
 router.post("/uploadfiles", upload.any, (req, res) => {

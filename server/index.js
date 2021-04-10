@@ -36,13 +36,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
     name: process.env.SESSION_NAME,
-    saveUninitialized: true,
+    saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE,
     cookie: {
       httpOnly: true,
       expires: expiryDate,
-      //domain have to change
+      secure: process.env.NODE_ENV === "production",
+      domain: process.env.NODE_ENV === "production" && ".noahworld.site",
     },
   })
 );
@@ -59,13 +60,13 @@ db.sequelize
   .catch(console.error);
 
 if (process.env.NODE_ENV === "production") {
+  app.enable("trust proxy");
   app.use(morgan("combined"));
   app.use(hpp());
-  app.use(helmet());
+  app.use(helmet({ contentSecurityPolicy: false }));
   app.use(
     cors({
-      origin: true, //have to change
-      // secure: true, have to change
+      origin: ["https://noahworld.site"],
       credentials: true,
     })
   );
@@ -99,9 +100,9 @@ app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "em
 
 app.get(
   "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "http://localhost:3000/" }), //have to change
+  passport.authenticate("google", { failureRedirect: "https://noahworld.site" }), //have to change
   function (req, res) {
-    res.redirect("http://localhost:3000/"); //have to change
+    res.redirect("https://noahworld.site"); //have to change
   }
 );
 
@@ -114,7 +115,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const port = 5000; //have to change
+const port = 5000;
 
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`);
