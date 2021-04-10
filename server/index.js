@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const dotenv = require("dotenv");
 const cors = require("cors");
 const db = require("./models");
@@ -12,46 +11,9 @@ const passport = require("passport");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const hpp = require("hpp");
-const expiryDate = new Date(Date.now() + 60 * 60 * 1000);
-
-app.disable("x-powered-by");
 
 dotenv.config();
-app.use(cookieParser(process.env.COOKIE));
-
-app.use(express.json());
-app.use(
-  express.json({
-    limit: "1mb",
-  })
-);
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(
-  session({
-    name: process.env.SESSION_NAME,
-    saveUninitialized: false,
-    resave: false,
-    secret: process.env.COOKIE,
-    proxy: process.env.NODE_ENV === "production",
-    cookie: {
-      httpOnly: true,
-      expires: expiryDate,
-      secure: process.env.NODE_ENV === "production",
-      domain: process.env.NODE_ENV === "production" && ".noahworld.site",
-    },
-  })
-);
-
-passportConfig();
-app.use(passport.initialize());
-app.use(passport.session());
+const app = express();
 
 db.sequelize
   .sync()
@@ -59,9 +21,10 @@ db.sequelize
     console.log("db connected");
   })
   .catch(console.error);
+passportConfig();
 
 if (process.env.NODE_ENV === "production") {
-  app.enable("trust proxy", 1);
+  app.set("trust proxy");
   app.use(morgan("combined"));
   app.use(hpp());
   app.use(helmet({ contentSecurityPolicy: false }));
@@ -82,7 +45,26 @@ if (process.env.NODE_ENV === "production") {
   );
   console.log("production off");
 }
+
 app.use("/", express.static(path.join(__dirname, "uploads")));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser(process.env.COOKIE));
+app.use(
+  session({
+    saveUninitialized: false,
+    resave: false,
+    secret: process.env.COOKIE,
+    proxy: process.env.NODE_ENV === "production",
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      domain: process.env.NODE_ENV === "production" && ".noahworld.site",
+    },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/", (req, res) => {
   res.send("Noah world");
