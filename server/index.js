@@ -27,7 +27,7 @@ app.use(
 );
 app.use(
   express.urlencoded({
-    extended: false,
+    extended: true,
   })
 );
 app.use(bodyParser.json());
@@ -39,6 +39,7 @@ app.use(
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE,
+    proxy: process.env.NODE_ENV === "production",
     cookie: {
       httpOnly: true,
       expires: expiryDate,
@@ -66,7 +67,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(
     cors({
-      origin: ["https://noahworld.site"],
+      origin: "https://noahworld.site",
       credentials: true,
     })
   );
@@ -81,6 +82,7 @@ if (process.env.NODE_ENV === "production") {
   );
   console.log("production off");
 }
+app.use("/", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", (req, res) => {
   res.send("Noah world");
@@ -105,15 +107,6 @@ app.get(
     res.redirect("https://noahworld.site"); //have to change
   }
 );
-
-app.use("/", express.static(path.join(__dirname, "uploads")));
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
-  });
-}
 
 const port = 5000;
 
