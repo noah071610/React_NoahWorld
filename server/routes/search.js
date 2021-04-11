@@ -10,8 +10,13 @@ router.post("/", async (req, res) => {
       res.status(401).json({ searchedKeyword: "need keyword more then 1 letter" });
     }
     const searchPosts = await Post.findAll({
-      where: { [Op.or]:{title:{[Op.like]: `%${req.body.keyword}%`}},{content:{[Op.like]: `%${req.body.keyword}%`}}}
-    })
+      where: {
+        [Op.or]: [
+          { title: { [Op.like]: `%${req.body.keyword}%` } },
+          { content: { [Op.like]: `%${req.body.keyword}%` } },
+        ],
+      },
+    });
     res.status(200).json({ searchPosts, searchedKeyword: req.body.keyword });
   } catch (error) {
     console.error(error);
