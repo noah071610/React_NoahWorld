@@ -1080,7 +1080,10 @@ h1 {
     width: 65%;
   }
   p {
-    font-size: 1.1rem !important;
+    font-size: 1rem;
+  }
+  span {
+    font-size: 1rem;
   }
 }
 //===== BLOG MEDIA QUERY=========
@@ -1282,6 +1285,9 @@ h1 {
       width: 100%;
     }
     p {
+      font-size: 13px;
+    }
+    span {
       font-size: 13px;
     }
   }

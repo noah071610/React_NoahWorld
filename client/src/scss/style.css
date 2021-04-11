@@ -1302,7 +1302,11 @@ h1 {
 }
 
 .tui-editor-contents p {
-  font-size: 1.1rem !important;
+  font-size: 1rem;
+}
+
+.tui-editor-contents span {
+  font-size: 1rem;
 }
 
 @media only screen and (max-width: 992px) {
@@ -1502,6 +1506,9 @@ h1 {
     width: 100%;
   }
   .tui-editor-contents p {
+    font-size: 13px;
+  }
+  .tui-editor-contents span {
     font-size: 13px;
   }
   .intro_me {
