@@ -270,6 +270,7 @@ function BlogClassPage() {
           <div
             style={{
               background: `url('/images/blog/class_memo.jpg') no-repeat center`,
+              width: "100%",
             }}
             className="blog_word_div"
           >
