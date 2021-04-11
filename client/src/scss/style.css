@@ -126,6 +126,9 @@ section {
 body,
 html {
   line-height: 1;
+}
+
+html {
   overflow-x: hidden;
 }
 
@@ -1541,6 +1544,7 @@ h1 {
     width: 100%;
     display: block;
     margin: 2rem 0;
+    overflow-x: hidden;
     -webkit-box-shadow: 4px 8px 10px 0px rgba(0, 0, 0, 0.15);
             box-shadow: 4px 8px 10px 0px rgba(0, 0, 0, 0.15);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(15%, #fbfffd), to(rgba(226, 150, 153, 0.8)));

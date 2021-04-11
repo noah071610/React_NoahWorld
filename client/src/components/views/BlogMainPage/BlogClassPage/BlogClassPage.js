@@ -238,16 +238,16 @@ function BlogClassPage() {
     setViewQuizAnswer(true);
   }, [quizAnswer]);
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "100%", overflowX: "hidden" }}>
       <ReactTitle title="Noah World - Korean Class" />
       {user && (
-        <div style={{ width: "100%" }}>
+        <div style={{ width: "100%", overflowX: "hidden" }}>
           <HeaderProfile />
         </div>
       )}
       <MainPoster />
       <SmallPoster />
-      <Row style={{ width: "100%", margin: 0, padding: 0 }}>
+      <Row style={{ width: "100%", margin: 0, padding: 0, overflowX: "hidden" }}>
         <Col style={{ padding: "1rem" }} md={24} lg={12}>
           <h2 className="blog_class_title">韓国語基礎</h2>
           <ClassLists>
