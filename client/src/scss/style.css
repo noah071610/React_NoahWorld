@@ -126,6 +126,9 @@ section {
 body,
 html {
   line-height: 1;
+}
+
+html {
   overflow-x: hidden;
 }
 
