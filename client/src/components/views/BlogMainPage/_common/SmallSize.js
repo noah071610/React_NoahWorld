@@ -13,7 +13,6 @@ export function SmallPoster() {
       </h2>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <img
-          data-aos="fade-right"
           alt="class_poster_girl"
           src="/images/blog/class_study.png"
           className="class_poster_girl"
@@ -33,7 +32,6 @@ export function SmallPoster() {
           data-aos-delay="700"
           alt="class_intro_text"
           className="small_poster_cha"
-          style={{ width: "70%", height: "70%" }}
           src="./images/blog/kankokugo.png"
         />
         <img

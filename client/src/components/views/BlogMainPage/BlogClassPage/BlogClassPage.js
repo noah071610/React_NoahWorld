@@ -240,7 +240,11 @@ function BlogClassPage() {
   return (
     <div style={{ width: "100%" }}>
       <ReactTitle title="Noah World - Korean Class" />
-      {user && <HeaderProfile />}
+      {user && (
+        <div style={{ width: "100%" }}>
+          <HeaderProfile />
+        </div>
+      )}
       <MainPoster />
       <SmallPoster />
       <Row style={{ width: "100%", margin: 0, padding: 0 }}>
