@@ -22,8 +22,9 @@ export function SmallPoster() {
         style={{
           marginTop: "1rem",
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "flex-end",
           alignItems: "flex-end",
+          width: "100%",
         }}
       >
         <img
@@ -33,7 +34,7 @@ export function SmallPoster() {
           alt="class_intro_text"
           className="small_poster_cha"
           src="./images/blog/kankokugo.png"
-          style={{ width: "60%", height: "80%" }}
+          style={{ width: "50%", height: "100%" }}
         />
         <img
           data-aos-anchor-placement="top-bottom"
