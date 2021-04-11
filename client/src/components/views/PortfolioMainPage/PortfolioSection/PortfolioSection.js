@@ -79,7 +79,7 @@ const CardImg = styled.img`
     height: 200px;
   }
   @media only screen and (max-width: 460px) {
-    height: 150px;
+    height: 120px;
   }
 `;
 
@@ -118,6 +118,32 @@ function PortfolioSection({ id }) {
           {portfolios && (
             <>
               <h2 style={{ marginBottom: "1rem 0", color: "black" }}>
+                {portfolios[1].name}{" "}
+                <FontAwesomeIcon className="portfolio_search" icon={faSearch} />{" "}
+              </h2>
+              <p>
+                {portfolios[1].date}
+                <br />
+                {portfolios[1].tags.map((tag, i) => {
+                  return (
+                    <span key={i} className="tag">
+                      {tag}
+                    </span>
+                  );
+                })}
+              </p>
+            </>
+          )}
+        </CardTitle>
+      </Link>
+    </PortfolioCard>,
+    <PortfolioCard options={options}>
+      <Link style={{ cursor: "unset" }} to="/portfolio/1">
+        <CardImg src="/images/blog/logo_poster.png" alt="portfolio2" />
+        <CardTitle className="card_title">
+          {portfolios && (
+            <>
+              <h2 style={{ marginBottom: "1rem 0", color: "black" }}>
                 {portfolios[0].name}{" "}
                 <FontAwesomeIcon className="portfolio_search" icon={faSearch} />{" "}
               </h2>
@@ -138,8 +164,8 @@ function PortfolioSection({ id }) {
       </Link>
     </PortfolioCard>,
     <PortfolioCard options={options}>
-      <Link style={{ cursor: "unset" }} to="/portfolio/2">
-        <CardImg src="/images/blog/logo_cha.png" alt="portfolio2" />
+      <Link style={{ cursor: "unset" }} to="/portfolio/3">
+        <CardImg src="/images/portfolio/portfolio_movie.jpg" alt="portfolio3" />
         <CardTitle className="card_title">
           {portfolios && (
             <>
@@ -163,32 +189,6 @@ function PortfolioSection({ id }) {
         </CardTitle>
       </Link>
     </PortfolioCard>,
-    <PortfolioCard options={options}>
-      <Link style={{ cursor: "unset" }} to="/portfolio/2">
-        <CardImg src="/images/blog/logo_poster.png" alt="portfolio2" />
-        <CardTitle className="card_title">
-          {portfolios && (
-            <>
-              <h2 style={{ marginBottom: "1rem 0", color: "black" }}>
-                {portfolios[1].name}{" "}
-                <FontAwesomeIcon className="portfolio_search" icon={faSearch} />{" "}
-              </h2>
-              <p>
-                {portfolios[1].date}
-                <br />
-                {portfolios[1].tags.map((tag, i) => {
-                  return (
-                    <span key={i} className="tag">
-                      {tag}
-                    </span>
-                  );
-                })}
-              </p>
-            </>
-          )}
-        </CardTitle>
-      </Link>
-    </PortfolioCard>,
   ];
   const portfolioDescComponent = (PortfolioNumber) => {
     switch (PortfolioNumber) {
@@ -196,26 +196,24 @@ function PortfolioSection({ id }) {
         return (
           <PortfolioDesc>
             <Link
-              to="/portfolio/2"
+              to="/portfolio/3"
               onClick={() => {
                 window.scrollTo({
                   top: 0,
                 });
               }}
             >
-              <h2 className="mobile_port_title">Noah world - Blog </h2>
+              <h2 className="mobile_port_title">Movie App</h2>
             </Link>
             <span className="tag">#React</span>
-            <span className="tag">#Nodejs</span>
-            <span className="tag">#Mysql</span>
-            <span className="tag">#AWS</span>
+            <span className="tag">#MongoDB</span>
           </PortfolioDesc>
         );
       case 1:
         return (
           <PortfolioDesc>
             <Link
-              to="/portfolio/1"
+              to="/portfolio/2"
               onClick={() => {
                 window.scrollTo({
                   top: 0,
@@ -234,7 +232,7 @@ function PortfolioSection({ id }) {
         return (
           <PortfolioDesc>
             <Link
-              to="/portfolio/3"
+              to="/portfolio/1"
               onClick={() => {
                 window.scrollTo({
                   top: 0,
@@ -244,6 +242,9 @@ function PortfolioSection({ id }) {
               <h2 className="mobile_port_title">Noah world - Blog </h2>
             </Link>
             <span className="tag">#React</span>
+            <span className="tag">#Nodejs</span>
+            <span className="tag">#Mysql</span>
+            <span className="tag">#AWS</span>
           </PortfolioDesc>
         );
       default:

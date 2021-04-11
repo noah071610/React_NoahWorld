@@ -77,7 +77,7 @@ const Poster = () => {
   return (
     <PosterWrapper>
       <PosterImg>
-        <img style={{ width: "80%" }} src={`/images/poster/skills.png`} alt="poster" />
+        <img style={{ width: "80%" }} src="/images/poster/Skills.png" alt="poster" />
         <Gear src="/images/poster/skills_decoration.png" />
         <GearRight src="/images/poster/skills_decoration.png" />
       </PosterImg>

@@ -200,8 +200,8 @@ export const languages = [
 
 //Portfolio
 
-export const portfolio1 = {
-  id: 1,
+export const portfolio2 = {
+  id: 2,
   name: "반응형 웹 포트폴리오 사이트",
   date: "2021/2~ 2021/3",
   tags: ["#Html", "#CSS", "#Javascript", "#React"],
@@ -210,13 +210,13 @@ export const portfolio1 = {
   <br />
   #필요없는 기능은 과감하게 제거했으며 최적화를 보장합니다.
   <br />
-  #야간모드 및 다양한 라이브러리를 이해하고 적용했습니다.`,
+  #다양한 라이브러리를 이해하고 적용했습니다.`,
   src: "/images/portfolio/portfolio1_main.png",
   git: "https://github.com/noah071610/React_Portfolio",
 };
 
-export const portfolio2 = {
-  id: 2,
+export const portfolio1 = {
+  id: 1,
   name: "Noah world Blog (개인 블로그)",
   date: "2021/2~ 2021/4",
   tags: ["#React", "#Nodejs", "#Mysql", "#AWS"],
@@ -326,15 +326,17 @@ export const portfolio2 = {
 
 export const portfolio3 = {
   id: 3,
-  name: "ss",
-  date: "2021/2~ 2021/3zz",
-  tags: ["#Html", "dd", "Javascript", "React"],
-  desc: `#반응형으로 모바일과 PC 둘 다 사용이 가능합니다.
-  <br />#<span class="marker">간결하고 직관적인</span> 페이지로 가독성을 높였습니다.
+  name: "Movie App",
+  date: "2020/12~ 2021/1",
+  tags: ["#Javascript", "#React", "#MongoDB"],
+  desc: `# 클론코딩 입니다.
+  <br />#<span class="marker">회원가입</span>및 로그인 로그아웃 기능을 포함합니다.
   <br />
-  #필요없는 기능은 과감하게 제거했으며 dd최적화를 보장합니다.
+  # movie API를 axios로 가져오고 즐겨찾기에 자신이 마음에 드는 영화를 추가할 수 있습니다.
   <br />
-  #야간모드 및 다양한 라이브러리를 이해하고 적용했습니다.`,
-  src: "/images/game.jpg",
-  git: "https://github.com/noah071610",
+  # Auth 시스템을 사용하여, 로그인하지 않은 사용자는 특정 페이지에 들어가지 못하도록 설정했습니다.
+  <br />
+  # 그외 라이브러리 및 추가 기능을 연습하기에 만족스러운 프로젝트 였습니다.`,
+  src: "/images/portfolio/portfolio_movie.jpg",
+  git: "https://github.com/React_Movie-App",
 };

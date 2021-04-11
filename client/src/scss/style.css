@@ -250,7 +250,7 @@ table {
 
 @media only screen and (max-width: 460px) {
   .react-3d-carousel {
-    height: 170px !important;
+    height: 150px !important;
   }
 }
 
