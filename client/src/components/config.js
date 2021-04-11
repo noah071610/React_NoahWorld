@@ -338,5 +338,5 @@ export const portfolio3 = {
   <br />
   # 그외 라이브러리 및 추가 기능을 연습하기에 만족스러운 프로젝트 였습니다.`,
   src: "/images/portfolio/portfolio_movie.jpg",
-  git: "https://github.com/React_Movie-App",
+  git: "https://github.com/noah071610/React_Movie-App",
 };

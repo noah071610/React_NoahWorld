@@ -1079,6 +1079,9 @@ h1 {
   img {
     width: 65%;
   }
+  p {
+    font-size: 1.1rem !important;
+  }
 }
 //===== BLOG MEDIA QUERY=========
 
@@ -1277,6 +1280,9 @@ h1 {
   .tui-editor-contents {
     img {
       width: 100%;
+    }
+    p {
+      font-size: 13px;
     }
   }
   .intro_me {
