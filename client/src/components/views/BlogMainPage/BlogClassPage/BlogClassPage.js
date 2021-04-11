@@ -238,7 +238,7 @@ function BlogClassPage() {
     setViewQuizAnswer(true);
   }, [quizAnswer]);
   return (
-    <>
+    <div style={{ width: "100%" }}>
       <ReactTitle title="Noah World - Korean Class" />
       {user && <HeaderProfile />}
       <MainPoster />
@@ -390,7 +390,7 @@ function BlogClassPage() {
           <div className="space" />
         </Col>
       </Row>
-    </>
+    </div>
   );
 }
 

@@ -9,13 +9,9 @@ router.post("/", async (req, res) => {
     if (req.body.keyword.length < 2) {
       res.status(401).json({ searchedKeyword: "need keyword more then 1 letter" });
     }
-    const searchPosts = await sequelize.query(
-      "SELECT * FROM portfolio_blog.posts WHERE title LIKE $1 or content Like $1",
-      {
-        bind: ["%" + req.body.keyword + "%"],
-        type: QueryTypes.SELECT,
-      }
-    );
+    const searchPosts = await Post.findAll({
+      where: { [Op.or]:{title:{[Op.like]: `%${req.body.keyword}%`}},{content:{[Op.like]: `%${req.body.keyword}%`}}}
+    })
     res.status(200).json({ searchPosts, searchedKeyword: req.body.keyword });
   } catch (error) {
     console.error(error);

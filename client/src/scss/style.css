@@ -976,6 +976,14 @@ h1 {
   border-color: #1187cf;
 }
 
+.blog_post_article {
+  width: 850px;
+}
+
+.blog_post_divier {
+  width: 850px;
+}
+
 .blog_comment_deleteModal {
   position: absolute;
   top: 0;
@@ -1402,6 +1410,12 @@ h1 {
   }
   .blog_category_header {
     display: block;
+  }
+  .blog_post_article {
+    width: 100%;
+  }
+  .blog_post_divier {
+    width: 100%;
   }
   .blog_header_nav {
     display: none;

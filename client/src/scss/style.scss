@@ -803,6 +803,12 @@ h1 {
         border-color: $BLUE_COLOR;
       }
     }
+    &_article {
+      width: 850px;
+    }
+    &_divier {
+      width: 850px;
+    }
   }
   &_comment {
     &_deleteModal {
@@ -1187,6 +1193,14 @@ h1 {
   .blog {
     &_category_header {
       display: block;
+    }
+    &_post {
+      &_article {
+        width: 100%;
+      }
+      &_divier {
+        width: 100%;
+      }
     }
     &_header {
       &_nav {

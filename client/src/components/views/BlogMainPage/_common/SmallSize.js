@@ -30,7 +30,7 @@ export function SmallPoster() {
           data-aos-anchor-placement="top-bottom"
           data-aos-delay="500"
           alt="class_intro_cha"
-          style={{ width: "30%" }}
+          style={{ width: "30%", height: "30%" }}
           src="./images/blog/logo_cha.png"
         />
       </div>

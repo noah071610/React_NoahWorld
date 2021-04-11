@@ -172,7 +172,7 @@ function BlogPostPage() {
             <meta property="og:url" content={`https://noahworld.site/${post?.id}`} />
           </MetaTags>
           <h1 className="post_main_title">{post.title}</h1>
-          <Divider style={{ width: "850px" }} />
+          <Divider className="blog_post_divier" />
           <ul
             style={{
               display: "flex",
@@ -187,7 +187,7 @@ function BlogPostPage() {
             <li>·&nbsp;{post.PostLikers.length} likes</li>
           </ul>
           <div style={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
-            <div className="blog_post_article" style={{ width: "850px" }}>
+            <div className="blog_post_article">
               <div className="tui-editor-contents" style={{ marginBottom: "3rem" }}>
                 {post?.thumbnail || post?.imagePath ? (
                   <>
