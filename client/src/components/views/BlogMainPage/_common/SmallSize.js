@@ -12,7 +12,12 @@ export function SmallPoster() {
         />
       </h2>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <img data-aos="fade-right" alt="class_poster_girl" src="/images/blog/class_study.png" />
+        <img
+          data-aos="fade-right"
+          alt="class_poster_girl"
+          src="/images/blog/class_study.png"
+          className="class_poster_girl"
+        />
       </div>
       <div
         style={{
