@@ -33,6 +33,7 @@ export function SmallPoster() {
           data-aos-delay="700"
           alt="class_intro_text"
           className="small_poster_cha"
+          style={{ width: "70%", height: "70%" }}
           src="./images/blog/kankokugo.png"
         />
         <img
