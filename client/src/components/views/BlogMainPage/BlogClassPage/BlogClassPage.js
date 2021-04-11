@@ -243,7 +243,7 @@ function BlogClassPage() {
       {user && <HeaderProfile />}
       <MainPoster />
       <SmallPoster />
-      <Row>
+      <Row style={{ width: "100%", margin: 0, padding: 0 }}>
         <Col style={{ padding: "1rem" }} md={24} lg={12}>
           <h2 className="blog_class_title">韓国語基礎</h2>
           <ClassLists>

@@ -385,6 +385,7 @@ h1 {
 }
 
 .space {
+  width: 100%;
   height: 5rem;
 }
 
@@ -1322,6 +1323,7 @@ h1 {
       }
 
       &_small_poster {
+        width: 100%;
         display: block;
         margin: 2rem 0;
         box-shadow: 4px 8px 10px 0px rgba(0, 0, 0, 0.15);

@@ -17,7 +17,14 @@ export function SmallPoster() {
         src="/images/blog/class_study.png"
         style={{ width: "100%" }}
       />
-      <div style={{ marginTop: "1rem", display: "flex", justifyContent: "center" }}>
+      <div
+        style={{
+          marginTop: "1rem",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "flex-end",
+        }}
+      >
         <img
           data-aos="fade-up"
           data-aos-anchor-placement="top-bottom"
