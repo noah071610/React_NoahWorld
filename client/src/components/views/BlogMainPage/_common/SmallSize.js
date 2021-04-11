@@ -11,13 +11,8 @@ export function SmallPoster() {
           src="https://img.icons8.com/plasticine/100/000000/south-korea.png"
         />
       </h2>
-      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-        <img
-          style={{ width: "90%" }}
-          data-aos="fade-right"
-          alt="class_poster_girl"
-          src="/images/blog/class_study.png"
-        />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <img data-aos="fade-right" alt="class_poster_girl" src="/images/blog/class_study.png" />
       </div>
       <div
         style={{

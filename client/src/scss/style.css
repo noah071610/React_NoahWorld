@@ -1551,6 +1551,9 @@ h1 {
     text-align: center;
     font-size: 2.5rem;
   }
+  .blog_class_small_poster .class_poster_girl {
+    width: 100%;
+  }
   .blog_class_poster {
     display: none;
   }
@@ -1661,6 +1664,9 @@ h1 {
   }
   .blog_class_small_poster h2 {
     font-size: 1.3rem;
+  }
+  .blog_class_small_poster .class_poster_girl {
+    width: 350px;
   }
   .blog_class_poster_girl {
     width: 300px;

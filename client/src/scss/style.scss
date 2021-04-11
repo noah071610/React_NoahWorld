@@ -1335,6 +1335,9 @@ h1 {
           text-align: center;
           font-size: 2.5rem;
         }
+        .class_poster_girl {
+          width: 100%;
+        }
       }
       &_poster {
         display: none;
@@ -1460,6 +1463,9 @@ h1 {
       &_small_poster {
         h2 {
           font-size: 1.3rem;
+        }
+        .class_poster_girl {
+          width: 350px;
         }
       }
       &_poster {
