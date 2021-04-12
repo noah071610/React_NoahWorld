@@ -216,20 +216,20 @@ export function WelcomeTable({ visible }) {
       <Divider />
       <Row style={{ margin: "2rem 0" }}>
         <Col style={{ borderRight: "1px solid rgba(0,0,0,0.1)" }} span={8}>
-          <h4>Comments</h4>
-          <h4 style={{ fontSize: "1rem", color: BLUE_COLOR }}>
+          <h4 style={{ fontSize: "0.85rem" }}>Comments</h4>
+          <h4 style={{ margin: "0.5rem 0", fontSize: "1rem", color: BLUE_COLOR }}>
             {user?.Comments ? user.Comments.length : 0}
           </h4>
         </Col>
         <Col style={{ borderRight: "1px solid rgba(0,0,0,0.1)" }} span={8}>
-          <h4>Likes</h4>
-          <h4 style={{ fontSize: "1rem", color: BLUE_COLOR }}>
+          <h4 style={{ fontSize: "0.85rem" }}>Likes</h4>
+          <h4 style={{ margin: "0.5rem 0", fontSize: "1rem", color: BLUE_COLOR }}>
             {user?.PostLiked ? user.PostLiked.length : 0}
           </h4>
         </Col>
         <Col span={8}>
-          <h4>Posts</h4>
-          <h4 style={{ fontSize: "1rem", color: BLUE_COLOR }}>
+          <h4 style={{ fontSize: "0.85rem" }}>Posts</h4>
+          <h4 style={{ margin: "0.5rem 0", fontSize: "1rem", color: BLUE_COLOR }}>
             {user?.Posts ? user.Posts.length : 0}
           </h4>
         </Col>

@@ -38,7 +38,7 @@ router.post("/images", upload.single("image"), async (req, res, next) => {
 });
 
 router.post("/image", upload.single("image"), async (req, res, next) => {
-  res.json(req.file.location.replace(/\/original\//, "/thumb/"));
+  res.json(req.file.location);
 });
 
 router.get("/class", async (req, res) => {

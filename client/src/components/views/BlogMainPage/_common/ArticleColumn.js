@@ -71,7 +71,7 @@ function ArticleColumn({ article, nocontent }) {
                     article.Hashtags?.length > 0
                       ? { margin: 0, WebkitLineClamp: 4, height: "5.1rem", lineHeight: "1.3" }
                       : {
-                          height: "6.4rem",
+                          height: "6.3rem",
                           WebkitLineClamp: 5,
                           marginBottom: "1.7rem",
                           lineHeight: "1.3",

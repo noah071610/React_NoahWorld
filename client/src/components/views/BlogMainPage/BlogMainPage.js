@@ -150,7 +150,7 @@ function BlogMainPage() {
         )}
         {/*Aside Manu*/}
         <aside className="blog_aside">
-          <div>
+          <div style={{ marginBottom: "1rem" }}>
             <h3
               style={{
                 display: "flex",
@@ -169,7 +169,7 @@ function BlogMainPage() {
             </h3>
             <ArticleAside type="like" article={mostLikedPost} />
           </div>
-          <div>
+          <div style={{ marginBottom: "1rem" }}>
             <h3
               style={{
                 display: "flex",

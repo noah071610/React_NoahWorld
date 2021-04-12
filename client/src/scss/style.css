@@ -125,7 +125,7 @@ section {
 
 body,
 html {
-  line-height: 1;
+  line-height: 1.2;
 }
 
 html {
@@ -1082,14 +1082,13 @@ h1 {
 
 .article_aside_header {
   font-size: 1.2rem;
-  margin: 0 0 0.5rem 0;
+  margin: 0.5rem 0;
   display: -webkit-box;
   word-wrap: break-word;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 2rem;
 }
 
 .article_img {
@@ -1110,7 +1109,6 @@ h1 {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 2rem;
 }
 
 .article_desc {
@@ -1250,6 +1248,11 @@ h1 {
 
 .login_title h1 {
   font-size: 3.3rem;
+}
+
+.login_title img {
+  width: 100px;
+  height: 100px;
 }
 
 .login_image {
@@ -1613,6 +1616,10 @@ h1 {
   .login_title h3 {
     font-size: 0.8rem;
   }
+  .login_title img {
+    width: 50px;
+    height: 50px;
+  }
   .intro_me {
     font-size: 1rem;
   }
@@ -1736,7 +1743,7 @@ h1 {
     height: 180px;
   }
   .article_header {
-    font-size: 1rem;
+    font-size: 1.1rem;
     height: 1.6rem;
   }
   .slide_menu li {
@@ -1756,10 +1763,10 @@ h1 {
     font-size: 1rem;
   }
   .blog_main_small {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
   .blog_main_small li {
-    font-size: 0.65rem;
+    font-size: 0.9rem;
   }
   .blog_footer_list li {
     font-size: 0.6rem;

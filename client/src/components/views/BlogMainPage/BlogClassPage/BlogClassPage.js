@@ -19,7 +19,7 @@ import QuizComponentSmall from "./Section/QuizComponentSmall";
 
 const ClassLists = styled.div`
   -ms-overflow-style: none;
-  overflow: auto;
+  overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -31,6 +31,7 @@ const NextBtn = styled.button`
   bottom: 0;
   right: 0;
   margin: 0.5rem;
+  padding: 0.5rem 0;
   width: 30%;
   background-color: white;
   color: black;
@@ -112,7 +113,7 @@ function BlogClassPage() {
       )}
       <MainPoster />
       <SmallPoster />
-      <Row style={{ width: "100%", margin: 0, padding: 0, overflowX: "hidden" }}>
+      <Row style={{ overflow: "hidden" }}>
         <Col style={{ padding: "1rem" }} md={24} lg={12}>
           <h2 className="blog_class_title">韓国語基礎</h2>
           <ClassLists>
@@ -123,9 +124,22 @@ function BlogClassPage() {
                     onClick={() => window.scrollTo({ top: 0 })}
                     to={`/class/post/${v.id}`}
                     className="blog_class_list"
+                    style={{ alignItems: "center" }}
                   >
                     <div style={{ fontSize: "2rem", marginRight: "1rem" }}>0{i + 1}</div>
-                    <span style={{ fontSize: "1.2rem", display: "flex", alignItems: "center" }}>
+                    <span
+                      style={{
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                        height: "0.9rem",
+                        WebkitLineClamp: 1,
+                        lineHeight: 1.1,
+                        wordWrap: "break-word",
+                        overflow: "hidden",
+                        fontSize: "0.9rem",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
                       {v.title}
                     </span>
                   </Link>
