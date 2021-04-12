@@ -19,7 +19,7 @@ const QuizWrapper = styled.div`
       justify-content: space-between;
       align-items: center;
       right: 5%;
-      bottom: 1.3%;
+      bottom: 1.4%;
     }
   }
 `;

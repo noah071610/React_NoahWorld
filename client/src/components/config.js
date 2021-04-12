@@ -208,7 +208,7 @@ export const portfolio2 = {
   desc: `#반응형으로 모바일과 PC 둘 다 사용이 가능합니다.
   <br />#<span class="marker">간결하고 직관적인</span> 페이지로 가독성을 높였습니다.
   <br />
-  #필요없는 기능은 과감하게 제거했으며 최적화를 보장합니다.
+  #필요없는 기능은 과감하게 제거했습니다.
   <br />
   #다양한 라이브러리를 이해하고 적용했습니다.`,
   src: "/images/portfolio/portfolio1_main.png",
@@ -217,11 +217,11 @@ export const portfolio2 = {
 
 export const portfolio1 = {
   id: 1,
-  name: "Noah world Blog (개인 블로그)",
+  name: "Noah world Blog",
   date: "2021/2~ 2021/4",
   tags: ["#React", "#Nodejs", "#Mysql", "#AWS"],
-  desc: `<h1 style="font-size:2rem;" >Noah World - Place to step up 👨‍💻
-  </h1><br data-tomark-pass="">
+  desc: `<h2 >Noah World - Place to step up 👨‍💻
+  </h2><br data-tomark-pass="">
   <h3 data-tomark-pass="">반갑습니다. 신뢰를 주는 장현수(Noah) 입니다. 😸
   </h3><br data-tomark-pass="">
   <span style="color:rgba(0, 0, 0, 0.85)" data-tomark-pass="">성급하지 않지만, 꾸준히, 누구보다 즐겁고 열정 있게 신입 프론트엔드 개발자라는 목표를 향해 나아가고 있습니다.&nbsp;</span><br data-tomark-pass="">
@@ -330,7 +330,7 @@ export const portfolio3 = {
   date: "2020/12~ 2021/1",
   tags: ["#Javascript", "#React", "#MongoDB"],
   desc: `# 클론코딩 입니다.
-  <br />#<span class="marker">회원가입</span>및 로그인 로그아웃 기능을 포함합니다.
+  <br />#<span class="marker">회원가입및 로그인 로그아웃 기능을 포함합니다.</span>
   <br />
   # movie API를 axios로 가져오고 즐겨찾기에 자신이 마음에 드는 영화를 추가할 수 있습니다.
   <br />

@@ -51,9 +51,7 @@ function SkillSection({ id }) {
         </Row>
         <Divider orientation="left">
           <h4 style={{ textAlign: "start" }}>Sub skills</h4>
-          <SkillDescDivider>
-            초록불은 주스킬과 연계해서 응용까지 공부한 스킬입니다.
-          </SkillDescDivider>
+          <SkillDescDivider>초록불은 응용까지 공부한 스킬입니다.</SkillDescDivider>
         </Divider>
         <Row style={{ marginTop: "2rem" }}>
           {sub_skills.map((skill, i) => {
