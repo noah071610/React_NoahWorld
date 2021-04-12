@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Articles from "../_common/Articles";
 import Title from "../_common/Title";
 import { Carousel } from "3d-react-carousal";
 import styled from "styled-components";
 import VanillaTilt from "vanilla-tilt";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -83,28 +83,41 @@ const CardImg = styled.img`
   }
 `;
 
-const PortfolioDesc = styled.div`
+const PortfolioSmall = styled.div`
   display: none;
-  margin-bottom: 1rem;
-  @media only screen and (max-width: 650px) {
-    padding-right: 2.3rem;
-  }
-  @media only screen and (max-width: 460px) {
-    padding-right: 1.3rem;
+  @media only screen and (max-width: 550px) {
     display: block;
-    text-align: end;
+    width: 100%;
+    height: 200px;
+    position: relative;
+    margin-bottom: 5rem;
+    cursor: pointer;
+  }
+`;
+
+const PortfolioDesc = styled.div`
+  display: block;
+  text-align: end;
+  position: absolute;
+  background-color: white;
+  bottom: -2rem;
+  right: -0.5rem;
+  padding: 1.5rem;
+  box-shadow: 4px 8px 21px 1px rgba(0, 0, 0, 0.15);
+  h2 {
+    margin: 0;
   }
 `;
 
 function PortfolioSection({ id }) {
-  const [PortfolioNumber, setPortfolioNumber] = useState(2);
+  const { portfolios } = useSelector((state) => state.blog);
+  const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
       type: LOAD_PORTFOLIOS,
     });
   }, [dispatch]);
-  const { portfolios } = useSelector((state) => state.blog);
   const options = {
     scale: 1.1,
     speed: 700,
@@ -190,92 +203,50 @@ function PortfolioSection({ id }) {
       </Link>
     </PortfolioCard>,
   ];
-  const portfolioDescComponent = (PortfolioNumber) => {
-    switch (PortfolioNumber) {
-      case 0:
-        return (
-          <PortfolioDesc>
-            <Link
-              to="/portfolio/3"
-              onClick={() => {
-                window.scrollTo({
-                  top: 0,
-                });
-              }}
-            >
-              <h2 className="mobile_port_title">Movie App</h2>
-            </Link>
-            <span className="tag">#React</span>
-            <span className="tag">#MongoDB</span>
-          </PortfolioDesc>
-        );
-      case 1:
-        return (
-          <PortfolioDesc>
-            <Link
-              to="/portfolio/2"
-              onClick={() => {
-                window.scrollTo({
-                  top: 0,
-                });
-              }}
-            >
-              <h2 className="mobile_port_title">반응형 웹 포트폴리오 사이트 </h2>
-            </Link>
-            <span className="tag">#Html</span>
-            <span className="tag">#Css</span>
-            <span className="tag">#React</span>
-          </PortfolioDesc>
-        );
-
-      case 2:
-        return (
-          <PortfolioDesc>
-            <Link
-              to="/portfolio/1"
-              onClick={() => {
-                window.scrollTo({
-                  top: 0,
-                });
-              }}
-            >
-              <h2 className="mobile_port_title">Noah world - Blog </h2>
-            </Link>
-            <span className="tag">#React</span>
-            <span className="tag">#Nodejs</span>
-            <span className="tag">#Mysql</span>
-            <span className="tag">#AWS</span>
-          </PortfolioDesc>
-        );
-      default:
-        break;
-    }
-  };
-  const onClickCardHandler = (selected) => {
-    if (selected === "slider-right") {
-      setPortfolioNumber(PortfolioNumber + 1);
-      return;
-    }
-    if (selected === "slider-left") {
-      setPortfolioNumber(PortfolioNumber - 1);
-      return;
-    }
-  };
-  if (PortfolioNumber === -1) {
-    setPortfolioNumber(slides.length - 1);
-  }
-  if (PortfolioNumber === slides.length) {
-    setPortfolioNumber(0);
-  }
   return (
     <section id={id}>
       <div className="space" />
       <Articles>
         <Title title="Portfolio" sub="최고가 아니더라도 항상 최선을 다합니다." />
-        <div className="carousel_wrapper" onClick={(e) => onClickCardHandler(e.target.className)}>
+        <div className="carousel_wrapper">
           <Carousel slides={slides} autoplay={false} />
         </div>
-        {portfolioDescComponent(PortfolioNumber)}
+        {portfolios.map((v, i) => {
+          return (
+            <>
+              <PortfolioSmall
+                key={i}
+                onClick={() => {
+                  history.push(`/portfolio/${v.id}`);
+                  window.scrollTo({ top: 0 });
+                }}
+              >
+                <img
+                  style={{ width: "100%", height: "200px", border: "1px solid rgba(0,0,0,0.1)" }}
+                  src={v.src}
+                  alt="portfolio_image"
+                />
+                <PortfolioDesc>
+                  <Link
+                    to={`/portfolio/${v.id}`}
+                    onClick={() => {
+                      window.scrollTo({
+                        top: 0,
+                      });
+                    }}
+                  >
+                    <h2 className="mobile_port_title">{v.name}</h2>
+                  </Link>
+                  {v.tags.map((tag, i) => (
+                    <span key={i} className="tag">
+                      {tag}
+                    </span>
+                  ))}
+                </PortfolioDesc>
+              </PortfolioSmall>
+            </>
+          );
+        })}
       </Articles>
     </section>
   );

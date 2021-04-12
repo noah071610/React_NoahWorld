@@ -55,13 +55,7 @@ function ContactSection({ id }) {
               방문해주셔서 감사합니다 😄.
             </P>
           </Col>
-          <ContactLinkBox
-            data-aos="fade-left"
-            data-aos-delay="500"
-            data-aos-duration="1000"
-            xs={24}
-            lg={12}
-          >
+          <ContactLinkBox xs={24} lg={12}>
             <ContactLink href="mailto:noah071610@naver.com">
               <img
                 alt="contact_link"

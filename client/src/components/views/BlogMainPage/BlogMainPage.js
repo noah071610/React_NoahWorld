@@ -256,7 +256,9 @@ function BlogMainPage() {
               hashtags.map((v, i) => {
                 return (
                   <li key={i}>
-                    <Link to={`/hashtag/${v.name}`}>#{v.name}</Link>
+                    <Link onClick={() => window.scrollTo({ top: 0 })} to={`/hashtag/${v.name}`}>
+                      #{v.name}
+                    </Link>
                   </li>
                 );
               })}

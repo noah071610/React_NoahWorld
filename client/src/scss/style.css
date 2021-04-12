@@ -160,6 +160,11 @@ table {
   border-spacing: 0;
 }
 
+.poster_slider {
+  width: 50%;
+  margin: 0 auto;
+}
+
 .poster_slider button {
   visibility: hidden;
 }
@@ -234,6 +239,7 @@ table {
 
 .react-3d-carousel {
   height: 380px !important;
+  display: block;
 }
 
 @media only screen and (max-width: 992px) {
@@ -248,9 +254,9 @@ table {
   }
 }
 
-@media only screen and (max-width: 460px) {
+@media only screen and (max-width: 550px) {
   .react-3d-carousel {
-    height: 150px !important;
+    display: none;
   }
 }
 
@@ -1591,12 +1597,15 @@ h1 {
   .youtube {
     height: 300px;
   }
+  .poster_slider {
+    width: 100%;
+  }
   .profile_table {
     display: block;
   }
   .search_title {
     margin: 3rem 1rem;
-    font-size: 2rem;
+    font-size: 1.4rem;
   }
   .login_title h1 {
     font-size: 2rem;
@@ -1684,8 +1693,8 @@ h1 {
     font-size: 1.3rem;
   }
   .blog_class_small_poster .class_poster_girl {
-    width: 350px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
   }
   .blog_class_poster_girl {
     width: 300px;

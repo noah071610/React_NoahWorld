@@ -3,12 +3,18 @@ import styled from "styled-components";
 
 const Div = styled.div`
   padding: 1rem 1rem 2rem 1rem;
+  .articles_div {
+    width: 90%;
+    margin: 0 auto;
+    @media only screen and (max-width: 660px) {
+      width:100%;
+  }
 `;
 
 function Articles({ children, title, sub }) {
   return (
     <Div className="articles">
-      <div style={{ width: "90%", margin: "0 auto" }}>{children}</div>
+      <div className="articles_div">{children}</div>
     </Div>
   );
 }

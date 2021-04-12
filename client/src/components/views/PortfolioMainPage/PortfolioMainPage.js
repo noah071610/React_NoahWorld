@@ -122,7 +122,7 @@ const PortfolioMainPage = ({ mobileSize }) => {
               <IntroImg span={12}>
                 <Img data-aos="fade-down" data-aos-duration="800" src="./images/profile.jpg" />
               </IntroImg>
-              <IntroMe data-aos="fade-down" data-aos-duration="800" data-aos-delay="100" span={12}>
+              <IntroMe span={12}>
                 <h3>
                   신뢰를 주는 <span className="marker">장현수</span> 입니다.
                 </h3>
@@ -131,12 +131,12 @@ const PortfolioMainPage = ({ mobileSize }) => {
                   목표를향해 나아가고 있습니다.
                 </p>
                 <ul>
-                  <li data-aos="fade-down" data-aos-duration="800" data-aos-delay="300">
+                  <li>
                     <a href="https://github.com/noah071610" target="_blank" rel="noreferrer">
                       <SocialIcon className="social_icon" icon={faGithub} />
                     </a>
                   </li>
-                  <li data-aos="fade-down" data-aos-duration="800" data-aos-delay="400">
+                  <li>
                     <a
                       href="https://www.instagram.com/salmonchobab/"
                       target="_blank"
@@ -145,7 +145,7 @@ const PortfolioMainPage = ({ mobileSize }) => {
                       <SocialIcon className="social_icon" icon={faInstagram} />
                     </a>
                   </li>
-                  <li data-aos="fade-down" data-aos-duration="800" data-aos-delay="500">
+                  <li>
                     <a href="mailto:noah071610@naver.com">
                       <SocialIcon className="social_icon" icon={faEnvelope} />
                     </a>
@@ -157,31 +157,13 @@ const PortfolioMainPage = ({ mobileSize }) => {
               Main Value
             </Divider>
             <Row>
-              <ValueCard
-                data-aos="flip-up"
-                data-aos-duration="500"
-                data-aos-delay="400"
-                xs={24}
-                md={8}
-              >
+              <ValueCard xs={24} md={8}>
                 <CardContent contents={CardContents[0]} />
               </ValueCard>
-              <ValueCard
-                data-aos="flip-up"
-                data-aos-duration="500"
-                data-aos-delay="600"
-                xs={24}
-                md={8}
-              >
+              <ValueCard xs={24} md={8}>
                 <CardContent contents={CardContents[1]} />
               </ValueCard>
-              <ValueCard
-                data-aos="flip-up"
-                data-aos-duration="500"
-                data-aos-delay="700"
-                xs={24}
-                md={8}
-              >
+              <ValueCard xs={24} md={8}>
                 <CardContent contents={CardContents[2]} />
               </ValueCard>
             </Row>

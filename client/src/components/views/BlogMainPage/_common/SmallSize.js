@@ -11,37 +11,11 @@ export function SmallPoster() {
           src="https://img.icons8.com/plasticine/100/000000/south-korea.png"
         />
       </h2>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
         <img
           alt="class_poster_girl"
           src="/images/blog/class_study.png"
           className="class_poster_girl"
-        />
-      </div>
-      <div
-        style={{
-          marginTop: "1rem",
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "flex-end",
-          width: "100%",
-        }}
-      >
-        <img
-          data-aos="fade-up"
-          data-aos-anchor-placement="top-bottom"
-          data-aos-delay="700"
-          alt="class_intro_text"
-          className="small_poster_cha"
-          src="./images/blog/kankokugo.png"
-          style={{ width: "50%", height: "100%" }}
-        />
-        <img
-          data-aos-anchor-placement="top-bottom"
-          data-aos-delay="500"
-          alt="class_intro_cha"
-          style={{ width: "30%", height: "30%" }}
-          src="./images/blog/logo_cha.png"
         />
       </div>
     </section>

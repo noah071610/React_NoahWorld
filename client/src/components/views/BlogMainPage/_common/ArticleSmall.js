@@ -44,7 +44,7 @@ function ArticleSmall({ post }) {
       <img
         style={{ width: "110px", height: "80px" }}
         src={post?.thumbnail ? post.thumbnail : post.imagePath?.replace(/\/thumb\//, "/original/")}
-        alt="ss"
+        alt="thumbnail"
       />
       <div>
         <p style={{ margin: "0 0 0.5rem 1rem", height: "100%" }}>{post.title} </p>

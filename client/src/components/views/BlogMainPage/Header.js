@@ -30,13 +30,6 @@ function Header() {
   useEffect(() => {
     function scrollCallBack() {
       if (window.scrollY >= 275) {
-        if (
-          document.documentElement.clientHeight > 703 &&
-          document.documentElement.clientHeight < 776
-        ) {
-          setFixedNavbar(false);
-          return;
-        }
         setFixedNavbar(true);
       } else {
         setFixedNavbar(false);

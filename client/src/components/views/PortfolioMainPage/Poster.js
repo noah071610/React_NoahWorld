@@ -37,6 +37,12 @@ const PosterImg = styled.div`
   justify-content: center;
   max-width: 450px;
   position: relative;
+  .poster_img {
+    width: 80%;
+    @media only screen and (max-width: 400px) {
+      height: 250px;
+    }
+  }
 `;
 
 const Title = styled.div`
@@ -77,7 +83,7 @@ const Poster = () => {
   return (
     <PosterWrapper>
       <PosterImg>
-        <img style={{ width: "80%" }} src="/images/poster/Skills.png" alt="poster" />
+        <img className="poster_img" src="/images/poster/Skills.png" alt="poster" />
         <Gear src="/images/poster/skills_decoration.png" />
         <GearRight src="/images/poster/skills_decoration.png" />
       </PosterImg>
@@ -86,11 +92,7 @@ const Poster = () => {
           <h2 style={{ fontSize: "2rem" }}>Jang Hyun Soo</h2>
         </div>
         <div>
-          <Slider
-            className="poster_slider"
-            style={{ width: "50%", margin: "0 auto" }}
-            {...settings}
-          >
+          <Slider className="poster_slider" {...settings}>
             <div>
               <h4 style={{ margin: "1rem 0", textAlign: "center" }}>Hi! I'm a Web-developer 💻</h4>
             </div>

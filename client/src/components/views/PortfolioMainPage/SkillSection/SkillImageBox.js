@@ -43,7 +43,7 @@ const Title = styled.h4`
   margin-top: 0.5rem;
   font-size: 0.8rem;
   @media only screen and (max-width: 532px) {
-    font-size: 0.3rem;
+    font-size: 0.6rem;
   }
 `;
 
