@@ -88,7 +88,11 @@ export function BlogHeader() {
           </Link>
         </li>
         <li className="blog_header_li">
-          <Link onClick={() => window.scrollTo({ top: 0 })} to={"/class"}>
+          <Link
+            style={{ display: "flex", alignItems: "center" }}
+            onClick={() => window.scrollTo({ top: 0 })}
+            to={"/class"}
+          >
             Korean Class for &nbsp;
             <img
               style={{ width: "1.5rem" }}

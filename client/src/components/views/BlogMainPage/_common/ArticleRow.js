@@ -47,7 +47,7 @@ function ArticleRow({ article }) {
           </div>
           <div className="article_contents">
             <h2 className="article_header">{article.title}</h2>
-            <ul className="article_tag">
+            <ul style={{ marginBottom: "1rem" }} className="article_tag">
               {article.Hashtags &&
                 article.Hashtags.map((v, i) => {
                   return (
@@ -66,10 +66,10 @@ function ArticleRow({ article }) {
             <p
               style={{
                 width: "100%",
-                height: "7rem",
+                height: "7.2rem",
                 overflow: "hidden",
                 margin: 0,
-                WebkitLineClamp: 5,
+                WebkitLineClamp: 6,
               }}
               className="article_desc"
             >

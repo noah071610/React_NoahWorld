@@ -50,7 +50,7 @@ function ArticleColumn({ article, nocontent }) {
             </h2>
             {nocontent ? null : (
               <>
-                <ul>
+                <ul style={{ marginBottom: "1rem" }}>
                   {article.Hashtags &&
                     article.Hashtags.map((v, i) => {
                       return (
@@ -69,8 +69,13 @@ function ArticleColumn({ article, nocontent }) {
                 <p
                   style={
                     article.Hashtags?.length > 0
-                      ? null
-                      : { height: "5.6rem", WebkitLineClamp: 4, marginBottom: "1.7rem" }
+                      ? { margin: 0, height: "4.4rem", lineHeight: "1.5" }
+                      : {
+                          height: "6rem",
+                          WebkitLineClamp: 4,
+                          marginBottom: "1.7rem",
+                          lineHeight: "1.5",
+                        }
                   }
                   className="article_desc"
                 >
@@ -79,7 +84,10 @@ function ArticleColumn({ article, nocontent }) {
               </>
             )}
           </div>
-          <ul className="article_footer">
+          <ul
+            style={article.Hashtags?.length > 0 ? { marginTop: "1rem" } : { marginTop: "1.7rem" }}
+            className="article_footer"
+          >
             <li>
               {dayjs().to(dayjs(article.createdAt), true)}
               &nbsp;ago

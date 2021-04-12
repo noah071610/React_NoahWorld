@@ -151,7 +151,15 @@ function BlogMainPage() {
         {/*Aside Manu*/}
         <aside className="blog_aside">
           <div>
-            <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
+            <h3
+              style={{
+                display: "flex",
+                alignItems: "center",
+                margin: 0,
+                fontSize: "1.2rem",
+                padding: "0 1rem",
+              }}
+            >
               <img
                 alt="trophy"
                 className="icon"
@@ -162,7 +170,15 @@ function BlogMainPage() {
             <ArticleAside type="like" article={mostLikedPost} />
           </div>
           <div>
-            <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
+            <h3
+              style={{
+                display: "flex",
+                alignItems: "center",
+                margin: 0,
+                fontSize: "1.2rem",
+                padding: "0 1rem",
+              }}
+            >
               <img
                 alt="view_log"
                 className="icon"
@@ -173,7 +189,15 @@ function BlogMainPage() {
             <ArticleAside type="view" article={mostViewedPost} />
           </div>
           <div style={{ marginBottom: "1rem" }}>
-            <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
+            <h3
+              style={{
+                display: "flex",
+                alignItems: "center",
+                margin: 0,
+                fontSize: "1.2rem",
+                padding: "0 1rem",
+              }}
+            >
               <img
                 alt="comment_log"
                 className="icon"
@@ -185,9 +209,17 @@ function BlogMainPage() {
           </div>
 
           <div style={{ marginBottom: "1rem" }}>
-            <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
+            <h3
+              style={{
+                display: "flex",
+                alignItems: "center",
+                margin: 0,
+                fontSize: "1.2rem",
+                padding: "0 1rem",
+              }}
+            >
               <img
-                alt="view_log"
+                alt="hash_tag"
                 className="icon"
                 src="https://img.icons8.com/ios/100/000000/hashtag.png"
               />
@@ -267,7 +299,7 @@ function BlogMainPage() {
       </div>
       <section style={{ width: "100%", marginRight: "2rem" }}>
         <Divider orientation="left">
-          <Link to={"/class"}>
+          <Link style={{ display: "flex", alignItems: "center" }} to={"/class"}>
             Korean Class for &nbsp;
             <img
               alt="japan_flag"
