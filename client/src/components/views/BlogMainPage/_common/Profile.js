@@ -177,7 +177,7 @@ function HeaderProfile() {
     <>
       {user && (
         <>
-          <Row className={"blog_header_profile display"}>
+          <Row className={"blog_header_profile"}>
             <Col style={{ paddingRight: "1rem", marginBottom: "1.5rem" }} xs={24} lg={6}>
               <div
                 style={{

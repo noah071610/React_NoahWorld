@@ -98,7 +98,7 @@ function RemoteControl({ Fullcontent }) {
         top: "5.375rem",
       }}
     >
-      <h2 style={{ fontSize: "1rem" }}>{post.title}</h2>
+      <h2 style={{ fontSize: "1rem", marginBottom: "1rem", lineHeight: "1.5" }}>{post.title}</h2>
       <ul style={{ overflow: "hidden" }}>
         <li style={{ margin: 0 }}>
           <Link to={"/"}>

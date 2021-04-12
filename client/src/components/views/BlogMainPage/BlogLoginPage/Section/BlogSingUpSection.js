@@ -43,7 +43,7 @@ function BlogSignUpSection({ onClickLogin }) {
   return (
     <>
       <div className="login_title" style={{ margin: "3rem 0" }}>
-        <h1>
+        <h1 style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
           Sign Up now!{" "}
           <img
             alt="signup_icon"

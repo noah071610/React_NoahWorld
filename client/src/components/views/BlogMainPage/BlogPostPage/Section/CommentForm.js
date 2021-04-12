@@ -114,7 +114,11 @@ function CommentForm() {
         </div>
         <div style={{ marginLeft: "2rem", width: "100%" }}>
           <TextArea value={content} onChange={onChangeContent} className="comment_textArea" />
-          <button onClick={onClickAddComment} className="public_btn comment_btn">
+          <button
+            style={{ padding: "0.5rem 0" }}
+            onClick={onClickAddComment}
+            className="public_btn comment_btn"
+          >
             COMMENT
           </button>
         </div>

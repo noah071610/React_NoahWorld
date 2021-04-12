@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 dayjs.locale("kor");
 
 const Wrapper = styled.div`
-  padding: 0 0.5rem;
+  padding: 0.5rem;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -34,7 +34,6 @@ const Title = styled.h3`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 1.5rem;
 `;
 
 function ArticlePost({ post, active }) {

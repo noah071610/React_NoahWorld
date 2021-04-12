@@ -48,11 +48,14 @@ export function MainPoster() {
           overflow: "hidden",
         }}
       >
-        <h2 style={{ paddingLeft: "0.5rem" }} className="blog_class_poster_title">
+        <h2
+          style={{ paddingLeft: "0.5rem", display: "flex", alignItems: "center" }}
+          className="blog_class_poster_title"
+        >
           楽しく始まる韓国語教室
           <img
             alt="class_poster_flag"
-            style={{ width: "3rem", paddingBottom: "0.7rem", marginLeft: "0.5rem" }}
+            style={{ width: "3rem", marginLeft: "0.5rem" }}
             src="https://img.icons8.com/plasticine/100/000000/south-korea.png"
           />
         </h2>
@@ -90,11 +93,11 @@ export function RecentTableComment({ visible }) {
             history.push(`/${recentCommentPost?.category}/post/${recentCommentPost?.id}`)
           }
         >
-          <h3>
+          <h3 style={{ margin: "1rem 0" }}>
             · Post Number:{" "}
             <span style={{ color: BLUE_COLOR, marginLeft: "0.3rem" }}>{recentCommentPost?.id}</span>{" "}
           </h3>
-          <h3>
+          <h3 style={{ margin: "1rem 0" }}>
             · Post Title: <br />
           </h3>
           <span
@@ -109,7 +112,7 @@ export function RecentTableComment({ visible }) {
           >
             {recentCommentPost?.title}
           </span>
-          <h3>
+          <h3 style={{ margin: "1rem 0" }}>
             · Your comment:
             <br />
           </h3>
@@ -157,11 +160,11 @@ export function RecentTableView({ visible }) {
         <div
           onClick={() => history.push(`/${recentViewPost?.category}/post/${recentViewPost?.id}`)}
         >
-          <h3>
+          <h3 style={{ margin: "1rem 0" }}>
             · Post Number:{" "}
             <span style={{ color: BLUE_COLOR, marginLeft: "0.3rem" }}>{recentViewPost?.id}</span>
           </h3>
-          <h3>
+          <h3 style={{ margin: "1rem 0" }}>
             · Post Title: <br />
           </h3>
           <span
@@ -176,7 +179,7 @@ export function RecentTableView({ visible }) {
           >
             {recentViewPost?.title}
           </span>
-          <h3>
+          <h3 style={{ margin: "1rem 0" }}>
             · Total Post Views:
             <span style={{ color: BLUE_COLOR, marginLeft: "0.3rem" }}>{recentViewPost?.hit}</span>
           </h3>

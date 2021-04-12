@@ -171,7 +171,9 @@ function BlogPostPage() {
             />
             <meta property="og:url" content={`https://noahworld.site/${post?.id}`} />
           </MetaTags>
-          <h1 className="post_main_title">{post.title}</h1>
+          <h1 style={{ lineHeight: "1.5" }} className="post_main_title">
+            {post.title}
+          </h1>
           <Divider className="blog_post_divier" />
           <ul
             style={{
@@ -228,7 +230,7 @@ function BlogPostPage() {
               >
                 <div
                   style={{
-                    padding: "0.5rem",
+                    padding: "1rem 0.5rem",
                     display: "flex",
                     justifyContent: "space-between",
                     borderBottom: "1px solid rgba(0, 0, 0, 0.1)",

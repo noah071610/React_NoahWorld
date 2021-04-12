@@ -141,6 +141,7 @@ function SubComments({ subComment, CommentId }) {
                   style={{
                     fontSize: "1rem",
                     display: "inline-block",
+                    marginBottom: "0.5rem",
                   }}
                 >
                   {subComment.User.name}{" "}

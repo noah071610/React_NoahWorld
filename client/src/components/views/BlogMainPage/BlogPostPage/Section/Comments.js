@@ -192,6 +192,7 @@ function Comments({ comment }) {
                   style={{
                     fontSize: "1rem",
                     display: "inline-block",
+                    marginBottom: "0.5rem",
                   }}
                 >
                   {comment.User.name}{" "}

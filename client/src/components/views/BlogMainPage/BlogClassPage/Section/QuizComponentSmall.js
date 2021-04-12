@@ -19,13 +19,13 @@ const QuizWrapper = styled.div`
       justify-content: space-between;
       align-items: center;
       right: 5%;
-      bottom: 1.4%;
+      bottom: 2.3%;
     }
   }
 `;
 const KakaoContent = styled.div`
   font-size: 0.9rem;
-  padding: 0.3rem 0.5rem;
+  padding: 0.5rem;
   background-color: ${(props) => (props.whiteType ? "rgb(235, 235, 235)" : "#ffe941")};
   border-radius: 3px;
   margin-bottom: 1rem;

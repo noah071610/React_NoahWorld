@@ -45,9 +45,7 @@ function ArticleColumn({ article, nocontent }) {
             />
           </div>
           <div>
-            <h2 style={nocontent ? { height: "2rem" } : null} className="article_header">
-              {article.title}
-            </h2>
+            <h2 className="article_header">{article.title}</h2>
             {nocontent ? null : (
               <>
                 <ul style={{ marginBottom: "1rem" }}>
