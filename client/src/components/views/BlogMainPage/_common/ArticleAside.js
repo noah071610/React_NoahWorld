@@ -55,7 +55,10 @@ function ArticleAside({ article, type }) {
                 ? article.PostLikers.length + " Likes"
                 : article.hit + " views"}
             </span>
-            <h2 style={{ marginTop: "0.5rem" }} className="article_aside_header">
+            <h2
+              style={{ margin: "0.5rem 0 0.8rem 0", height: "1.5rem", lineHeight: "1.5" }}
+              className="article_aside_header"
+            >
               {article.title}
             </h2>
             <ul className="article_footer">

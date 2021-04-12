@@ -234,7 +234,12 @@ function PortfolioSection({ id }) {
                     });
                   }}
                 >
-                  <h2 className="mobile_port_title">{v.name}</h2>
+                  <h2
+                    style={{ fontSize: "1rem", marginBottom: "0.5rem" }}
+                    className="mobile_port_title"
+                  >
+                    {v.name}
+                  </h2>
                 </Link>
                 {v.tags.map((tag, i) => (
                   <span key={i} className="tag">

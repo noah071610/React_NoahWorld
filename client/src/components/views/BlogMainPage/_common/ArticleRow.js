@@ -68,7 +68,7 @@ function ArticleRow({ article }) {
             <p
               style={{
                 width: "100%",
-                height: "7.7rem",
+                height: "7.9rem",
                 overflow: "hidden",
                 lineHeight: "1.3",
                 margin: 0,

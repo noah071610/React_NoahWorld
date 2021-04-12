@@ -34,7 +34,7 @@ const Signal = styled.div`
 `;
 
 const TdImg = styled.td`
-  width: 30%;
+  width: 40%;
   margin: auto 0;
   position: relative;
   @media only screen and (max-width: 768px) {
@@ -53,7 +53,7 @@ const Table = styled.table`
   width: 100%;
   margin: 1.5rem auto;
   p {
-    width: 90%;
+    width: 100%;
     font-size: 0.8rem;
     text-align: start;
     margin: 0;
@@ -73,7 +73,7 @@ function SkillBox(props) {
     <Col xs={24} md={12} style={{ display: "flex" }}>
       <Table>
         <tbody>
-          <tr>
+          <tr style={{ display: "flex", alignItems: "center" }}>
             <TdImg>
               <div style={{ margin: "0 auto", width: "60%", position: "relative" }}>
                 <Img style={{ width: "100%" }} alt={props.name} src={props.src} />
@@ -89,7 +89,7 @@ function SkillBox(props) {
                 paddingLeft: "0.5rem",
               }}
             >
-              <p>{props.desc}</p>
+              <p style={{ lineHeight: "1.5" }}>{props.desc}</p>
             </td>
           </tr>
         </tbody>

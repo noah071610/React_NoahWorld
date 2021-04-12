@@ -464,7 +464,6 @@ export function BlogSmallHeader() {
                 <li> - Daily</li>
               </Link>
               <Link
-                style={{ display: "flex", alignItems: "center" }}
                 onClick={() => {
                   window.scrollTo({ top: 0 });
                   dispatch({
@@ -473,7 +472,7 @@ export function BlogSmallHeader() {
                 }}
                 to={"/class"}
               >
-                <li>
+                <li style={{ display: "flex", alignItems: "center" }}>
                   - Korean Class for &nbsp;
                   <img
                     style={{ width: "1.5rem" }}

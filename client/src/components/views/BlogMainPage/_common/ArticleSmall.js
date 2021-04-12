@@ -8,7 +8,7 @@ dayjs.locale("kor");
 
 const Article = styled.article`
   width: 100%;
-  padding: 1rem;
+  padding: 1rem 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   align-items: center;
   transition: all 0.3s;

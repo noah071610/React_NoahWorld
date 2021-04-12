@@ -114,7 +114,9 @@ const CardContent = ({ contents }) => {
       </ValueShape>
       <ValueContent>
         <h3>{contents.title}</h3>
-        <p style={{ width: "80%" }}>{contents.desc}</p>
+        <p style={{ width: "100%", lineHeight: "1.5", fontSize: "0.9rem", margin: "1rem auto" }}>
+          {contents.desc}
+        </p>
       </ValueContent>
     </>
   );

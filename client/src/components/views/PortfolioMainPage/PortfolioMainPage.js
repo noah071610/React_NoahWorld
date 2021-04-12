@@ -29,9 +29,10 @@ const Img = styled.img`
 
 const IntroImg = styled.div`
   width: 50%;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
   @media only screen and (max-width: 600px) {
     width: 100%;
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -76,6 +77,7 @@ const SocialIcon = styled(FontAwesomeIcon)`
 
 const ValueCard = styled(Col)`
   width: 100%;
+  padding: 0 1rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -126,7 +128,7 @@ const PortfolioMainPage = ({ mobileSize }) => {
                 <h3>
                   신뢰를 주는 <span className="marker">장현수</span> 입니다.
                 </h3>
-                <p>
+                <p style={{ lineHeight: "1.5", fontSize: "0.9rem" }}>
                   성급하지 않지만 꾸준히, 누구보다 즐겁고 열정있게 신입 프론트엔드 개발자라는
                   목표를향해 나아가고 있습니다.
                 </p>

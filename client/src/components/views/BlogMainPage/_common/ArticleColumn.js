@@ -69,9 +69,9 @@ function ArticleColumn({ article, nocontent }) {
                 <p
                   style={
                     article.Hashtags?.length > 0
-                      ? { margin: 0, WebkitLineClamp: 4, height: "4.8rem", lineHeight: "1.3" }
+                      ? { margin: 0, WebkitLineClamp: 4, height: "5.1rem", lineHeight: "1.3" }
                       : {
-                          height: "6.1rem",
+                          height: "6.4rem",
                           WebkitLineClamp: 5,
                           marginBottom: "1.7rem",
                           lineHeight: "1.3",

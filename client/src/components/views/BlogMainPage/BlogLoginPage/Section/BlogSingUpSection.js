@@ -46,6 +46,7 @@ function BlogSignUpSection({ onClickLogin }) {
         <h1 style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
           Sign Up now!{" "}
           <img
+            style={{ marginLeft: "1rem" }}
             alt="signup_icon"
             src="https://img.icons8.com/bubbles/100/000000/add-user-male.png"
           />
