@@ -82,7 +82,8 @@ function BlogPostPage() {
           )}"></iframe>`;
         }
         if (v.match(/(#[^\s#+^<]+)/g)) {
-          return `<a class="hashtag" href='/hashtag/${v.slice(1)}'>${v}</a>`;
+          return `<a class="hashtag" target="_blank"
+          rel="noreferrer" href="https://noahworld.site/hashtag/${v.slice(1)}">${v}</a>`;
         }
         return v;
       });
