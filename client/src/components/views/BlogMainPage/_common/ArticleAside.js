@@ -55,7 +55,9 @@ function ArticleAside({ article, type }) {
                 ? article.PostLikers.length + " Likes"
                 : article.hit + " views"}
             </span>
-            <h2 className="article_aside_header">{article.title}</h2>
+            <h2 style={{ marginTop: "0.5rem" }} className="article_aside_header">
+              {article.title}
+            </h2>
             <ul className="article_footer">
               <li className="date">
                 {dayjs().to(dayjs(article.createdAt), true)}

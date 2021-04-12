@@ -50,7 +50,7 @@ const KakaoContent = styled.div`
   button {
     margin-top: 0.5rem;
     font-size: 1rem;
-    padding: 0.2rem 0.8rem;
+    padding: 0.5rem 1rem;
     float: right;
   }
 `;

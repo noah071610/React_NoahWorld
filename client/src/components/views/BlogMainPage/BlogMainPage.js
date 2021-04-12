@@ -241,7 +241,9 @@ function BlogMainPage() {
       <div className="blog_md_aside">
         <Divider />
         <div>
-          <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
+          <h3
+            style={{ display: "flex", alignItems: "center", fontSize: "1.2rem", padding: "0 1rem" }}
+          >
             <img
               alt="trophy"
               className="icon"
@@ -252,7 +254,9 @@ function BlogMainPage() {
           <ArticleSmallAside type="like" article={mostLikedPost} />
         </div>
         <div>
-          <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
+          <h3
+            style={{ display: "flex", alignItems: "center", fontSize: "1.2rem", padding: "0 1rem" }}
+          >
             <img
               alt="view_log"
               className="icon"
@@ -263,7 +267,9 @@ function BlogMainPage() {
           <ArticleSmallAside type="view" article={mostViewedPost} />
         </div>
         <div>
-          <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
+          <h3
+            style={{ display: "flex", alignItems: "center", fontSize: "1.2rem", padding: "0 1rem" }}
+          >
             <img
               alt="comment_log"
               className="icon"
@@ -275,9 +281,11 @@ function BlogMainPage() {
         </div>
         <Divider />
         <div style={{ marginBottom: "2rem" }}>
-          <h3 style={{ fontSize: "1.2rem", padding: "0 1rem" }}>
+          <h3
+            style={{ display: "flex", alignItems: "center", fontSize: "1.2rem", padding: "0 1rem" }}
+          >
             <img
-              alt="view_log"
+              alt="hashtag"
               className="icon"
               src="https://img.icons8.com/ios/100/000000/hashtag.png"
             />

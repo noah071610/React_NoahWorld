@@ -45,7 +45,9 @@ function ArticleColumn({ article, nocontent }) {
             />
           </div>
           <div>
-            <h2 className="article_header">{article.title}</h2>
+            <h2 style={{ height: "auto" }} className="article_header">
+              {article.title}
+            </h2>
             {nocontent ? null : (
               <>
                 <ul style={{ marginBottom: "1rem" }}>
@@ -67,12 +69,12 @@ function ArticleColumn({ article, nocontent }) {
                 <p
                   style={
                     article.Hashtags?.length > 0
-                      ? { margin: 0, height: "4.4rem", lineHeight: "1.5" }
+                      ? { margin: 0, WebkitLineClamp: 4, height: "4.8rem", lineHeight: "1.3" }
                       : {
-                          height: "6rem",
-                          WebkitLineClamp: 4,
+                          height: "6.1rem",
+                          WebkitLineClamp: 5,
                           marginBottom: "1.7rem",
-                          lineHeight: "1.5",
+                          lineHeight: "1.3",
                         }
                   }
                   className="article_desc"

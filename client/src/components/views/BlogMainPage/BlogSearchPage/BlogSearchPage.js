@@ -38,7 +38,7 @@ function BlogSearchPage() {
   };
   return (
     <>
-      <h2 className="search_title">
+      <h2 style={{ lineHeight: "1.3" }} className="search_title">
         SEARCH POSTS <br className="br_search" />
         <span style={{ color: BLUE_COLOR }}>"{searchedKeyword && searchedKeyword}"</span>
         <span style={{ color: BLUE_COLOR, margin: "0 1rem", fontSize: "1.2rem" }}>
@@ -68,7 +68,7 @@ function BlogSearchPage() {
               alt="noComment"
               src="https://icons.iconarchive.com/icons/iconsmind/outline/256/Inbox-Empty-icon.png"
             />
-            <h3>Couldn't find posts with your keyword.</h3>
+            <h3 style={{ textAlign: "center" }}>Couldn't find posts with your keyword.</h3>
           </div>
         )}
       </ul>

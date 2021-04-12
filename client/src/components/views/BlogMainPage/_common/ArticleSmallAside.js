@@ -50,7 +50,9 @@ function ArticleSmallAside({ article, type }) {
                 ? article.PostLikers.length + " Likes"
                 : article.hit + " views"}
             </span>
-            <h2 className="article_aside_header small_title">{article.title}</h2>
+            <h2 style={{ marginTop: "1rem" }} className="article_aside_header small_title">
+              {article.title}
+            </h2>
           </div>
         </Article>
       )}

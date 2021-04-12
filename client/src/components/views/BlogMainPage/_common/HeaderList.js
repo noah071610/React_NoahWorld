@@ -39,8 +39,6 @@ const PostTitle = styled.h4`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 1.2rem;
-  margin-bottom: 0.2rem;
 `;
 
 export function BlogHeader() {
@@ -431,7 +429,7 @@ export function BlogSmallHeader() {
           />
           <div style={{ display: "flex", marginTop: "1rem" }}>
             <ul style={{ margin: 0, width: "50%", paddingRight: "1rem" }}>
-              <h2>Blog</h2>
+              <h2 style={{ margin: "0 0 1rem 0" }}>Blog</h2>
               <Link
                 onClick={() => {
                   window.scrollTo({ top: 0 });
@@ -466,6 +464,7 @@ export function BlogSmallHeader() {
                 <li> - Daily</li>
               </Link>
               <Link
+                style={{ display: "flex", alignItems: "center" }}
                 onClick={() => {
                   window.scrollTo({ top: 0 });
                   dispatch({
@@ -498,8 +497,7 @@ export function BlogSmallHeader() {
                 borderLeft: "1px solid rgba(0,0,0,0.1)",
               }}
             >
-              <h2>Direct Link</h2>
-
+              <h2 style={{ margin: "0 0 1rem 0" }}>Direct Link</h2>
               <Link
                 onClick={() => {
                   window.scrollTo({ top: 0 });

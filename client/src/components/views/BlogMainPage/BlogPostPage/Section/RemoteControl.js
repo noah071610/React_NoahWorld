@@ -106,7 +106,7 @@ function RemoteControl({ Fullcontent }) {
           </Link>
         </li>
         <Divider type="vertical" />
-        <li style={{ margin: 0 }}>
+        <li style={{ margin: "0 0 1rem 0" }}>
           <a
             onClick={() =>
               history.push(`/${post.category === "culture" ? "class" : post.category}`)

@@ -48,7 +48,7 @@ function BlogHashtagPage() {
   };
   return (
     <>
-      <h2 className="search_title">
+      <h2 style={{ lineHeight: "1.3" }} className="search_title">
         SEARCH TAGS <br className="br_search" />
         <span style={{ color: BLUE_COLOR }}>"#{hashtagName && hashtagName}"</span>
         <span style={{ color: BLUE_COLOR, margin: "0 1rem", fontSize: "1.2rem" }}>
@@ -78,7 +78,7 @@ function BlogHashtagPage() {
               alt="noComment"
               src="https://icons.iconarchive.com/icons/iconsmind/outline/256/Inbox-Empty-icon.png"
             />
-            <h3>Couldn't find Hashtags</h3>
+            <h3 style={{ textAlign: "center" }}>Couldn't find Hashtags</h3>
           </div>
         )}
       </ul>

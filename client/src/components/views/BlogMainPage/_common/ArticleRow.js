@@ -46,7 +46,9 @@ function ArticleRow({ article }) {
             />
           </div>
           <div className="article_contents">
-            <h2 className="article_header">{article.title}</h2>
+            <h2 style={{ height: "auto" }} className="article_header">
+              {article.title}
+            </h2>
             <ul style={{ marginBottom: "1rem" }} className="article_tag">
               {article.Hashtags &&
                 article.Hashtags.map((v, i) => {
