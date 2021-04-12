@@ -211,7 +211,7 @@ function PortfolioSection({ id }) {
         <div className="carousel_wrapper">
           <Carousel slides={slides} autoplay={false} />
         </div>
-        {portfolios.map((v, i) => {
+        {portfolios?.map((v, i) => {
           return (
             <>
               <PortfolioSmall
