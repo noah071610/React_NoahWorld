@@ -213,38 +213,36 @@ function PortfolioSection({ id }) {
         </div>
         {portfolios?.map((v, i) => {
           return (
-            <>
-              <PortfolioSmall
-                key={i}
-                onClick={() => {
-                  history.push(`/portfolio/${v.id}`);
-                  window.scrollTo({ top: 0 });
-                }}
-              >
-                <img
-                  style={{ width: "100%", height: "200px", border: "1px solid rgba(0,0,0,0.1)" }}
-                  src={v.src}
-                  alt="portfolio_image"
-                />
-                <PortfolioDesc>
-                  <Link
-                    to={`/portfolio/${v.id}`}
-                    onClick={() => {
-                      window.scrollTo({
-                        top: 0,
-                      });
-                    }}
-                  >
-                    <h2 className="mobile_port_title">{v.name}</h2>
-                  </Link>
-                  {v.tags.map((tag, i) => (
-                    <span key={i} className="tag">
-                      {tag}
-                    </span>
-                  ))}
-                </PortfolioDesc>
-              </PortfolioSmall>
-            </>
+            <PortfolioSmall
+              key={i}
+              onClick={() => {
+                history.push(`/portfolio/${v.id}`);
+                window.scrollTo({ top: 0 });
+              }}
+            >
+              <img
+                style={{ width: "100%", height: "200px", border: "1px solid rgba(0,0,0,0.1)" }}
+                src={v.src}
+                alt="portfolio_image"
+              />
+              <PortfolioDesc>
+                <Link
+                  to={`/portfolio/${v.id}`}
+                  onClick={() => {
+                    window.scrollTo({
+                      top: 0,
+                    });
+                  }}
+                >
+                  <h2 className="mobile_port_title">{v.name}</h2>
+                </Link>
+                {v.tags.map((tag, i) => (
+                  <span key={i} className="tag">
+                    {tag}
+                  </span>
+                ))}
+              </PortfolioDesc>
+            </PortfolioSmall>
           );
         })}
       </Articles>

@@ -174,7 +174,7 @@ function RemoteControl({ Fullcontent }) {
       <Divider style={{ margin: "0.5rem 0 3rem 0" }} />
       <Scrollspy
         style={{ margin: 0 }}
-        items={headers}
+        items={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
         currentClassName="blog_post_selected"
         offset={300}
       >
