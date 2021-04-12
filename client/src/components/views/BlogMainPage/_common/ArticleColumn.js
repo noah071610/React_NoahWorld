@@ -69,12 +69,19 @@ function ArticleColumn({ article, nocontent }) {
                 <p
                   style={
                     article.Hashtags?.length > 0
-                      ? { margin: 0, WebkitLineClamp: 4, height: "5.1rem", lineHeight: "1.3" }
+                      ? {
+                          margin: 0,
+                          WebkitLineClamp: 4,
+                          height: "5.1rem",
+                          lineHeight: "1.7",
+                          fontSize: "0.8rem",
+                        }
                       : {
-                          height: "6.3rem",
+                          height: "6.5rem",
                           WebkitLineClamp: 5,
-                          marginBottom: "1.7rem",
-                          lineHeight: "1.3",
+                          marginBottom: "1.5rem",
+                          lineHeight: "1.7",
+                          fontSize: "0.8rem",
                         }
                   }
                   className="article_desc"
