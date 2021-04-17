@@ -205,12 +205,12 @@ export const portfolio2 = {
   name: "반응형 웹 포트폴리오 사이트",
   date: "2021/2~ 2021/3",
   tags: ["#Html", "#CSS", "#Javascript", "#React"],
-  desc: `#반응형으로 모바일과 PC 둘 다 사용이 가능합니다.
+  desc: `# 반응형으로 모바일과 PC 둘 다 사용이 가능합니다.
   <br />#<span class="marker">간결하고 직관적인</span> 페이지로 가독성을 높였습니다.
   <br />
-  #필요없는 기능은 과감하게 제거했습니다.
+  # 필요없는 기능은 과감하게 제거했습니다.
   <br />
-  #다양한 라이브러리를 이해하고 적용했습니다.`,
+  # 다양한 라이브러리를 이해하고 적용했습니다.`,
   src: "/images/portfolio/portfolio1_main.png",
   git: "https://github.com/noah071610/React_Portfolio",
 };
