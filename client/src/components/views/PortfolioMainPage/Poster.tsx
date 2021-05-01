@@ -1,4 +1,3 @@
-import React from "react";
 import styled, { keyframes } from "styled-components";
 import { useHistory } from "react-router";
 import Slider from "react-slick";

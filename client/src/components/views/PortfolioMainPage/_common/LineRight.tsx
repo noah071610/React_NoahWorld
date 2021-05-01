@@ -1,8 +1,7 @@
-import React from "react";
+import { GRAY_COLOR, MAIN_COLOR } from "src/components/config";
 import styled from "styled-components";
-import { GRAY_COLOR, MAIN_COLOR } from "../../config";
 
-const Div = styled.div`
+const Divder = styled.div`
   position: relative;
   width: 100%;
   height: 1px;
@@ -20,7 +19,7 @@ const Div = styled.div`
 `;
 
 function LineRight() {
-  return <Div></Div>;
+  return <Divder />;
 }
 
 export default LineRight;

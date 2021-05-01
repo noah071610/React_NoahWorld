@@ -1,8 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 import { GRAY_COLOR, MAIN_COLOR } from "../../../config";
 
-const Div = styled.div`
+const Divder = styled.div`
   position: relative;
   width: 100%;
   margin: 0.5rem auto;
@@ -21,7 +20,7 @@ const Div = styled.div`
 `;
 
 function DividerLeftPoint() {
-  return <Div />;
+  return <Divder />;
 }
 
 export default DividerLeftPoint;

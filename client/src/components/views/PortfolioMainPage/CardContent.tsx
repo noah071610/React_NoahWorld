@@ -1,5 +1,5 @@
-import React from "react";
 import styled from "styled-components";
+import { FC } from "react";
 import { MAIN_COLOR } from "../../config";
 
 const Square = styled.div`
@@ -51,7 +51,7 @@ const Img = styled.div`
   }
 `;
 
-const H4 = styled.h4`
+const SqureTitle = styled.h4`
   background-color: white;
   user-select: none;
   color: black;
@@ -94,7 +94,18 @@ const ValueContent = styled.div`
   }
 `;
 
-const CardContent = ({ contents }) => {
+interface Contents {
+  squareTitle: string;
+  src: string;
+  title: string;
+  desc: string;
+}
+
+interface ContentType {
+  contents: Contents;
+}
+
+const CardContent: FC<ContentType> = ({ contents }) => {
   return (
     <>
       <ValueShape>
@@ -108,7 +119,7 @@ const CardContent = ({ contents }) => {
                 width: "60px",
               }}
             />
-            <H4>{contents.squareTitle}</H4>
+            <SqureTitle>{contents.squareTitle}</SqureTitle>
           </Img>
         </Square>
       </ValueShape>

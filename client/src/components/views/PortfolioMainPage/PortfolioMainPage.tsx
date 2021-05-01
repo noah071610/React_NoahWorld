@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { CardContents, SUB_COLOR } from "../../config";
+// @ts-ignore
 import { ReactTitle } from "react-meta-tags";
 import Col from "antd/lib/col";
 import Row from "antd/lib/row";
@@ -93,7 +94,7 @@ const MobileHome = styled.div`
   overflow: hidden;
 `;
 
-const PortfolioMainPage = ({ mobileSize }) => {
+const PortfolioMainPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
@@ -121,10 +122,10 @@ const PortfolioMainPage = ({ mobileSize }) => {
           <Articles>
             <Title title="Introduce" sub="신뢰를 바탕으로 함께 발전합니다." />
             <Row>
-              <IntroImg span={12}>
+              <IntroImg>
                 <Img data-aos="fade-down" data-aos-duration="800" src="./images/profile.jpg" />
               </IntroImg>
-              <IntroMe span={12}>
+              <IntroMe>
                 <h3>
                   신뢰를 주는 <span className="marker">장현수</span> 입니다.
                 </h3>

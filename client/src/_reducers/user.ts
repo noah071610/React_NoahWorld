@@ -1,4 +1,59 @@
 import produce from "../util/produce";
+import { UserInter } from "./@reducerTypes";
+
+export interface UserState {
+  user: UserInter | null;
+  imagePath: string | null;
+  confirmPassword: Boolean;
+
+  logInLoading: Boolean;
+  logInDone: Boolean;
+  logInError: Boolean | Error;
+
+  logInGoogleLoading: Boolean;
+  logInGoogleDone: Boolean;
+  logInGoogleError: Boolean | Error;
+
+  logOutLoading: Boolean;
+  logOutDone: Boolean;
+  logOutError: Boolean | Error;
+
+  loadInfoLoading: Boolean;
+  loadInfoDone: Boolean;
+  loadInfoError: Boolean | Error;
+
+  signUpLoading: Boolean;
+  signUpDone: Boolean;
+  signUpError: Boolean | Error;
+
+  addIconLoading: Boolean;
+  addIconDone: Boolean;
+  addIconError: Boolean | Error;
+
+  addIconUrlLoading: Boolean;
+  addIconUrlDone: Boolean;
+  addIconUrlError: Boolean | Error;
+
+  removeIconLoading: Boolean;
+  removeIconDone: Boolean;
+  removeIconError: Boolean | Error;
+
+  confirmPasswordLoading: Boolean;
+  confirmPasswordDone: Boolean;
+  confirmPasswordError: Boolean | Error;
+
+  withDrawalLoading: Boolean;
+  withDrawalDone: Boolean;
+  withDrawalError: Boolean | Error;
+
+  changePasswordLoading: Boolean;
+  changePasswordDone: Boolean;
+  changePasswordError: Boolean | Error;
+
+  changeNameLoading: Boolean;
+  changeNameDone: Boolean;
+  changeNameError: Boolean | Error;
+}
 
 const initialState = {
   user: null,
@@ -7,118 +62,118 @@ const initialState = {
 
   logInLoading: false,
   logInDone: false,
-  logInError: null,
+  logInError: false,
 
   logInGoogleLoading: false,
   logInGoogleDone: false,
-  logInGoogleError: null,
+  logInGoogleError: false,
 
   logOutLoading: false,
   logOutDone: false,
-  logOutError: null,
+  logOutError: false,
 
   loadInfoLoading: false,
   loadInfoDone: false,
-  loadInfoError: null,
+  loadInfoError: false,
 
   signUpLoading: false,
   signUpDone: false,
-  signUpError: null,
+  signUpError: false,
 
   addIconLoading: false,
   addIconDone: false,
-  addIconError: null,
+  addIconError: false,
 
   addIconUrlLoading: false,
   addIconUrlDone: false,
-  addIconUrlError: null,
+  addIconUrlError: false,
 
   removeIconLoading: false,
   removeIconDone: false,
-  removeIconError: null,
+  removeIconError: false,
 
   confirmPasswordLoading: false,
   confirmPasswordDone: false,
-  confirmPasswordError: null,
+  confirmPasswordError: false,
 
   withDrawalLoading: false,
   withDrawalDone: false,
-  withDrawalError: null,
+  withDrawalError: false,
 
   changePasswordLoading: false,
   changePasswordDone: false,
-  changePasswordError: null,
+  changePasswordError: false,
 
   changeNameLoading: false,
   changeNameDone: false,
-  changeNameError: null,
+  changeNameError: false,
 };
 
-export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
-export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
-export const LOG_IN_FAILURE = "LOG_IN_FAILURE";
-export const LOG_IN_CLEAR = "LOG_IN_CLEAR";
+export const LOG_IN_REQUEST = "LOG_IN_REQUEST" as const;
+export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS" as const;
+export const LOG_IN_FAILURE = "LOG_IN_FAILURE" as const;
+export const LOG_IN_CLEAR = "LOG_IN_CLEAR" as const;
 
-export const LOG_IN_GOOGLE_REQUEST = "LOG_IN_GOOGLE_REQUEST";
-export const LOG_IN_GOOGLE_SUCCESS = "LOG_IN_GOOGLE_SUCCESS";
-export const LOG_IN_GOOGLE_FAILURE = "LOG_IN_GOOGLE_FAILURE";
-export const LOG_IN_GOOGLE_CLEAR = "LOG_IN_GOOGLE_CLEAR";
+export const LOG_IN_GOOGLE_REQUEST = "LOG_IN_GOOGLE_REQUEST" as const;
+export const LOG_IN_GOOGLE_SUCCESS = "LOG_IN_GOOGLE_SUCCESS" as const;
+export const LOG_IN_GOOGLE_FAILURE = "LOG_IN_GOOGLE_FAILURE" as const;
+export const LOG_IN_GOOGLE_CLEAR = "LOG_IN_GOOGLE_CLEAR" as const;
 
-export const LOG_OUT_REQUEST = "LOG_OUT_REQUEST";
-export const LOG_OUT_SUCCESS = "LOG_OUT_SUCCESS";
-export const LOG_OUT_FAILURE = "LOG_OUT_FAILURE";
-export const LOG_OUT_CLEAR = "LOG_OUT_CLEAR";
+export const LOG_OUT_REQUEST = "LOG_OUT_REQUEST" as const;
+export const LOG_OUT_SUCCESS = "LOG_OUT_SUCCESS" as const;
+export const LOG_OUT_FAILURE = "LOG_OUT_FAILURE" as const;
+export const LOG_OUT_CLEAR = "LOG_OUT_CLEAR" as const;
 
-export const SIGN_UP_REQUEST = "SIGN_UP_REQUEST";
-export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
-export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
-export const SIGN_UP_CLEAR = "SIGN_UP_CLEAR";
+export const SIGN_UP_REQUEST = "SIGN_UP_REQUEST" as const;
+export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS" as const;
+export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE" as const;
+export const SIGN_UP_CLEAR = "SIGN_UP_CLEAR" as const;
 
-export const LOAD_INFO_REQUEST = "LOAD_INFO_REQUEST";
-export const LOAD_INFO_SUCCESS = "LOAD_INFO_SUCCESS";
-export const LOAD_INFO_FAILURE = "LOAD_INFO_FAILURE";
+export const LOAD_INFO_REQUEST = "LOAD_INFO_REQUEST" as const;
+export const LOAD_INFO_SUCCESS = "LOAD_INFO_SUCCESS" as const;
+export const LOAD_INFO_FAILURE = "LOAD_INFO_FAILURE" as const;
 
-export const ADD_ICON_REQUEST = "ADD_ICON_REQUEST";
-export const ADD_ICON_SUCCESS = "ADD_ICON_SUCCESS";
-export const ADD_ICON_FAILURE = "ADD_ICON_FAILURE";
-export const ADD_ICON_CLEAR = "ADD_ICON_CLEAR";
+export const ADD_ICON_REQUEST = "ADD_ICON_REQUEST" as const;
+export const ADD_ICON_SUCCESS = "ADD_ICON_SUCCESS" as const;
+export const ADD_ICON_FAILURE = "ADD_ICON_FAILURE" as const;
+export const ADD_ICON_CLEAR = "ADD_ICON_CLEAR" as const;
 
-export const ADD_ICON_URL_REQUEST = "ADD_ICON_URL_REQUEST";
-export const ADD_ICON_URL_SUCCESS = "ADD_ICON_URL_SUCCESS";
-export const ADD_ICON_URL_FAILURE = "ADD_ICON_URL_FAILURE";
-export const ADD_ICON_URL_CLEAR = "ADD_ICON_URL_CLEAR";
+export const ADD_ICON_URL_REQUEST = "ADD_ICON_URL_REQUEST" as const;
+export const ADD_ICON_URL_SUCCESS = "ADD_ICON_URL_SUCCESS" as const;
+export const ADD_ICON_URL_FAILURE = "ADD_ICON_URL_FAILURE" as const;
+export const ADD_ICON_URL_CLEAR = "ADD_ICON_URL_CLEAR" as const;
 
-export const REMOVE_ICON_REQUEST = "REMOVE_ICON_REQUEST";
-export const REMOVE_ICON_SUCCESS = "REMOVE_ICON_SUCCESS";
-export const REMOVE_ICON_FAILURE = "REMOVE_ICON_FAILURE";
-export const REMOVE_ICON_CLEAR = "REMOVE_ICON_CLEAR";
+export const REMOVE_ICON_REQUEST = "REMOVE_ICON_REQUEST" as const;
+export const REMOVE_ICON_SUCCESS = "REMOVE_ICON_SUCCESS" as const;
+export const REMOVE_ICON_FAILURE = "REMOVE_ICON_FAILURE" as const;
+export const REMOVE_ICON_CLEAR = "REMOVE_ICON_CLEAR" as const;
 
-export const CHANGE_PASSWORD_REQUEST = "CHANGE_PASSWORD_REQUEST";
-export const CHANGE_PASSWORD_SUCCESS = "CHANGE_PASSWORD_SUCCESS";
-export const CHANGE_PASSWORD_FAILURE = "CHANGE_PASSWORD_FAILURE";
-export const CHANGE_PASSWORD_CLEAR = "CHANGE_PASSWORD_CLEAR";
+export const CHANGE_PASSWORD_REQUEST = "CHANGE_PASSWORD_REQUEST" as const;
+export const CHANGE_PASSWORD_SUCCESS = "CHANGE_PASSWORD_SUCCESS" as const;
+export const CHANGE_PASSWORD_FAILURE = "CHANGE_PASSWORD_FAILURE" as const;
+export const CHANGE_PASSWORD_CLEAR = "CHANGE_PASSWORD_CLEAR" as const;
 
-export const CHANGE_NAME_REQUEST = "CHANGE_NAME_REQUEST";
-export const CHANGE_NAME_SUCCESS = "CHANGE_NAME_SUCCESS";
-export const CHANGE_NAME_FAILURE = "CHANGE_NAME_FAILURE";
-export const CHANGE_NAME_CLEAR = "CHANGE_NAME_CLEAR";
+export const CHANGE_NAME_REQUEST = "CHANGE_NAME_REQUEST" as const;
+export const CHANGE_NAME_SUCCESS = "CHANGE_NAME_SUCCESS" as const;
+export const CHANGE_NAME_FAILURE = "CHANGE_NAME_FAILURE" as const;
+export const CHANGE_NAME_CLEAR = "CHANGE_NAME_CLEAR" as const;
 
-export const WITHDRWAL_REQUEST = "WITHDRWAL_REQUEST";
-export const WITHDRWAL_SUCCESS = "WITHDRWAL_SUCCESS";
-export const WITHDRWAL_FAILURE = "WITHDRWAL_FAILURE";
-export const WITHDRWAL_CLEAR = "WITHDRWAL_CLEAR";
+export const WITHDRWAL_REQUEST = "WITHDRWAL_REQUEST" as const;
+export const WITHDRWAL_SUCCESS = "WITHDRWAL_SUCCESS" as const;
+export const WITHDRWAL_FAILURE = "WITHDRWAL_FAILURE" as const;
+export const WITHDRWAL_CLEAR = "WITHDRWAL_CLEAR" as const;
 
-export const CONFIRM_PASSWORD_REQUEST = "CONFIRM_PASSWORD_REQUEST";
-export const CONFIRM_PASSWORD_SUCCESS = "CONFIRM_PASSWORD_SUCCESS";
-export const CONFIRM_PASSWORD_FAILURE = "CONFIRM_PASSWORD_FAILURE";
-export const CONFIRM_PASSWORD_CLEAR = "CONFIRM_PASSWORD_CLEAR";
+export const CONFIRM_PASSWORD_REQUEST = "CONFIRM_PASSWORD_REQUEST" as const;
+export const CONFIRM_PASSWORD_SUCCESS = "CONFIRM_PASSWORD_SUCCESS" as const;
+export const CONFIRM_PASSWORD_FAILURE = "CONFIRM_PASSWORD_FAILURE" as const;
+export const CONFIRM_PASSWORD_CLEAR = "CONFIRM_PASSWORD_CLEAR" as const;
 
-const reducer = (state = initialState, action) =>
-  produce(state, (draft) => {
+const reducer = (state: UserState = initialState, action: any) =>
+  produce(state, (draft: any) => {
     switch (action.type) {
       case LOG_IN_REQUEST:
         draft.logInLoading = true;
-        draft.logInError = null;
+        draft.logInError = false;
         draft.logInDone = false;
         break;
       case LOG_IN_SUCCESS:
@@ -131,12 +186,12 @@ const reducer = (state = initialState, action) =>
         draft.logInError = action.error;
         break;
       case LOG_IN_CLEAR:
-        draft.logInError = null;
+        draft.logInError = false;
         draft.logInDone = false;
         break;
       case LOG_IN_GOOGLE_REQUEST:
         draft.logInGoogleLoading = true;
-        draft.logInGoogleError = null;
+        draft.logInGoogleError = false;
         draft.logInGoogleDone = false;
         break;
       case LOG_IN_GOOGLE_SUCCESS:
@@ -149,30 +204,30 @@ const reducer = (state = initialState, action) =>
         draft.logInGoogleError = action.error;
         break;
       case LOG_IN_GOOGLE_CLEAR:
-        draft.logInGoogleError = null;
+        draft.logInGoogleError = false;
         draft.logInGoogleDone = false;
         break;
       case LOG_OUT_REQUEST:
         draft.logOutLoading = true;
-        draft.logOutError = null;
+        draft.logOutError = false;
         draft.logOutDone = false;
         break;
       case LOG_OUT_SUCCESS:
         draft.logOutLoading = false;
         draft.logOutDone = true;
-        draft.user = null;
+        draft.user = false;
         break;
       case LOG_OUT_FAILURE:
         draft.logOutLoading = false;
         draft.logOutError = action.error;
         break;
       case LOG_OUT_CLEAR:
-        draft.logOutError = null;
+        draft.logOutError = false;
         draft.logOutDone = false;
         break;
       case LOAD_INFO_REQUEST:
         draft.loadInfoLoading = true;
-        draft.loadInfoDone = null;
+        draft.loadInfoDone = false;
         draft.loadInfoError = false;
         break;
       case LOAD_INFO_SUCCESS:
@@ -186,7 +241,7 @@ const reducer = (state = initialState, action) =>
         break;
       case SIGN_UP_REQUEST:
         draft.signUpLoading = true;
-        draft.signUpError = null;
+        draft.signUpError = false;
         draft.signUpDone = false;
         break;
       case SIGN_UP_SUCCESS:
@@ -199,12 +254,12 @@ const reducer = (state = initialState, action) =>
         draft.signUpError = action.error;
         break;
       case SIGN_UP_CLEAR:
-        draft.signUpError = null;
+        draft.signUpError = false;
         draft.signUpDone = false;
         break;
       case ADD_ICON_REQUEST:
         draft.addIconLoading = true;
-        draft.addIconError = null;
+        draft.addIconError = false;
         draft.addIconDone = false;
         break;
       case ADD_ICON_SUCCESS:
@@ -219,11 +274,11 @@ const reducer = (state = initialState, action) =>
       case ADD_ICON_CLEAR:
         draft.addIconLoading = false;
         draft.addIconDone = false;
-        draft.addIconError = null;
+        draft.addIconError = false;
         break;
       case ADD_ICON_URL_REQUEST:
         draft.addIconUrlLoading = true;
-        draft.addIconUrlError = null;
+        draft.addIconUrlError = false;
         draft.addIconUrlDone = false;
         break;
       case ADD_ICON_URL_SUCCESS:
@@ -238,11 +293,11 @@ const reducer = (state = initialState, action) =>
       case ADD_ICON_URL_CLEAR:
         draft.addIconUrlLoading = false;
         draft.addIconUrlDone = false;
-        draft.addIconUrlError = null;
+        draft.addIconUrlError = false;
         break;
       case REMOVE_ICON_REQUEST:
         draft.removeIconLoading = true;
-        draft.removeIconError = null;
+        draft.removeIconError = false;
         draft.removeIconDone = false;
         break;
       case REMOVE_ICON_SUCCESS:
@@ -257,11 +312,11 @@ const reducer = (state = initialState, action) =>
       case REMOVE_ICON_CLEAR:
         draft.removeIconLoading = false;
         draft.removeIconDone = false;
-        draft.removeIconError = null;
+        draft.removeIconError = false;
         break;
       case CONFIRM_PASSWORD_REQUEST:
         draft.confirmPasswordLoading = true;
-        draft.confirmPasswordError = null;
+        draft.confirmPasswordError = false;
         draft.confirmPasswordDone = false;
         break;
       case CONFIRM_PASSWORD_SUCCESS:
@@ -275,12 +330,12 @@ const reducer = (state = initialState, action) =>
         break;
       case CONFIRM_PASSWORD_CLEAR:
         draft.confirmPasswordLoading = false;
-        draft.confirmPasswordError = null;
+        draft.confirmPasswordError = false;
         draft.confirmPasswordDone = false;
         break;
       case CHANGE_PASSWORD_REQUEST:
         draft.changePasswordLoading = true;
-        draft.changePasswordError = null;
+        draft.changePasswordError = false;
         draft.changePasswordDone = false;
         break;
       case CHANGE_PASSWORD_SUCCESS:
@@ -294,11 +349,11 @@ const reducer = (state = initialState, action) =>
       case CHANGE_PASSWORD_CLEAR:
         draft.changePasswordLoading = false;
         draft.changePasswordDone = false;
-        draft.changePasswordError = null;
+        draft.changePasswordError = false;
         break;
       case CHANGE_NAME_REQUEST:
         draft.changeNameLoading = true;
-        draft.changeNameError = null;
+        draft.changeNameError = false;
         draft.changeNameDone = false;
         break;
       case CHANGE_NAME_SUCCESS:
@@ -313,11 +368,11 @@ const reducer = (state = initialState, action) =>
       case CHANGE_NAME_CLEAR:
         draft.changeNameLoading = false;
         draft.changeNameDone = false;
-        draft.changeNameError = null;
+        draft.changeNameError = false;
         break;
       case WITHDRWAL_REQUEST:
         draft.withdrawalLoading = true;
-        draft.withdrawalError = null;
+        draft.withdrawalError = false;
         draft.withdrawalDone = false;
         break;
       case WITHDRWAL_SUCCESS:
@@ -330,11 +385,11 @@ const reducer = (state = initialState, action) =>
         break;
       case WITHDRWAL_CLEAR:
         draft.withdrawalLoading = false;
-        draft.withdrawalError = null;
+        draft.withdrawalError = false;
         draft.withdrawalDone = false;
         break;
       default:
-        return state;
+        break;
     }
   });
 

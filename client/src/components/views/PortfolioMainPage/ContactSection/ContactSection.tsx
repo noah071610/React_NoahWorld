@@ -1,9 +1,10 @@
 import { Col, message, Row } from "antd";
-import React from "react";
+import { FC } from "react";
 import styled from "styled-components";
 import Articles from "../_common/Articles";
 import Title from "../_common/Title";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { Portfolio_SectionId } from "src/types";
 
 const ContactLinkBox = styled(Col)`
   display: flex;
@@ -31,7 +32,8 @@ const P = styled.q`
     font-size: 0.8rem;
   }
 `;
-function ContactSection({ id }) {
+
+const ContactSection: FC<Portfolio_SectionId> = ({ id }) => {
   return (
     <section id={id}>
       <div className="space" />
@@ -94,6 +96,6 @@ function ContactSection({ id }) {
       </Articles>
     </section>
   );
-}
+};
 
 export default ContactSection;

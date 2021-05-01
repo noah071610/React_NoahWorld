@@ -1,4 +1,112 @@
-import produce from "../util/produce";
+import produce from "immer";
+import { CommentsInter, PostInter, QuizzesInter, RecentPostInter } from "./@reducerTypes";
+
+export interface PostState {
+  techPosts: Array<PostInter> | void[];
+  dailyPosts: Array<PostInter> | void[];
+  classPosts: Array<PostInter> | void[];
+  culturePosts: Array<PostInter> | void[];
+  quizzes: Array<QuizzesInter>;
+  words: Array<QuizzesInter>;
+  hashtags: string[];
+  mostLikedPost: PostInter | null;
+  mostViewedPost: PostInter | null;
+  mostCommentedPost: PostInter | null;
+  post: PostInter | null;
+  prevPost: PostInter | null;
+  nextPost: PostInter | null;
+  countPosts: string[];
+  imagePath: string | null;
+  postImagePath: string | null;
+  recentViewPost: RecentPostInter | null;
+  recentCommentPost: RecentPostInter | null;
+
+  addPostLoading: Boolean;
+  addPostDone: Boolean;
+  addPostError: Boolean | Error;
+
+  uploadImagesLoading: Boolean;
+  uploadImagesDone: Boolean;
+  uploadImagesError: Boolean | Error;
+
+  uploadPostImageLoading: Boolean;
+  uploadPostImageDone: Boolean;
+  uploadPostImageError: Boolean | Error;
+
+  removePostLoading: Boolean;
+  removePostDone: Boolean;
+  removePostError: Boolean | Error;
+
+  editPostLoading: Boolean;
+  editPostDone: Boolean;
+  editPostError: Boolean | Error;
+
+  loadPostLoading: Boolean;
+  loadPostDone: Boolean;
+  loadPostError: Boolean | Error;
+
+  loadRecentPostsLoading: Boolean;
+  loadRecentPostsDone: Boolean;
+  loadRecentPostsError: Boolean | Error;
+
+  loadPostsLoading: Boolean;
+  loadPostsDone: Boolean;
+  loadPostsError: Boolean | Error;
+
+  loadCategoryPostsLoading: Boolean;
+  loadCategoryPostsDone: Boolean;
+  loadCategoryPostsError: Boolean | Error;
+
+  loadMorePostsLoading: Boolean;
+  loadMorePostsDone: Boolean;
+  loadMorePostsError: Boolean | Error;
+
+  loadClassPostsLoading: Boolean;
+  loadClassPostsDone: Boolean;
+  loadClassPostsError: Boolean | Error;
+
+  likePostLoading: Boolean;
+  likePostDone: Boolean;
+  likePostError: Boolean | Error;
+
+  unlikePostLoading: Boolean;
+  unlikePostDone: Boolean;
+  unlikePostError: Boolean | Error;
+
+  addCommentLoading: Boolean;
+  addCommentDone: Boolean;
+  addCommentError: Boolean | Error;
+
+  editCommentLoading: Boolean;
+  editCommentDone: Boolean;
+  editCommentError: Boolean | Error;
+
+  removeCommentLoading: Boolean;
+  removeCommentDone: Boolean;
+  removeCommentError: Boolean | Error;
+
+  likeCommentLoading: Boolean;
+  likeCommentDone: Boolean;
+  likeCommentError: Boolean | Error;
+
+  unlikeCommentLoading: Boolean;
+  unlikeCommentDone: Boolean;
+  unlikeCommentError: Boolean | Error;
+
+  addSubCommentLoading: Boolean;
+  addSubCommentDone: Boolean;
+  addSubCommentError: Boolean | Error;
+
+  editSubCommentLoading: Boolean;
+  editSubCommentDone: Boolean;
+  editSubCommentError: Boolean | Error;
+
+  removeSubCommentLoading: Boolean;
+  removeSubCommentDone: Boolean;
+  removeSubCommentError: Boolean | Error;
+
+  hasMorePosts: Boolean;
+}
 
 const initialState = {
   techPosts: [],
@@ -22,190 +130,190 @@ const initialState = {
 
   addPostLoading: false,
   addPostDone: false,
-  addPostError: null,
+  addPostError: false,
 
   uploadImagesLoading: false,
   uploadImagesDone: false,
-  uploadImagesError: null,
+  uploadImagesError: false,
 
   uploadPostImageLoading: false,
   uploadPostImageDone: false,
-  uploadPostImageError: null,
+  uploadPostImageError: false,
 
   removePostLoading: false,
   removePostDone: false,
-  removePostError: null,
+  removePostError: false,
 
   editPostLoading: false,
   editPostDone: false,
-  editPostError: null,
+  editPostError: false,
 
   loadPostLoading: false,
   loadPostDone: false,
-  loadPostError: null,
+  loadPostError: false,
 
   loadRecentPostsLoading: false,
   loadRecentPostsDone: false,
-  loadRecentPostsError: null,
+  loadRecentPostsError: false,
 
   loadPostsLoading: false,
   loadPostsDone: false,
-  loadPostsError: null,
+  loadPostsError: false,
 
   loadCategoryPostsLoading: false,
   loadCategoryPostsDone: false,
-  loadCategoryPostsError: null,
+  loadCategoryPostsError: false,
 
   loadMorePostsLoading: false,
   loadMorePostsDone: false,
-  loadMorePostsError: null,
+  loadMorePostsError: false,
 
   loadClassPostsLoading: false,
   loadClassPostsDone: false,
-  loadClassPostsError: null,
+  loadClassPostsError: false,
 
   likePostLoading: false,
   likePostDone: false,
-  likePostError: null,
+  likePostError: false,
 
   unlikePostLoading: false,
   unlikePostDone: false,
-  unlikePostError: null,
+  unlikePostError: false,
 
   addCommentLoading: false,
   addCommentDone: false,
-  addCommentError: null,
+  addCommentError: false,
 
   editCommentLoading: false,
   editCommentDone: false,
-  editCommentError: null,
+  editCommentError: false,
 
   removeCommentLoading: false,
   removeCommentDone: false,
-  removeCommentError: null,
+  removeCommentError: false,
 
   likeCommentLoading: false,
   likeCommentDone: false,
-  likeCommentError: null,
+  likeCommentError: false,
 
   unlikeCommentLoading: false,
   unlikeCommentDone: false,
-  unlikeCommentError: null,
+  unlikeCommentError: false,
 
   addSubCommentLoading: false,
   addSubCommentDone: false,
-  addSubCommentError: null,
+  addSubCommentError: false,
 
   editSubCommentLoading: false,
   editSubCommentDone: false,
-  editSubCommentError: null,
+  editSubCommentError: false,
 
   removeSubCommentLoading: false,
   removeSubCommentDone: false,
-  removeSubCommentError: null,
+  removeSubCommentError: false,
 
   hasMorePosts: true,
 };
 
-export const UPLOAD_IMAGES_REQUEST = "UPLOAD_IMAGES_REQUEST";
-export const UPLOAD_IMAGES_SUCCESS = "UPLOAD_IMAGES_SUCCESS";
-export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";
-export const UPLOAD_IMAGES_CLEAR = "UPLOAD_IMAGES_CLEAR";
+export const UPLOAD_IMAGES_REQUEST = "UPLOAD_IMAGES_REQUEST" as const;
+export const UPLOAD_IMAGES_SUCCESS = "UPLOAD_IMAGES_SUCCESS" as const;
+export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE" as const;
+export const UPLOAD_IMAGES_CLEAR = "UPLOAD_IMAGES_CLEAR" as const;
 
-export const UPLOAD_POST_IMAGE_REQUEST = "UPLOAD_POST_IMAGE_REQUEST";
-export const UPLOAD_POST_IMAGE_SUCCESS = "UPLOAD_POST_IMAGE_SUCCESS";
-export const UPLOAD_POST_IMAGE_FAILURE = "UPLOAD_POST_IMAGE_FAILURE";
-export const UPLOAD_POST_IMAGE_CLEAR = "UPLOAD_POST_IMAGE_CLEAR";
+export const UPLOAD_POST_IMAGE_REQUEST = "UPLOAD_POST_IMAGE_REQUEST" as const;
+export const UPLOAD_POST_IMAGE_SUCCESS = "UPLOAD_POST_IMAGE_SUCCESS" as const;
+export const UPLOAD_POST_IMAGE_FAILURE = "UPLOAD_POST_IMAGE_FAILURE" as const;
+export const UPLOAD_POST_IMAGE_CLEAR = "UPLOAD_POST_IMAGE_CLEAR" as const;
 
-export const ADD_POST_REQUEST = "ADD_POST_REQUEST";
-export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
-export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
-export const ADD_POST_CLEAR = "ADD_POST_CLEAR";
+export const ADD_POST_REQUEST = "ADD_POST_REQUEST" as const;
+export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS" as const;
+export const ADD_POST_FAILURE = "ADD_POST_FAILURE" as const;
+export const ADD_POST_CLEAR = "ADD_POST_CLEAR" as const;
 
-export const LOAD_POST_REQUEST = "LOAD_POST_REQUEST";
-export const LOAD_POST_SUCCESS = "LOAD_POST_SUCCESS";
-export const LOAD_POST_FAILURE = "LOAD_POST_FAILURE";
+export const LOAD_POST_REQUEST = "LOAD_POST_REQUEST" as const;
+export const LOAD_POST_SUCCESS = "LOAD_POST_SUCCESS" as const;
+export const LOAD_POST_FAILURE = "LOAD_POST_FAILURE" as const;
 
-export const LOAD_RECENT_POSTS_REQUEST = "LOAD_RECENT_POSTS_REQUEST";
-export const LOAD_RECENT_POSTS_SUCCESS = "LOAD_RECENT_POSTS_SUCCESS";
-export const LOAD_RECENT_POSTS_FAILURE = "LOAD_RECENT_POSTS_FAILURE";
+export const LOAD_RECENT_POSTS_REQUEST = "LOAD_RECENT_POSTS_REQUEST" as const;
+export const LOAD_RECENT_POSTS_SUCCESS = "LOAD_RECENT_POSTS_SUCCESS" as const;
+export const LOAD_RECENT_POSTS_FAILURE = "LOAD_RECENT_POSTS_FAILURE" as const;
 
-export const LOAD_POSTS_REQUEST = "LOAD_POSTS_REQUEST";
-export const LOAD_POSTS_SUCCESS = "LOAD_POSTS_SUCCESS";
-export const LOAD_POSTS_FAILURE = "LOAD_POSTS_FAILURE";
+export const LOAD_POSTS_REQUEST = "LOAD_POSTS_REQUEST" as const;
+export const LOAD_POSTS_SUCCESS = "LOAD_POSTS_SUCCESS" as const;
+export const LOAD_POSTS_FAILURE = "LOAD_POSTS_FAILURE" as const;
 
-export const LOAD_CATEGORY_POSTS_REQUEST = "LOAD_CATEGORY_POSTS_REQUEST";
-export const LOAD_CATEGORY_POSTS_SUCCESS = "LOAD_CATEGORY_POSTS_SUCCESS";
-export const LOAD_CATEGORY_POSTS_FAILURE = "LOAD_CATEGORY_POSTS_FAILURE";
+export const LOAD_CATEGORY_POSTS_REQUEST = "LOAD_CATEGORY_POSTS_REQUEST" as const;
+export const LOAD_CATEGORY_POSTS_SUCCESS = "LOAD_CATEGORY_POSTS_SUCCESS" as const;
+export const LOAD_CATEGORY_POSTS_FAILURE = "LOAD_CATEGORY_POSTS_FAILURE" as const;
 
-export const LOAD_MORE_POSTS_REQUEST = "LOAD_MORE_POSTS_REQUEST";
-export const LOAD_MORE_POSTS_SUCCESS = "LOAD_MORE_POSTS_SUCCESS";
-export const LOAD_MORE_POSTS_FAILURE = "LOAD_MORE_POSTS_FAILURE";
+export const LOAD_MORE_POSTS_REQUEST = "LOAD_MORE_POSTS_REQUEST" as const;
+export const LOAD_MORE_POSTS_SUCCESS = "LOAD_MORE_POSTS_SUCCESS" as const;
+export const LOAD_MORE_POSTS_FAILURE = "LOAD_MORE_POSTS_FAILURE" as const;
 
-export const LOAD_CLASS_POSTS_REQUEST = "LOAD_CLASS_POSTS_REQUEST";
-export const LOAD_CLASS_POSTS_SUCCESS = "LOAD_CLASS_POSTS_SUCCESS";
-export const LOAD_CLASS_POSTS_FAILURE = "LOAD_CLASS_POSTS_FAILURE";
+export const LOAD_CLASS_POSTS_REQUEST = "LOAD_CLASS_POSTS_REQUEST" as const;
+export const LOAD_CLASS_POSTS_SUCCESS = "LOAD_CLASS_POSTS_SUCCESS" as const;
+export const LOAD_CLASS_POSTS_FAILURE = "LOAD_CLASS_POSTS_FAILURE" as const;
 
-export const EDIT_POST_REQUEST = "EDIT_POST_REQUEST";
-export const EDIT_POST_SUCCESS = "EDIT_POST_SUCCESS";
-export const EDIT_POST_FAILURE = "EDIT_POST_FAILURE";
-export const EDIT_POST_CLEAR = "EDIT_POST_CLEAR";
+export const EDIT_POST_REQUEST = "EDIT_POST_REQUEST" as const;
+export const EDIT_POST_SUCCESS = "EDIT_POST_SUCCESS" as const;
+export const EDIT_POST_FAILURE = "EDIT_POST_FAILURE" as const;
+export const EDIT_POST_CLEAR = "EDIT_POST_CLEAR" as const;
 
-export const REMOVE_POST_REQUEST = "REMOVE_POST_REQUEST";
-export const REMOVE_POST_SUCCESS = "REMOVE_POST_SUCCESS";
-export const REMOVE_POST_FAILURE = "REMOVE_POST_FAILURE";
-export const REMOVE_POST_CLEAR = "REMOVE_POST_CLEAR";
+export const REMOVE_POST_REQUEST = "REMOVE_POST_REQUEST" as const;
+export const REMOVE_POST_SUCCESS = "REMOVE_POST_SUCCESS" as const;
+export const REMOVE_POST_FAILURE = "REMOVE_POST_FAILURE" as const;
+export const REMOVE_POST_CLEAR = "REMOVE_POST_CLEAR" as const;
 
-export const LIKE_POST_REQUEST = "LIKE_POST_REQUEST";
-export const LIKE_POST_SUCCESS = "LIKE_POST_SUCCESS";
-export const LIKE_POST_FAILURE = "LIKE_POST_FAILURE";
+export const LIKE_POST_REQUEST = "LIKE_POST_REQUEST" as const;
+export const LIKE_POST_SUCCESS = "LIKE_POST_SUCCESS" as const;
+export const LIKE_POST_FAILURE = "LIKE_POST_FAILURE" as const;
 
-export const UNLIKE_POST_REQUEST = "UNLIKE_POST_REQUEST";
-export const UNLIKE_POST_SUCCESS = "UNLIKE_POST_SUCCESS";
-export const UNLIKE_POST_FAILURE = "UNLIKE_POST_FAILURE";
+export const UNLIKE_POST_REQUEST = "UNLIKE_POST_REQUEST" as const;
+export const UNLIKE_POST_SUCCESS = "UNLIKE_POST_SUCCESS" as const;
+export const UNLIKE_POST_FAILURE = "UNLIKE_POST_FAILURE" as const;
 
-export const LIKE_COMMENT_REQUEST = "LIKE_COMMENT_REQUEST";
-export const LIKE_COMMENT_SUCCESS = "LIKE_COMMENT_SUCCESS";
-export const LIKE_COMMENT_FAILURE = "LIKE_COMMENT_FAILURE";
+export const LIKE_COMMENT_REQUEST = "LIKE_COMMENT_REQUEST" as const;
+export const LIKE_COMMENT_SUCCESS = "LIKE_COMMENT_SUCCESS" as const;
+export const LIKE_COMMENT_FAILURE = "LIKE_COMMENT_FAILURE" as const;
 
-export const UNLIKE_COMMENT_REQUEST = "UNLIKE_COMMENT_REQUEST";
-export const UNLIKE_COMMENT_SUCCESS = "UNLIKE_COMMENT_SUCCESS";
-export const UNLIKE_COMMENT_FAILURE = "UNLIKE_COMMENT_FAILURE";
+export const UNLIKE_COMMENT_REQUEST = "UNLIKE_COMMENT_REQUEST" as const;
+export const UNLIKE_COMMENT_SUCCESS = "UNLIKE_COMMENT_SUCCESS" as const;
+export const UNLIKE_COMMENT_FAILURE = "UNLIKE_COMMENT_FAILURE" as const;
 
-export const ADD_COMMENT_REQUEST = "ADD_COMMENT_REQUEST";
-export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
-export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
-export const ADD_COMMENT_CLEAR = "ADD_COMMENT_CLEAR";
+export const ADD_COMMENT_REQUEST = "ADD_COMMENT_REQUEST" as const;
+export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS" as const;
+export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE" as const;
+export const ADD_COMMENT_CLEAR = "ADD_COMMENT_CLEAR" as const;
 
-export const REMOVE_COMMENT_REQUEST = "REMOVE_COMMENT_REQUEST";
-export const REMOVE_COMMENT_SUCCESS = "REMOVE_COMMENT_SUCCESS";
-export const REMOVE_COMMENT_FAILURE = "REMOVE_COMMENT_FAILURE";
+export const REMOVE_COMMENT_REQUEST = "REMOVE_COMMENT_REQUEST" as const;
+export const REMOVE_COMMENT_SUCCESS = "REMOVE_COMMENT_SUCCESS" as const;
+export const REMOVE_COMMENT_FAILURE = "REMOVE_COMMENT_FAILURE" as const;
 
-export const EDIT_COMMENT_REQUEST = "EDIT_COMMENT_REQUEST";
-export const EDIT_COMMENT_SUCCESS = "EDIT_COMMENT_SUCCESS";
-export const EDIT_COMMENT_FAILURE = "EDIT_COMMENT_FAILURE";
-export const EDIT_COMMENT_CLEAR = "EDIT_COMMENT_CLEAR";
+export const EDIT_COMMENT_REQUEST = "EDIT_COMMENT_REQUEST" as const;
+export const EDIT_COMMENT_SUCCESS = "EDIT_COMMENT_SUCCESS" as const;
+export const EDIT_COMMENT_FAILURE = "EDIT_COMMENT_FAILURE" as const;
+export const EDIT_COMMENT_CLEAR = "EDIT_COMMENT_CLEAR" as const;
 
-export const ADD_SUB_COMMENT_REQUEST = "ADD_SUB_COMMENT_REQUEST";
-export const ADD_SUB_COMMENT_SUCCESS = "ADD_SUB_COMMENT_SUCCESS";
-export const ADD_SUB_COMMENT_FAILURE = "ADD_SUB_COMMENT_FAILURE";
-export const ADD_SUB_COMMENT_CLEAR = "ADD_SUB_COMMENT_CLEAR";
+export const ADD_SUB_COMMENT_REQUEST = "ADD_SUB_COMMENT_REQUEST" as const;
+export const ADD_SUB_COMMENT_SUCCESS = "ADD_SUB_COMMENT_SUCCESS" as const;
+export const ADD_SUB_COMMENT_FAILURE = "ADD_SUB_COMMENT_FAILURE" as const;
+export const ADD_SUB_COMMENT_CLEAR = "ADD_SUB_COMMENT_CLEAR" as const;
 
-export const REMOVE_SUB_COMMENT_REQUEST = "REMOVE_SUB_COMMENT_REQUEST";
-export const REMOVE_SUB_COMMENT_SUCCESS = "REMOVE_SUB_COMMENT_SUCCESS";
-export const REMOVE_SUB_COMMENT_FAILURE = "REMOVE_SUB_COMMENT_FAILURE";
+export const REMOVE_SUB_COMMENT_REQUEST = "REMOVE_SUB_COMMENT_REQUEST" as const;
+export const REMOVE_SUB_COMMENT_SUCCESS = "REMOVE_SUB_COMMENT_SUCCESS" as const;
+export const REMOVE_SUB_COMMENT_FAILURE = "REMOVE_SUB_COMMENT_FAILURE" as const;
 
-export const EDIT_SUB_COMMENT_REQUEST = "EDIT_SUB_COMMENT_REQUEST";
-export const EDIT_SUB_COMMENT_SUCCESS = "EDIT_SUB_COMMENT_SUCCESS";
-export const EDIT_SUB_COMMENT_FAILURE = "EDIT_SUB_COMMENT_FAILURE";
-export const EDIT_SUB_COMMENT_CLEAR = "EDIT_SUB_COMMENT_CLEAR";
+export const EDIT_SUB_COMMENT_REQUEST = "EDIT_SUB_COMMENT_REQUEST" as const;
+export const EDIT_SUB_COMMENT_SUCCESS = "EDIT_SUB_COMMENT_SUCCESS" as const;
+export const EDIT_SUB_COMMENT_FAILURE = "EDIT_SUB_COMMENT_FAILURE" as const;
+export const EDIT_SUB_COMMENT_CLEAR = "EDIT_SUB_COMMENT_CLEAR" as const;
 
-const reducer = (state = initialState, action) =>
-  produce(state, (draft) => {
+const reducer = (state: PostState = initialState, action: any) =>
+  produce(state, (draft: any) => {
     switch (action.type) {
       case ADD_POST_REQUEST:
         draft.addPostLoading = true;
-        draft.addPostError = null;
+        draft.addPostError = false;
         draft.addPostDone = false;
         break;
       case ADD_POST_SUCCESS:
@@ -222,11 +330,11 @@ const reducer = (state = initialState, action) =>
         break;
       case ADD_POST_CLEAR:
         draft.addPostDone = false;
-        draft.addPostError = null;
+        draft.addPostError = false;
         break;
       case LOAD_POSTS_REQUEST:
         draft.loadPostsLoading = true;
-        draft.loadPostsDone = null;
+        draft.loadPostsDone = false;
         draft.loadPostsError = false;
         break;
       case LOAD_POSTS_SUCCESS:
@@ -234,8 +342,6 @@ const reducer = (state = initialState, action) =>
         draft.loadPostsDone = true;
         draft.techPosts = action.data.techPosts;
         draft.dailyPosts = action.data.dailyPosts;
-        // draft.classPosts = action.data.classPosts;
-        // draft.culturePosts = action.data.culturePosts;
         draft.hashtags = action.data.hashtags;
         draft.mostViewedPost = action.data.mostViewedPost;
         draft.mostLikedPost = action.data.mostLikedPost;
@@ -248,7 +354,7 @@ const reducer = (state = initialState, action) =>
         break;
       case LOAD_POST_REQUEST:
         draft.loadPostsLoading = true;
-        draft.loadPostsDone = null;
+        draft.loadPostsDone = false;
         draft.loadPostsError = false;
         break;
       case LOAD_POST_SUCCESS:
@@ -265,7 +371,7 @@ const reducer = (state = initialState, action) =>
         break;
       case LOAD_CATEGORY_POSTS_REQUEST:
         draft.loadCategoryPostsLoading = true;
-        draft.loadCategoryPostsDone = null;
+        draft.loadCategoryPostsDone = false;
         draft.loadCategoryPostsError = false;
         break;
       case LOAD_CATEGORY_POSTS_SUCCESS:
@@ -282,7 +388,7 @@ const reducer = (state = initialState, action) =>
         break;
       case LOAD_MORE_POSTS_REQUEST:
         draft.loadMorePostsLoading = true;
-        draft.loadMorePostsDone = null;
+        draft.loadMorePostsDone = false;
         draft.loadMorePostsError = false;
         break;
       case LOAD_MORE_POSTS_SUCCESS:
@@ -303,7 +409,7 @@ const reducer = (state = initialState, action) =>
         break;
       case LOAD_CLASS_POSTS_REQUEST:
         draft.loadClassPostsLoading = true;
-        draft.loadClassPostsDone = null;
+        draft.loadClassPostsDone = false;
         draft.loadClassPostsError = false;
         break;
       case LOAD_CLASS_POSTS_SUCCESS:
@@ -322,10 +428,10 @@ const reducer = (state = initialState, action) =>
       case ADD_COMMENT_REQUEST:
         draft.addCommentLoading = true;
         draft.addCommentDone = false;
-        draft.addCommentError = null;
+        draft.addCommentError = false;
         break;
       case ADD_COMMENT_SUCCESS: {
-        draft.post.Comments.push(action.data);
+        draft.post?.Comments?.push(action.data);
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         break;
@@ -337,16 +443,16 @@ const reducer = (state = initialState, action) =>
       case ADD_COMMENT_CLEAR:
         draft.addCommentLoading = false;
         draft.addCommentDone = false;
-        draft.addCommentError = null;
+        draft.addCommentError = false;
         break;
 
       case LIKE_POST_REQUEST:
         draft.likePostLoading = true;
         draft.likePostDone = false;
-        draft.likePostError = null;
+        draft.likePostError = false;
         break;
       case LIKE_POST_SUCCESS: {
-        draft.post.PostLikers.push({ id: action.data.UserId });
+        draft.post?.PostLikers?.push({ id: action.data.UserId });
         draft.likePostLoading = false;
         draft.likePostDone = true;
         break;
@@ -358,10 +464,10 @@ const reducer = (state = initialState, action) =>
       case UNLIKE_POST_REQUEST:
         draft.unlikePostLoading = true;
         draft.unlikePostDone = false;
-        draft.unlikePostError = null;
+        draft.unlikePostError = false;
         break;
       case UNLIKE_POST_SUCCESS: {
-        draft.post.PostLikers.filter((v) => v.id !== action.data.UserId);
+        draft.post?.PostLikers?.filter((v: any) => v.id !== action.data.UserId);
         draft.unlikePostLoading = false;
         draft.unlikePostDone = true;
         break;
@@ -373,7 +479,7 @@ const reducer = (state = initialState, action) =>
       case EDIT_POST_REQUEST:
         draft.editPostLoading = true;
         draft.editPostDone = false;
-        draft.editPostError = null;
+        draft.editPostError = false;
         break;
       case EDIT_POST_SUCCESS:
         draft.editPostLoading = false;
@@ -386,12 +492,12 @@ const reducer = (state = initialState, action) =>
       case EDIT_POST_CLEAR:
         draft.editPostLoading = false;
         draft.editPostDone = false;
-        draft.editPostError = null;
+        draft.editPostError = false;
         break;
       case REMOVE_POST_REQUEST:
         draft.removePostLoading = true;
         draft.removePostDone = false;
-        draft.removePostError = null;
+        draft.removePostError = false;
         break;
       case REMOVE_POST_SUCCESS:
         draft.removePostLoading = false;
@@ -408,10 +514,10 @@ const reducer = (state = initialState, action) =>
       case EDIT_COMMENT_REQUEST:
         draft.editCommentLoading = true;
         draft.editCommentDone = false;
-        draft.editCommentError = null;
+        draft.editCommentError = false;
         break;
       case EDIT_COMMENT_SUCCESS: {
-        draft.post.Comments.find((v) => {
+        draft.post.Comments.find((v: CommentsInter) => {
           return v.id === action.data.CommentId;
         }).content = action.data.newComment;
         draft.editCommentLoading = false;
@@ -425,12 +531,12 @@ const reducer = (state = initialState, action) =>
       case EDIT_COMMENT_CLEAR:
         draft.editCommentLoading = false;
         draft.editCommentDone = false;
-        draft.editCommentError = null;
+        draft.editCommentError = false;
         break;
       case REMOVE_COMMENT_REQUEST:
         draft.removeCommentLoading = true;
         draft.removeCommentDone = false;
-        draft.removeCommentError = null;
+        draft.removeCommentError = false;
         break;
       case REMOVE_COMMENT_SUCCESS: {
         draft.removeCommentLoading = false;
@@ -444,10 +550,10 @@ const reducer = (state = initialState, action) =>
       case LIKE_COMMENT_REQUEST:
         draft.likeCommentLoading = true;
         draft.likeCommentDone = false;
-        draft.likeCommentError = null;
+        draft.likeCommentError = false;
         break;
       case LIKE_COMMENT_SUCCESS: {
-        draft.post.Comments.find((v) => v.id === action.data.CommentId).CommentLikers.push({
+        draft.post?.Comments?.find((v: any) => v.id === action.data.CommentId).CommentLikers.push({
           id: action.data.UserId,
         });
         draft.likeCommentLoading = false;
@@ -461,14 +567,14 @@ const reducer = (state = initialState, action) =>
       case UNLIKE_COMMENT_REQUEST:
         draft.unlikeCommentLoading = true;
         draft.unlikeCommentDone = false;
-        draft.unlikeCommentError = null;
+        draft.unlikeCommentError = false;
         break;
       case UNLIKE_COMMENT_SUCCESS: {
-        let CommentsWithoutDeleted = draft.post.Comments.find(
-          (v) => v.id === action.data.CommentId
-        ).CommentLikers.filter((v) => v.id !== action.data.UserId);
+        let CommentsWithoutDeleted = draft.post?.Comments?.find(
+          (v: CommentsInter) => v.id === action.data.CommentId
+        ).CommentLikers.filter((v: any) => v.id !== action.data.UserId);
         draft.post.Comments.find(
-          (v) => v.id === action.data.CommentId
+          (v: CommentsInter) => v.id === action.data.CommentId
         ).CommentLikers = CommentsWithoutDeleted;
         draft.unlikeCommentLoading = false;
         draft.unlikeCommentDone = true;
@@ -479,7 +585,7 @@ const reducer = (state = initialState, action) =>
         draft.unlikeCommentError = action.error;
         break;
       case ADD_SUB_COMMENT_SUCCESS: {
-        draft.post.Comments.find((v) => v.id === action.data.CommentId).SubComments.push(
+        draft.post?.Comments?.find((v: any) => v.id === action.data.CommentId).SubComments.push(
           action.data.fullSubComment
         );
         draft.addCommentLoading = false;
@@ -493,18 +599,18 @@ const reducer = (state = initialState, action) =>
       case ADD_SUB_COMMENT_CLEAR:
         draft.addCommentLoading = false;
         draft.addCommentDone = false;
-        draft.addCommentError = null;
+        draft.addCommentError = false;
         break;
 
       case EDIT_SUB_COMMENT_REQUEST:
         draft.editSubCommentLoading = true;
         draft.editSubCommentDone = false;
-        draft.editSubCommentError = null;
+        draft.editSubCommentError = false;
         break;
       case EDIT_SUB_COMMENT_SUCCESS: {
-        draft.post.Comments.find((v) => {
+        draft.post.Comments.find((v: CommentsInter) => {
           return v.id === action.data.CommentId;
-        }).SubComments.find((v) => {
+        }).SubComments.find((v: any) => {
           return v.id === action.data.SubCommentId;
         }).content = action.data.content;
         draft.editSubCommentLoading = false;
@@ -518,12 +624,12 @@ const reducer = (state = initialState, action) =>
       case EDIT_SUB_COMMENT_CLEAR:
         draft.editSubCommentLoading = false;
         draft.editSubCommentDone = false;
-        draft.editSubCommentError = null;
+        draft.editSubCommentError = false;
         break;
       case REMOVE_SUB_COMMENT_REQUEST:
         draft.removeSubCommentLoading = true;
         draft.removeSubCommentDone = false;
-        draft.removeSubCommentError = null;
+        draft.removeSubCommentError = false;
         break;
       case REMOVE_SUB_COMMENT_SUCCESS: {
         draft.removeSubCommentLoading = false;
@@ -537,7 +643,7 @@ const reducer = (state = initialState, action) =>
       case UPLOAD_IMAGES_REQUEST:
         draft.uploadImagesLoading = true;
         draft.uploadImagesDone = false;
-        draft.uploadImagesError = null;
+        draft.uploadImagesError = false;
         break;
       case UPLOAD_IMAGES_SUCCESS: {
         draft.imagePath = action.data;
@@ -556,10 +662,10 @@ const reducer = (state = initialState, action) =>
       case UPLOAD_POST_IMAGE_REQUEST:
         draft.uploadPostImageLoading = true;
         draft.uploadPostImageDone = false;
-        draft.uploadPostImageError = null;
+        draft.uploadPostImageError = false;
         break;
       case UPLOAD_POST_IMAGE_SUCCESS: {
-        draft.PostImagePath = action.data;
+        draft.postImagePath = action.data;
         draft.uploadPostImageLoading = false;
         draft.uploadPostImageDone = true;
         break;
@@ -574,7 +680,7 @@ const reducer = (state = initialState, action) =>
         break;
       case LOAD_RECENT_POSTS_REQUEST:
         draft.loadRecentPostsLoading = true;
-        draft.loadRecentPostsDone = null;
+        draft.loadRecentPostsDone = false;
         draft.loadRecentPostsError = false;
         break;
       case LOAD_RECENT_POSTS_SUCCESS:
@@ -588,7 +694,7 @@ const reducer = (state = initialState, action) =>
         draft.loadRecentPostsError = action.error;
         break;
       default:
-        return state;
+        break;
     }
   });
 

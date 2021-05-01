@@ -1,4 +1,4 @@
-import React from "react";
+import { FC, ReactNode } from "react";
 import styled from "styled-components";
 
 const Div = styled.div`
@@ -10,8 +10,12 @@ const Div = styled.div`
   box-shadow: 4px 8px 21px 1px rgba(0, 0, 0, 0.1);
 `;
 
-function PageWrapper({ children }) {
-  return <Div>{children}</Div>;
+interface Wrapper {
+  children: ReactNode;
 }
+
+const PageWrapper: FC<Wrapper> = ({ children }) => {
+  return <Div>{children}</Div>;
+};
 
 export default PageWrapper;

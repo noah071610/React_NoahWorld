@@ -1,4 +1,4 @@
-import React from "react";
+import { FC, ReactNode } from "react";
 import styled from "styled-components";
 
 const Div = styled.div`
@@ -11,12 +11,16 @@ const Div = styled.div`
   }
 `;
 
-function Articles({ children, title, sub }) {
+interface ArticleInter {
+  children: ReactNode;
+}
+
+const Articles: FC<ArticleInter> = ({ children }) => {
   return (
     <Div className="articles">
       <div className="articles_div">{children}</div>
     </Div>
   );
-}
+};
 
 export default Articles;

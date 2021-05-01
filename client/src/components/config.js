@@ -1,4 +1,5 @@
 import { faAddressCard, faEnvelope, faImages, faLaptop } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
 
 // Config
 export const BACKEND_URL = "https://api.noahworld.site";
@@ -117,13 +118,11 @@ export const sub_skills = [
   {
     name: "Type Script",
     src: "https://img.icons8.com/color/144/000000/typescript.png",
-
     level: true,
   },
   {
     name: "Nodejs",
     src: "https://img.icons8.com/color/144/000000/nodejs.png",
-
     level: true,
   },
 

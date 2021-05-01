@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import PortfolioMainPage from "./views/PortfolioMainPage/PortfolioMainPage";
 import { createGlobalStyle } from "styled-components";
@@ -15,8 +15,8 @@ import "highlight.js/styles/github.css";
 import "tui-color-picker/dist/tui-color-picker.css";
 
 const BlogMainPage = lazy(() => import("./views/BlogMainPage/BlogMainPage"));
-const BlogCategoryPage = lazy(() =>
-  import("./views/BlogMainPage/BlogCategoryPage/BlogCategoryPage")
+const BlogCategoryPage = lazy(
+  () => import("./views/BlogMainPage/BlogCategoryPage/BlogCategoryPage")
 );
 const Admin = lazy(() => import("./views/BlogMainPage/_common/Admin"));
 const BlogPostPage = lazy(() => import("./views/BlogMainPage/BlogPostPage/BlogPostPage"));
@@ -26,8 +26,8 @@ const BlogAboutPage = lazy(() => import("./views/BlogMainPage/BlogAboutPage"));
 const BlogSearchPage = lazy(() => import("./views/BlogMainPage/BlogSearchPage/BlogSearchPage"));
 const BlogHashtagPage = lazy(() => import("./views/BlogMainPage/BlogSearchPage/BlogHashtagPage"));
 const NoMatch = lazy(() => import("./views/BlogMainPage/Section/NoMatch"));
-const PrivacyPolicy = lazy(() =>
-  import("./views/BlogMainPage/BlogLoginPage/Section/PrivacyPolicy")
+const PrivacyPolicy = lazy(
+  () => import("./views/BlogMainPage/BlogLoginPage/Section/PrivacyPolicy")
 );
 
 const GlobalStyles = createGlobalStyle`

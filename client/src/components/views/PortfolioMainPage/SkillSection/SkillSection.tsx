@@ -1,17 +1,18 @@
 import { Divider, Row } from "antd";
-import React from "react";
 import { languages, skills, sub_skills } from "../../../config";
 import SkillBox from "./SkillBox";
 import Articles from "../_common/Articles";
 import Title from "../_common/Title";
 import SkillImageBox from "./SkillImageBox";
 import styled from "styled-components";
+import { FC } from "react";
+import { Portfolio_SectionId } from "src/types";
 
 const SkillDescDivider = styled.span`
   font-size: 0.8rem;
 `;
 
-function SkillSection({ id }) {
+const SkillSection: FC<Portfolio_SectionId> = ({ id }) => {
   return (
     <section id={id}>
       <div className="space" />
@@ -60,7 +61,6 @@ function SkillSection({ id }) {
                 key={"skill" + i}
                 name={skill.name}
                 src={skill.src}
-                desc={skill.desc}
                 level={skill.level}
               />
             );
@@ -69,6 +69,6 @@ function SkillSection({ id }) {
       </Articles>
     </section>
   );
-}
+};
 
 export default SkillSection;

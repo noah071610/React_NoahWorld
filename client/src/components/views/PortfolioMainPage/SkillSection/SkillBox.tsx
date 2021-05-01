@@ -1,5 +1,6 @@
 import Col from "antd/lib/col";
-import React from "react";
+import { FC } from "react";
+import { Portfolio_SkillBox } from "src/types";
 import styled from "styled-components";
 import { BG_COLOR } from "../../../config";
 
@@ -68,7 +69,7 @@ const Table = styled.table`
   }
 `;
 
-function SkillBox(props) {
+const SkillBox: FC<Portfolio_SkillBox> = (props) => {
   return (
     <Col xs={24} md={12} style={{ display: "flex" }}>
       <Table>
@@ -96,6 +97,6 @@ function SkillBox(props) {
       </Table>
     </Col>
   );
-}
+};
 
 export default SkillBox;

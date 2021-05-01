@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import Articles from "../_common/Articles";
 import Title from "../_common/Title";
+// @ts-ignore
 import { Carousel } from "3d-react-carousal";
 import styled from "styled-components";
 import VanillaTilt from "vanilla-tilt";
@@ -9,18 +10,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_PORTFOLIOS } from "../../../../_reducers/blog";
+import { Portfolio_SectionId } from "src/types";
+import { RootState } from "src/_reducers";
 
-function Tilt(props) {
+const options = {
+  scale: 1.1,
+  speed: 700,
+  max: 10,
+};
+
+const Tilt = (props: any) => {
   const { options, ...rest } = props;
   const tilt = useRef(null);
 
   useEffect(() => {
-    VanillaTilt.init(tilt.current, options);
+    VanillaTilt.init(tilt.current!, options);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div ref={tilt} {...rest} />;
-}
+};
 
 const PortfolioCard = styled(Tilt)`
   transform-style: preserve-3d;
@@ -109,8 +118,8 @@ const PortfolioDesc = styled.div`
   }
 `;
 
-function PortfolioSection({ id }) {
-  const { portfolios } = useSelector((state) => state.blog);
+const PortfolioSection: FC<Portfolio_SectionId> = ({ id }) => {
+  const { portfolios } = useSelector((state: RootState) => state.blog);
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -118,11 +127,7 @@ function PortfolioSection({ id }) {
       type: LOAD_PORTFOLIOS,
     });
   }, [dispatch]);
-  const options = {
-    scale: 1.1,
-    speed: 700,
-    max: 10,
-  };
+
   let slides = [
     <PortfolioCard options={options}>
       <Link style={{ cursor: "unset" }} to="/portfolio/1">
@@ -137,7 +142,7 @@ function PortfolioSection({ id }) {
               <p>
                 {portfolios[1].date}
                 <br />
-                {portfolios[1].tags.map((tag, i) => {
+                {portfolios[1].tags.map((tag: string, i: number) => {
                   return (
                     <span key={i} className="tag">
                       {tag}
@@ -163,7 +168,7 @@ function PortfolioSection({ id }) {
               <p>
                 {portfolios[0].date}
                 <br />
-                {portfolios[0].tags.map((tag, i) => {
+                {portfolios[0].tags.map((tag: string, i: number) => {
                   return (
                     <span key={i} className="tag">
                       {tag}
@@ -189,7 +194,7 @@ function PortfolioSection({ id }) {
               <p>
                 {portfolios[2].date}
                 <br />
-                {portfolios[2].tags.map((tag, i) => {
+                {portfolios[2].tags.map((tag: string, i: number) => {
                   return (
                     <span key={i} className="tag">
                       {tag}
@@ -211,7 +216,7 @@ function PortfolioSection({ id }) {
         <div className="carousel_wrapper">
           <Carousel slides={slides} autoplay={false} />
         </div>
-        {portfolios?.map((v, i) => {
+        {portfolios?.map((v, i: number) => {
           return (
             <PortfolioSmall
               key={i}
@@ -241,7 +246,7 @@ function PortfolioSection({ id }) {
                     {v.name}
                   </h2>
                 </Link>
-                {v.tags.map((tag, i) => (
+                {v.tags.map((tag: string, i: number) => (
                   <span key={i} className="tag">
                     {tag}
                   </span>
@@ -253,6 +258,6 @@ function PortfolioSection({ id }) {
       </Articles>
     </section>
   );
-}
+};
 
 export default PortfolioSection;

@@ -1,6 +1,7 @@
 import { Popover } from "antd";
 import Col from "antd/lib/col";
-import React from "react";
+import { FC } from "react";
+import { Portfolio_SkillBox } from "src/types";
 import styled from "styled-components";
 import { BG_COLOR } from "../../../config";
 
@@ -55,7 +56,7 @@ const ImageBoxWrapper = styled(Col)`
   }
 `;
 
-function SkillImageBox(props) {
+const SkillImageBox: FC<Portfolio_SkillBox> = (props) => {
   return (
     <ImageBoxWrapper xs={6} md={4} lg={3}>
       {props.popup ? (
@@ -82,6 +83,6 @@ function SkillImageBox(props) {
       )}
     </ImageBoxWrapper>
   );
-}
+};
 
 export default SkillImageBox;
