@@ -8,6 +8,22 @@ export interface portfolioInter {
   git: string;
 }
 
+export interface SearchPostInter {
+  id: number;
+  hit: number;
+  category: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  UserId: number;
+  Hashtags?: Array<HashtagsInter>;
+}
+
+export interface AsideHashtags {
+  name: string;
+}
+
 export interface QuizzesInter {
   id: number;
   type: string;
@@ -60,9 +76,9 @@ export interface PostInter {
   updatedAt: string;
   UserId: number;
   User?: UserInfoInter;
-  HashTags?: Array<HashtagsInter> | void[];
-  PostLikers?: Array<PostLikersInter> | void[];
-  Comments?: Array<CommentsInter> | void[];
+  HashTags?: Array<HashtagsInter>;
+  PostLikers?: Array<PostLikersInter>;
+  Comments?: Array<CommentsInter>;
 }
 
 export interface CommentsInter {
@@ -73,8 +89,8 @@ export interface CommentsInter {
   UserId: number;
   PostId: number;
   User?: UserInfoInter;
-  CommentLikers?: Array<CommentLikersInter> | void[];
-  SubComments?: Array<SubCommentsInter> | void[];
+  CommentLikers?: Array<CommentLikersInter>;
+  SubComments?: Array<SubCommentsInter>;
 }
 
 export interface CommentLikersInter {
@@ -103,7 +119,7 @@ export interface RecentPostInter {
   id: number;
   category: string;
   title: string;
-  Comments?: Array<CommentsInter> | void[];
+  Comments?: Array<CommentsInter>;
 }
 
 export interface UserInter {
@@ -118,6 +134,6 @@ export interface UserInter {
   createdAt: string;
   updatedAt: string;
   Comments: Array<CommentsInter>;
-  Posts: Array<PostInter> | void[];
-  PostLiked: Array<PostLikersInter> | void[];
+  Posts: Array<PostInter>;
+  PostLiked: Array<PostLikersInter>;
 }

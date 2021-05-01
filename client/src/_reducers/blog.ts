@@ -1,6 +1,6 @@
 import { portfolio1, portfolio2, portfolio3 } from "../components/config";
 import produce from "immer";
-import { portfolioInter } from "./@reducerTypes";
+import { portfolioInter, SearchPostInter } from "./@reducerTypes";
 
 export interface BlogState {
   theme: string;
@@ -13,8 +13,8 @@ export interface BlogState {
   onAbout: boolean;
   onSignUpPage: boolean;
   postEditOn: boolean;
-  searchPosts: string[] | null;
-  hashtagPosts: string[] | null;
+  searchPosts: Array<SearchPostInter>;
+  hashtagPosts: Array<SearchPostInter>;
   onSlideMenu: boolean;
   onHeaderTitle: boolean;
 
@@ -56,8 +56,8 @@ const initialState = {
   onAbout: false,
   onSignUpPage: false,
   postEditOn: false,
-  searchPosts: null,
-  hashtagPosts: null,
+  searchPosts: [],
+  hashtagPosts: [],
   onSlideMenu: false,
   onHeaderTitle: false,
 

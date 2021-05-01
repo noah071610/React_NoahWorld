@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Articles from "../_common/Articles";
 import Title from "../_common/Title";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { Portfolio_SectionId } from "src/types";
+import { Portfolio_SectionId } from "src/components/views/PortfolioMainPage/types";
 
 const ContactLinkBox = styled(Col)`
   display: flex;

@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_PORTFOLIOS } from "../../../../_reducers/blog";
-import { Portfolio_SectionId } from "src/types";
+import { Portfolio_SectionId } from "src/components/views/PortfolioMainPage/types";
 import { RootState } from "src/_reducers";
 
 const options = {

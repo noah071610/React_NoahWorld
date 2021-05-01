@@ -11,11 +11,11 @@ const Div = styled.div`
   }
 `;
 
-interface ArticleInter {
+interface PtArticleInter {
   children: ReactNode;
 }
 
-const Articles: FC<ArticleInter> = ({ children }) => {
+const Articles: FC<PtArticleInter> = ({ children }) => {
   return (
     <Div className="articles">
       <div className="articles_div">{children}</div>

@@ -16,6 +16,9 @@ router.post("/", async (req, res) => {
           { content: { [Op.like]: `%${req.body.keyword}%` } },
         ],
       },
+      attributes: {
+        exclude: ["thumbnail", "imagePath"],
+      },
     });
     res.status(200).json({ searchPosts, searchedKeyword: req.body.keyword });
   } catch (error) {
@@ -27,11 +30,12 @@ router.get("/hashtag/:tag", async (req, res) => {
   try {
     const hashtagPosts = await Post.findAll({
       attributes: {
-        exclude: ["thumbnail"],
+        exclude: ["thumbnail", "imagePath"],
       },
       include: [
         {
           model: Hashtag,
+          attributes: ["name"],
           where: { name: { [Op.eq]: req.params.tag } },
         },
       ],

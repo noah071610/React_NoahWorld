@@ -1,7 +1,7 @@
 import { faGithub, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// @ts-ignore
 import { ReactTitle } from "react-meta-tags";
-import React from "react";
 import { Link } from "react-router-dom";
 
 function BlogAboutPage() {

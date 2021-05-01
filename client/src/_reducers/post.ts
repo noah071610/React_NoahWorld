@@ -1,14 +1,20 @@
 import produce from "immer";
-import { CommentsInter, PostInter, QuizzesInter, RecentPostInter } from "./@reducerTypes";
+import {
+  AsideHashtags,
+  CommentsInter,
+  PostInter,
+  QuizzesInter,
+  RecentPostInter,
+} from "./@reducerTypes";
 
 export interface PostState {
-  techPosts: Array<PostInter> | void[];
-  dailyPosts: Array<PostInter> | void[];
-  classPosts: Array<PostInter> | void[];
-  culturePosts: Array<PostInter> | void[];
+  techPosts: Array<PostInter>;
+  dailyPosts: Array<PostInter>;
+  classPosts: Array<PostInter>;
+  culturePosts: Array<PostInter>;
   quizzes: Array<QuizzesInter>;
   words: Array<QuizzesInter>;
-  hashtags: string[];
+  hashtags: Array<AsideHashtags>;
   mostLikedPost: PostInter | null;
   mostViewedPost: PostInter | null;
   mostCommentedPost: PostInter | null;

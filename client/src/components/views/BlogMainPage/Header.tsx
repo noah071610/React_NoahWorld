@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { navContents } from "../../config";
@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { message } from "antd";
 import { LOG_OUT_REQUEST } from "../../../_reducers/user";
+import { RootState } from "src/_reducers";
 const LogoMain = styled.img`
   &:hover {
     -webkit-animation: pulse 0.5s;
@@ -23,8 +24,8 @@ const LogoMain = styled.img`
 
 function Header() {
   const [FixedNavbar, setFixedNavbar] = useState(false);
-  const { header } = useSelector((state) => state.blog);
-  const { user, logOutDone, logOutError } = useSelector((state) => state.user);
+  const { header } = useSelector((state: RootState) => state.blog);
+  const { user, logOutDone, logOutError } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {

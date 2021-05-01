@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Divider, Input, Popover, Form, Modal, message } from "antd";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import { RootState } from "src/_reducers";
 import styled from "styled-components";
 import useInput from "../../../_hooks/useInput";
 import {
@@ -31,14 +32,15 @@ function Footer() {
     withdrawalError,
     changeNameDone,
     changeNameError,
-  } = useSelector((state) => state.user);
+  } = useSelector((state: RootState) => state.user);
   const history = useHistory();
-  const [password, onChangePassword] = useInput();
-  const [newPassword, onChangeNewPassword] = useInput();
-  const [newName, onChangeNewName] = useInput(user?.name);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [changePassword, setChangePassword] = useState(null);
-  const [changeNickname, setChangeNickname] = useState(null);
+  const userName: string = user?.name!;
+  const [password, onChangePassword] = useInput(null);
+  const [newPassword, onChangeNewPassword] = useInput(null);
+  const [newName, onChangeNewName] = useInput(userName);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [changePassword, setChangePassword] = useState<boolean>(false);
+  const [changeNickname, setChangeNickname] = useState<boolean>(false);
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -68,14 +70,14 @@ function Footer() {
   const onsubmitChangeName = () => {
     dispatch({
       type: CHANGE_NAME_REQUEST,
-      data: { newName, UserId: user.id },
+      data: { newName, UserId: user?.id },
     });
   };
 
   const onSubmitWithdrawal = () => {
     dispatch({
       type: WITHDRWAL_REQUEST,
-      data: user.id,
+      data: user?.id,
     });
     dispatch({
       type: LOG_OUT_REQUEST,
@@ -267,8 +269,8 @@ function Footer() {
                 name="Confirm"
                 dependencies={["Password"]}
                 hasFeedback
-                value={newPassword}
-                onChange={onChangeNewPassword}
+                // value={newPassword}
+                // onChange={onChangeNewPassword}
                 rules={[
                   {
                     required: true,

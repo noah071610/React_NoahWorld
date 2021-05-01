@@ -6,7 +6,7 @@ import Title from "../_common/Title";
 import SkillImageBox from "./SkillImageBox";
 import styled from "styled-components";
 import { FC } from "react";
-import { Portfolio_SectionId } from "src/types";
+import { Portfolio_SectionId } from "src/components/views/PortfolioMainPage/types";
 
 const SkillDescDivider = styled.span`
   font-size: 0.8rem;

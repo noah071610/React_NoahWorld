@@ -1,29 +1,28 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
 import { useHistory } from "react-router";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "react-router-dom";
+import { FC } from "react";
+import { ArticleInter } from "../types";
 dayjs.extend(relativeTime);
 dayjs.locale("kor");
 
-function ArticleColumn({ article, nocontent }) {
+const ArticleColumn: FC<ArticleInter> = ({ article, nocontent }) => {
   const history = useHistory();
-  const onClickArticle = (e) => {
-    if (e.target.className === "hashtag") {
+  const onClickArticle = (e: React.MouseEvent) => {
+    if ((e.target as Element).className === "hashtag") {
       return;
     }
     window.scrollTo({ top: 0 });
     history.push(`/${article.category}/post/${article.id}`);
   };
-  const contentWithoutHTML =
-    article &&
-    article.content
-      .replace(/(<([^>]+)>)/gi, "")
-      .replace(/(#youtube:.*)/g, "(Youtube Video Link)")
-      .replace(/&.*;/gi, "");
-  const handleImgError = (e) => {
-    e.target.src = "/images/blog/noImage.gif";
+  const contentWithoutHTML = article?.content
+    ?.replace(/(<([^>]+)>)/gi, "")
+    .replace(/(#youtube:.*)/g, "(Youtube Video Link)")
+    .replace(/&.*;/gi, "");
+  const handleImgError = (e: React.SyntheticEvent) => {
+    (e.target as HTMLImageElement).src = "/images/blog/noImage.gif";
   };
   return (
     <>
@@ -31,7 +30,7 @@ function ArticleColumn({ article, nocontent }) {
         <article onClick={onClickArticle} className="article article_column">
           <div style={{ marginBottom: "1rem", width: "100%", overflow: "hidden" }}>
             <img
-              style={nocontent ? { height: "140px" } : null}
+              style={nocontent ? { height: "140px" } : {}}
               className="article_img"
               alt={article.title}
               src={
@@ -51,8 +50,8 @@ function ArticleColumn({ article, nocontent }) {
             {nocontent ? null : (
               <>
                 <ul style={{ marginBottom: "1rem" }}>
-                  {article.Hashtags &&
-                    article.Hashtags.map((v, i) => {
+                  {article.HashTags &&
+                    article.HashTags.map((v, i) => {
                       return (
                         <li key={i}>
                           <Link
@@ -68,7 +67,7 @@ function ArticleColumn({ article, nocontent }) {
                 </ul>
                 <p
                   style={
-                    article.Hashtags?.length > 0
+                    article?.HashTags
                       ? {
                           margin: 0,
                           WebkitLineClamp: 4,
@@ -92,7 +91,7 @@ function ArticleColumn({ article, nocontent }) {
             )}
           </div>
           <ul
-            style={article.Hashtags?.length > 0 ? { marginTop: "1rem" } : { marginTop: "1.7rem" }}
+            style={article?.HashTags ? { marginTop: "1rem" } : { marginTop: "1.7rem" }}
             className="article_footer"
           >
             <li>
@@ -106,6 +105,6 @@ function ArticleColumn({ article, nocontent }) {
       )}
     </>
   );
-}
+};
 
 export default ArticleColumn;

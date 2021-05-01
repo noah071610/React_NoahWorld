@@ -1,23 +1,24 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
 import { useHistory } from "react-router";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { BLUE_COLOR } from "../../../config";
+import { FC } from "react";
+import { ArticleInter } from "../types";
 dayjs.extend(relativeTime);
 dayjs.locale("kor");
 
-function ArticleAside({ article, type }) {
+const ArticleAside: FC<ArticleInter> = ({ article, type }) => {
   const history = useHistory();
-  const onClickArticle = (e) => {
-    if (e.target.className === "hashtag") {
+  const onClickArticle = (e: React.MouseEvent) => {
+    if ((e.target as Element).className === "hashtag") {
       return;
     }
     window.scrollTo({ top: 0 });
     history.push(`/${article.category}/post/${article.id}`);
   };
-  const handleImgError = (e) => {
-    e.target.src = "/images/blog/noImage.gif";
+  const handleImgError = (e: React.SyntheticEvent) => {
+    (e.target as HTMLImageElement).src = "/images/blog/noImage.gif";
   };
   return (
     <>
@@ -50,9 +51,9 @@ function ArticleAside({ article, type }) {
             </span>
             <span className="article_md_footer">
               {type === "comments"
-                ? article.Comments.length + " Comments"
+                ? article?.Comments?.length + " Comments"
                 : type === "like"
-                ? article.PostLikers.length + " Likes"
+                ? article?.PostLikers?.length + " Likes"
                 : article.hit + " views"}
             </span>
             <h2
@@ -68,17 +69,17 @@ function ArticleAside({ article, type }) {
               </li>
               <li className="view">
                 ·
-                <span style={type === "view" ? { color: BLUE_COLOR, fontWeight: "bold" } : null}>
+                <span style={type === "view" ? { color: BLUE_COLOR, fontWeight: "bold" } : {}}>
                   &nbsp;{article.hit} views
                 </span>
               </li>
               <li className="comments">
                 ·
-                <span style={type === "view" ? null : { color: BLUE_COLOR, fontWeight: "bold" }}>
+                <span style={type === "view" ? {} : { color: BLUE_COLOR, fontWeight: "bold" }}>
                   &nbsp;
                   {type === "comments"
-                    ? article.Comments.length + " Comments"
-                    : article.PostLikers.length + " Likes"}
+                    ? article?.Comments?.length + " Comments"
+                    : article?.PostLikers?.length + " Likes"}
                 </span>
               </li>
             </ul>
@@ -87,6 +88,6 @@ function ArticleAside({ article, type }) {
       )}
     </>
   );
-}
+};
 
 export default ArticleAside;

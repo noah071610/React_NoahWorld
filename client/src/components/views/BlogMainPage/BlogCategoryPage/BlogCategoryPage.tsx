@@ -1,5 +1,6 @@
 import { Col, Divider, Row } from "antd";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+// @ts-ignore
 import { ReactTitle } from "react-meta-tags";
 import { useDispatch, useSelector } from "react-redux";
 import ArticleColumn from "../_common/ArticleColumn";
@@ -9,6 +10,7 @@ import { LOAD_CATEGORY_POSTS_REQUEST, LOAD_MORE_POSTS_REQUEST } from "../../../.
 import { useHistory } from "react-router";
 import { LOAD_INFO_REQUEST } from "../../../../_reducers/user";
 import CountUp from "react-countup";
+import { RootState } from "src/_reducers";
 
 function BlogCategoryPage() {
   const {
@@ -18,8 +20,8 @@ function BlogCategoryPage() {
     loadCategoryPostsLoading,
     loadMorePostsLoading,
     countPosts,
-  } = useSelector((state) => state.post);
-  const { user } = useSelector((state) => state.user);
+  } = useSelector((state: RootState) => state.post);
+  const { user } = useSelector((state: RootState) => state.user);
   const history = useHistory();
   const dispatch = useDispatch();
   let category = history.location.pathname.replace("/", "");
@@ -43,7 +45,7 @@ function BlogCategoryPage() {
         window.scrollY + document.documentElement.clientHeight >
         document.documentElement.scrollHeight - 300
       ) {
-        if (hasMorePosts && !loadMorePostsLoading && (techPosts || dailyPosts > 7)) {
+        if (hasMorePosts && !loadMorePostsLoading && (techPosts || dailyPosts.length > 7)) {
           const LastId =
             (techPosts || dailyPosts) &&
             (techPosts || dailyPosts)[(techPosts || dailyPosts).length - 1].id;

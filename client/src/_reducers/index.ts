@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
-import user from "./user";
-import post from "./post";
+import user, { UserState } from "./user";
+import post, { PostState } from "./post";
 import blog, { BlogState } from "./blog";
 
-const rootReducer = combineReducers<{ blog: BlogState; user: any; post: any }>({
+const rootReducer = combineReducers<{ blog: BlogState; user: UserState; post: PostState }>({
   blog,
   user,
   post,

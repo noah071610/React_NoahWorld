@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
 import { BLUE_COLOR } from "../../../config";
 import CountUp from "react-countup";
 import { Divider } from "antd";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { SEARCH_HASH_TAG_REQUEST } from "../../../../_reducers/blog";
+import { RootState } from "src/_reducers";
 
 const SearchList = styled.li`
   transition: all 0.3s;
@@ -19,20 +18,11 @@ const SearchList = styled.li`
   }
 `;
 
-function BlogHashtagPage() {
-  const dispatch = useDispatch();
-  const { hashtagPosts } = useSelector((state) => state.blog);
+function BlogSearchPage() {
+  const { searchedKeyword, searchPosts } = useSelector((state: RootState) => state.blog);
   const history = useHistory();
-  const hashtagName = history.location.pathname.split("/")[2];
-
-  useEffect(() => {
-    dispatch({
-      type: SEARCH_HASH_TAG_REQUEST,
-      data: hashtagName,
-    });
-  }, [dispatch, hashtagName, history.location.pathname]);
   const searchPostsComponent = () => {
-    return hashtagPosts?.map((v, i) => {
+    return searchPosts?.map((v, i) => {
       const contentWithoutHTML = v.content.replace(/(<([^>]+)>)/gi, "");
       return (
         <SearchList onClick={() => history.push(`/${v.category}/post/${v.id}`)} key={i}>
@@ -49,17 +39,17 @@ function BlogHashtagPage() {
   return (
     <>
       <h2 style={{ lineHeight: "1.3" }} className="search_title">
-        SEARCH TAGS <br className="br_search" />
-        <span style={{ color: BLUE_COLOR }}>"#{hashtagName && hashtagName}"</span>
+        SEARCH POSTS <br className="br_search" />
+        <span style={{ color: BLUE_COLOR }}>"{searchedKeyword && searchedKeyword}"</span>
         <span style={{ color: BLUE_COLOR, margin: "0 1rem", fontSize: "1.2rem" }}>
           +&nbsp;
-          <CountUp duration={4} start={0} end={hashtagPosts?.length || 0} />
+          <CountUp duration={4} start={0} end={searchPosts?.length || 0} />
           &nbsp;posts searched
         </span>
       </h2>
       <Divider style={{ marginBottom: 0 }} />
       <ul style={{ margin: 0 }}>
-        {hashtagPosts?.length > 0 ? (
+        {searchPosts?.length > 0 ? (
           searchPostsComponent()
         ) : (
           <div
@@ -78,7 +68,7 @@ function BlogHashtagPage() {
               alt="noComment"
               src="https://icons.iconarchive.com/icons/iconsmind/outline/256/Inbox-Empty-icon.png"
             />
-            <h3 style={{ textAlign: "center" }}>Couldn't find Hashtags</h3>
+            <h3 style={{ textAlign: "center" }}>Couldn't find posts with your keyword.</h3>
           </div>
         )}
       </ul>
@@ -87,4 +77,4 @@ function BlogHashtagPage() {
   );
 }
 
-export default BlogHashtagPage;
+export default BlogSearchPage;

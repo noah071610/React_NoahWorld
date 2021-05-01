@@ -1,7 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import { useHistory } from "react-router";
+import { FC } from "react";
+import { ArticleInter } from "../types";
 dayjs.locale("kor");
 
 const Wrapper = styled.div`
@@ -36,7 +37,7 @@ const Title = styled.h3`
   text-overflow: ellipsis;
 `;
 
-function ArticlePost({ post, active }) {
+const ArticlePost: FC<ArticleInter> = ({ post, active }) => {
   const history = useHistory();
   return (
     <Wrapper
@@ -59,6 +60,6 @@ function ArticlePost({ post, active }) {
       </ul>
     </Wrapper>
   );
-}
+};
 
 export default ArticlePost;

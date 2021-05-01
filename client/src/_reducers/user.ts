@@ -42,9 +42,9 @@ export interface UserState {
   confirmPasswordDone: Boolean;
   confirmPasswordError: Boolean | Error;
 
-  withDrawalLoading: Boolean;
-  withDrawalDone: Boolean;
-  withDrawalError: Boolean | Error;
+  withdrawalLoading: Boolean;
+  withdrawalDone: Boolean;
+  withdrawalError: Boolean | Error;
 
   changePasswordLoading: Boolean;
   changePasswordDone: Boolean;
@@ -96,9 +96,9 @@ const initialState = {
   confirmPasswordDone: false,
   confirmPasswordError: false,
 
-  withDrawalLoading: false,
-  withDrawalDone: false,
-  withDrawalError: false,
+  withdrawalLoading: false,
+  withdrawalDone: false,
+  withdrawalError: false,
 
   changePasswordLoading: false,
   changePasswordDone: false,
