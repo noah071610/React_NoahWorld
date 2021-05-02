@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
 import { useHistory } from "react-router";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { BLUE_COLOR } from "../../../config";
 import styled from "styled-components";
+import { FC } from "react";
+import { ArticleInter } from "../types";
 dayjs.extend(relativeTime);
 dayjs.locale("kor");
 
@@ -15,10 +16,10 @@ const Article = styled.article`
     background-color: rgba(0, 0, 0, 0.1);
   }
 `;
-function ArticleSmallAside({ article, type }) {
+const ArticleSmallAside: FC<ArticleInter> = ({ article, type }) => {
   const history = useHistory();
-  const onClickArticle = (e) => {
-    if (e.target.className === "hashtag") {
+  const onClickArticle = (e: React.MouseEvent) => {
+    if ((e.target as Element).className === "hashtag") {
       return;
     }
     window.scrollTo({ top: 0 });
@@ -43,11 +44,11 @@ function ArticleSmallAside({ article, type }) {
               IN {article.category.toUpperCase()}
             </span>
             <span className="article_md_footer">
-              >&nbsp;&nbsp;
+              &nbsp;&nbsp;
               {type === "comments"
-                ? article.Comments.length + " Comments"
+                ? article.Comments?.length + " Comments"
                 : type === "like"
-                ? article.PostLikers.length + " Likes"
+                ? article.PostLikers?.length + " Likes"
                 : article.hit + " views"}
             </span>
             <h2 style={{ marginTop: "1rem" }} className="article_aside_header small_title">
@@ -58,6 +59,6 @@ function ArticleSmallAside({ article, type }) {
       )}
     </>
   );
-}
+};
 
 export default ArticleSmallAside;

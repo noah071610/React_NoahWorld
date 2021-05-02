@@ -1,5 +1,3 @@
-import React from "react";
-
 export function SmallPoster() {
   return (
     <section className="blog_class_small_poster">

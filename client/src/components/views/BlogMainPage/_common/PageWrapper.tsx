@@ -1,5 +1,5 @@
 import { DoubleLeftOutlined } from "@ant-design/icons";
-import React from "react";
+import { FC, ReactNode } from "react";
 import styled, { keyframes } from "styled-components";
 import Footer from "../Footer";
 import Header from "../Header";
@@ -23,7 +23,11 @@ const Scroll = styled.div`
   }
 `;
 
-function PageWrapper({ children }) {
+interface WrapperProps {
+  children: ReactNode;
+}
+
+const PageWrapper: FC<WrapperProps> = ({ children }) => {
   return (
     <>
       <div className="pageWrapper">
@@ -46,6 +50,6 @@ function PageWrapper({ children }) {
       <Footer />
     </>
   );
-}
+};
 
 export default PageWrapper;

@@ -1,30 +1,29 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import { FC } from "react";
 import { useHistory } from "react-router";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "react-router-dom";
 import { BLUE_COLOR } from "../../../config";
+import { ArticleInter } from "../types";
 dayjs.extend(relativeTime);
 dayjs.locale("kor");
 
-function ArticleRow({ article }) {
+const ArticleRow: FC<ArticleInter> = ({ article }) => {
   const history = useHistory();
-  const onClickArticle = (e) => {
-    if (e.target.className === "hashtag") {
+  const onClickArticle = (e: React.MouseEvent) => {
+    if ((e.target as Element).className === "hashtag") {
       return;
     }
     window.scrollTo({ top: 0 });
     history.push(`/${article.category}/post/${article.id}`);
   };
-  const contentWithoutHTML =
-    article &&
-    article.content
-      .replace(/(<([^>]+)>)/gi, "")
-      .replace(/(#youtube:.*)/g, "(Youtube Video Link)")
-      .replace(/&.*;/gi, "");
-  const handleImgError = (e) => {
-    e.target.src = "images/blog/noImage.gif";
+  const contentWithoutHTML = article?.content
+    ?.replace(/(<([^>]+)>)/gi, "")
+    .replace(/(#youtube:.*)/g, "(Youtube Video Link)")
+    .replace(/&.*;/gi, "");
+  const handleImgError = (e: React.SyntheticEvent) => {
+    (e.target as HTMLImageElement).src = "images/blog/noImage.gif";
   };
   return (
     <>
@@ -50,8 +49,8 @@ function ArticleRow({ article }) {
               {article.title}
             </h2>
             <ul style={{ marginBottom: "1rem" }} className="article_tag">
-              {article.Hashtags &&
-                article.Hashtags.map((v, i) => {
+              {article.HashTags &&
+                article.HashTags.map((v, i) => {
                   return (
                     <li key={i}>
                       <Link
@@ -92,6 +91,6 @@ function ArticleRow({ article }) {
       )}
     </>
   );
-}
+};
 
 export default ArticleRow;

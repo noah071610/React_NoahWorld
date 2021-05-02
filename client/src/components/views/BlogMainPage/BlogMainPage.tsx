@@ -119,7 +119,7 @@ function BlogMainPage() {
               </Slider>
             </div>
             {techPosts.slice(3, 8).map((techPost, i) => {
-              return <ArticleSmall key={i} post={techPost} />;
+              return <ArticleSmall key={i} article={techPost} />;
             })}
             <Divider orientation="left">
               <Link to={"/daily"}>Daily</Link>
@@ -146,7 +146,7 @@ function BlogMainPage() {
               </Slider>
             </div>
             {dailyPosts.slice(3, 8).map((dailyPost, i) => {
-              return <ArticleSmall key={i} post={dailyPost} />;
+              return <ArticleSmall key={i} article={dailyPost} />;
             })}
           </section>
         )}
@@ -253,7 +253,7 @@ function BlogMainPage() {
             />
             Most Liked
           </h3>
-          <ArticleSmallAside type="like" article={mostLikedPost} />
+          {mostLikedPost && <ArticleSmallAside type="like" article={mostLikedPost} />}
         </div>
         <div>
           <h3
@@ -266,7 +266,7 @@ function BlogMainPage() {
             />
             Most View
           </h3>
-          <ArticleSmallAside type="view" article={mostViewedPost} />
+          {mostViewedPost && <ArticleSmallAside type="like" article={mostViewedPost} />}
         </div>
         <div>
           <h3
@@ -279,7 +279,7 @@ function BlogMainPage() {
             />
             Most Commented
           </h3>
-          <ArticleSmallAside type="comments" article={mostCommentedPost} />
+          {mostCommentedPost && <ArticleSmallAside type="comments" article={mostCommentedPost} />}
         </div>
         <Divider />
         <div style={{ marginBottom: "2rem" }}>

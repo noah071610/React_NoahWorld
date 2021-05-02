@@ -1,8 +1,9 @@
-import React from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useHistory } from "react-router";
+import { FC } from "react";
+import { ArticleInter } from "../types";
 dayjs.extend(relativeTime);
 dayjs.locale("kor");
 
@@ -31,34 +32,38 @@ const Article = styled.article`
   }
 `;
 
-function ArticleSmall({ post }) {
+const ArticleSmall: FC<ArticleInter> = ({ article }) => {
   const history = useHistory();
   return (
     <Article
       onClick={() => {
-        history.push(`/${post.category}/post/${post.id}`);
+        history.push(`/${article.category}/post/${article.id}`);
         window.scrollTo({ top: 0 });
       }}
       className="blog_main_small"
     >
       <img
         style={{ width: "110px", height: "80px" }}
-        src={post?.thumbnail ? post.thumbnail : post.imagePath?.replace(/\/thumb\//, "/original/")}
+        src={
+          article?.thumbnail
+            ? article.thumbnail
+            : article.imagePath?.replace(/\/thumb\//, "/original/")
+        }
         alt="thumbnail"
       />
       <div>
-        <p style={{ margin: "0 0 0.5rem 1rem", height: "100%" }}>{post.title} </p>
+        <p style={{ margin: "0 0 0.5rem 1rem", height: "100%" }}>{article.title} </p>
         <ul style={{ margin: "0 0 0 1rem" }} className="article_footer">
           <li>
-            {dayjs().to(dayjs(post.createdAt), true)}
+            {dayjs().to(dayjs(article.createdAt), true)}
             &nbsp;ago
           </li>
-          <li>·&nbsp;{post.hit} views</li>
-          <li>·&nbsp;{post.PostLikers && post.PostLikers.length} Likes</li>
+          <li>·&nbsp;{article.hit} views</li>
+          <li>·&nbsp;{article.PostLikers && article.PostLikers.length} Likes</li>
         </ul>
       </div>
     </Article>
   );
-}
+};
 
 export default ArticleSmall;

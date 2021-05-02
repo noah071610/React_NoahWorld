@@ -36,7 +36,7 @@ function Footer() {
   const history = useHistory();
   const userName: string = user?.name!;
   const [password, onChangePassword] = useInput(null);
-  const [newPassword, onChangeNewPassword] = useInput(null);
+  const [newPassword] = useInput(null);
   const [newName, onChangeNewName] = useInput(userName);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [changePassword, setChangePassword] = useState<boolean>(false);

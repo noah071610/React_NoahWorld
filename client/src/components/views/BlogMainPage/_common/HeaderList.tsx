@@ -17,14 +17,16 @@ import {
   faSignOutAlt,
   faTimes,
   faTrash,
+  IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Divider, Input, message } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import React, { useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import Scrollspy from "react-scrollspy";
+import { RootState } from "src/_reducers";
 import styled from "styled-components";
 import useInput from "../../../../_hooks/useInput";
 import useToggle from "../../../../_hooks/useToggle";
@@ -113,12 +115,16 @@ export function BlogHeader() {
 export function BlogSmallHeader() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { onSlideMenu, portfolios, portfolio } = useSelector((state) => state.blog);
-  const [password, onChangePassword] = useInput();
+
+  const { onSlideMenu, portfolios, portfolio } = useSelector((state: RootState) => state.blog);
+  const { user } = useSelector((state: RootState) => state.user);
+  const { post, removePostDone, prevPost, nextPost } = useSelector(
+    (state: RootState) => state.post
+  );
+
+  const [password, onChangePassword] = useInput("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [keyword, onChangeKeyword, setKeyword] = useInput("");
-  const { user } = useSelector((state) => state.user);
-  const { post, removePostDone, prevPost, nextPost } = useSelector((state) => state.post);
   const [onSearchForm, onClickSearchForm] = useToggle(false);
   const [slideTitle, onClickSlideTitle, setSlideTitle] = useToggle(false);
   const [headerTitle, setHeaderTitle] = useState(false);
@@ -136,7 +142,7 @@ export function BlogSmallHeader() {
         return;
       }
       setHeaderTitle(false);
-      setSlideTitle(false);
+      // setSlideTitle(false);
       setPortfolioTitle(false);
     }
     window.addEventListener("scroll", scrollCallBack);
@@ -187,7 +193,7 @@ export function BlogSmallHeader() {
     setIsModalVisible(false);
     dispatch({
       type: REMOVE_POST_REQUEST,
-      data: { PostId: post.id, password, tags: post.Hashtags },
+      data: { PostId: post?.id, password, tags: post?.HashTags },
     });
   };
 
@@ -254,7 +260,7 @@ export function BlogSmallHeader() {
                   onClick={() => {
                     window.scrollTo({ top: 130 });
                   }}
-                  to={`/portfolio/${portfolio.id === 1 ? portfolios.length : portfolio.id - 1}`}
+                  to={`/portfolio/${portfolio?.id === 1 ? portfolios.length : portfolio?.id - 1}`}
                   style={{ display: "flex", alignItems: "center", fontSize: "1rem" }}
                 >
                   <DoubleLeftOutlined />
@@ -318,7 +324,7 @@ export function BlogSmallHeader() {
             <li style={{ margin: 0 }}>
               <a
                 onClick={() =>
-                  history.push(`/${post.category === "culture" ? "class" : post.category}`)
+                  history.push(`/${post?.category === "culture" ? "class" : post?.category}`)
                 }
               >
                 <RollbackOutlined />
@@ -326,10 +332,10 @@ export function BlogSmallHeader() {
             </li>
             <Divider type="vertical" />
             <li style={{ margin: 0 }}>
-              {nextPost[0] ? (
+              {nextPost ? (
                 <Link
                   onClick={() => window.scrollTo({ top: 0 })}
-                  to={`/${post.category}/post/${nextPost[0].id}`}
+                  to={`/${post?.category}/post/${nextPost[0].id}`}
                 >
                   <DoubleLeftOutlined />
                 </Link>
@@ -339,10 +345,10 @@ export function BlogSmallHeader() {
             </li>
             <Divider type="vertical" />
             <li style={{ margin: 0 }}>
-              {prevPost[0] ? (
+              {prevPost ? (
                 <Link
                   onClick={() => window.scrollTo({ top: 0 })}
-                  to={`/${post.category}/post/${prevPost[0].id}`}
+                  to={`/${post?.category}/post/${prevPost[0].id}`}
                 >
                   <DoubleRightOutlined />
                 </Link>
@@ -555,7 +561,17 @@ export function BlogSmallHeader() {
   );
 }
 
-export function PortfolioHeader({ navContents }) {
+interface NavInter {
+  navContents: Array<NavProps>;
+}
+
+interface NavProps {
+  icon: IconDefinition;
+  explain: string;
+  name: string;
+}
+
+export const PortfolioHeader: FC<NavInter> = ({ navContents }) => {
   return (
     <>
       <Link
@@ -585,10 +601,10 @@ export function PortfolioHeader({ navContents }) {
       </Scrollspy>
     </>
   );
-}
+};
 
 export function PortfolioPostHeader() {
-  const { portfolios, portfolio } = useSelector((state) => state.blog);
+  const { portfolios, portfolio } = useSelector((state: RootState) => state.blog);
   return (
     <>
       <div>
@@ -613,7 +629,7 @@ export function PortfolioPostHeader() {
             onClick={() => {
               window.scrollTo({ top: 276 });
             }}
-            to={`/portfolio/${portfolio.id === 1 ? portfolios.length : portfolio.id - 1}`}
+            to={`/portfolio/${portfolio?.id === 1 ? portfolios.length : portfolio?.id - 1}`}
             style={{ display: "flex", alignItems: "center", fontSize: "1rem" }}
           >
             <DoubleLeftOutlined />
@@ -626,7 +642,7 @@ export function PortfolioPostHeader() {
             onClick={() => {
               window.scrollTo({ top: 276 });
             }}
-            to={`/portfolio/${portfolio.id === portfolios.length ? 1 : portfolio.id + 1}`}
+            to={`/portfolio/${portfolio?.id === portfolios.length ? 1 : portfolio?.id + 1}`}
             style={{ display: "flex", alignItems: "center", fontSize: "1rem" }}
           >
             <span style={{ fontSize: "0.8rem", margin: "0 0.5rem" }}>다음 포트폴리오</span>

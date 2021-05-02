@@ -120,6 +120,7 @@ export interface RecentPostInter {
   category: string;
   title: string;
   Comments?: Array<CommentsInter>;
+  hit?: number;
 }
 
 export interface UserInter {

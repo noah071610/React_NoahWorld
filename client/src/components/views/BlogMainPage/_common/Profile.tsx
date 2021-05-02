@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { CameraFilled } from "@ant-design/icons";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,7 @@ import { BLUE_COLOR } from "../../../config";
 import useInput from "../../../../_hooks/useInput";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { RootState } from "src/_reducers";
 
 const Camera = styled(CameraFilled)`
   position: absolute;
@@ -46,7 +47,9 @@ const Close = styled(FontAwesomeIcon)`
 `;
 
 function HeaderProfile() {
-  const { user, addIconDone, addIconUrlDone, removeIconDone } = useSelector((state) => state.user);
+  const { user, addIconDone, addIconUrlDone, removeIconDone } = useSelector(
+    (state: RootState) => state.user
+  );
   const history = useHistory();
   const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -67,25 +70,15 @@ function HeaderProfile() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addIconDone, addIconUrlDone, removeIconDone]);
+
   const handleOk = () => {
     const dd = new FormData();
     dd.append("image", blob);
-    dd.append("id", user.id);
+    dd.append("id", user?.id);
     dispatch({
       type: ADD_ICON_REQUEST,
       data: dd,
     });
-    // if (imageForm) {
-    //   dispatch({
-    //     type: ADD_ICON_REQUEST,
-    //     data: imageForm,
-    //   });
-    // } else if (url && !imageForm) {
-    //   dispatch({
-    //     type: ADD_ICON_URL_REQUEST,
-    //     data: { url, UserId: user.id },
-    //   });
-    // }
     setIsModalVisible(false);
     setUrl("");
     setUpImg(null);
@@ -213,9 +206,9 @@ function HeaderProfile() {
                 )}
               </div>
             </Col>
-            <WelcomeTable />
-            <RecentTableView />
-            <RecentTableComment />
+            <WelcomeTable visible={false} />
+            <RecentTableView visible={false} />
+            <RecentTableComment visible={false} />
           </Row>
           <Slider className="profile_table" {...settings}>
             <WelcomeTable visible={true} />
@@ -263,7 +256,6 @@ function HeaderProfile() {
             <div style={{ display: "flex", justifyContent: "center" }}>
               <canvas
                 ref={previewCanvasRef}
-                // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
                 style={{
                   width: "50%",
                   height: "50%",

@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import colorSyntaxPlugin from "@toast-ui/editor-plugin-color-syntax";
-import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
-import hljs from "highlight.js";
+// import hljs from "highlight.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Editor } from "@toast-ui/react-editor";
@@ -19,47 +18,44 @@ import {
   UPLOAD_IMAGES_REQUEST,
   UPLOAD_POST_IMAGE_REQUEST,
 } from "../../../../_reducers/post";
-import {
-  POST_EDIT_OFF,
-  POST_EDIT_ON,
-  ADD_WORD_REQUEST,
-  ADD_QUIZ_REQUEST,
-} from "../../../../_reducers/blog";
-import { BACKEND_URL } from "../../../config";
+import { POST_EDIT_OFF, POST_EDIT_ON, ADD_QUIZ_REQUEST } from "../../../../_reducers/blog";
+import { RootState } from "src/_reducers";
+import { HashtagsInter } from "src/_reducers/@reducerTypes";
 
 function Admin() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
-  const { postEditOn } = useSelector((state) => state.blog);
+  const { user } = useSelector((state: RootState) => state.user);
+  const { postEditOn } = useSelector((state: RootState) => state.blog);
   const {
     post,
     uploadImagesDone,
     imagePath,
-    PostImagePath,
+    postImagePath,
     uploadPostImageDone,
     addPostDone,
     editPostDone,
-  } = useSelector((state) => state.post);
+  } = useSelector((state: RootState) => state.post);
+  const [content, , setContent] = useInput("");
   const [radioValue, setRadioValue] = useState("tech");
   const [typeValue, setTypeValue] = useState("word");
-  const [password, onChangePassword, setPassword] = useInput();
+  const [password, onChangePassword] = useInput("");
   const [thumbnail, onChangeThumbnail, setthumbnail] = useInput("");
-  const [title, onChangeTitle, setTitle] = useInput();
-  const [content, onChangeContent, setContent] = useInput();
+  const [title, onChangeTitle, setTitle] = useInput("");
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [PostId, setPostId] = useState(null);
-  const [tags, setTags] = useState(null);
+  const [PostId, setPostId] = useState<number | null>(null);
+  const [tags, setTags] = useState<HashtagsInter[]>();
 
-  const [question, onChangeQuestion, setQuestion] = useInput();
-  const [answer, onChangeAnswer, setAnswer] = useInput();
+  const [question, onChangeQuestion] = useInput("");
+  const [answer, onChangeAnswer] = useInput("");
   const [quizForm, setQuizForm] = useState(false);
-  const editorRef = useRef();
-  const imageInput = useRef();
+  const editorRef = useRef<any>(null);
+  const imageInput = useRef<HTMLInputElement | null>(null);
 
-  const onClickImageUpload = useCallback(() => {
-    imageInput.current.click();
-  }, []);
+  // const onClickImageUpload = useCallback(() => {
+  //   imageInput.current.click();
+  // }, []);
+
   const onChangeImages = useCallback((e) => {
     const imageFormData = new FormData();
     imageFormData.append("image", e.target.files[0]);
@@ -71,7 +67,7 @@ function Admin() {
 
   //==authorize==
   useEffect(() => {
-    if (!user || !user.admin || !user.id === 1) {
+    if (!user || !user.admin || user.id !== 1) {
       history.goBack();
     }
   }, [history, user, content]);
@@ -89,7 +85,7 @@ function Admin() {
       setthumbnail(post.thumbnail);
       setRadioValue(post.category);
       setPostId(post.id);
-      setTags(post.Hashtags);
+      setTags(post?.HashTags);
     } else {
       dispatch({
         type: POST_EDIT_OFF,
@@ -129,7 +125,7 @@ function Admin() {
       imagePath,
       category: radioValue,
       content,
-      UserId: user.id,
+      UserId: user?.id,
       password,
       PostId,
       tags,
@@ -151,7 +147,7 @@ function Admin() {
     if (question && answer && quizForm) {
       dispatch({
         type: ADD_QUIZ_REQUEST,
-        data: { type: typeValue, question, answer, password, UserId: user.id },
+        data: { type: typeValue, question, answer, password, UserId: user?.id },
       });
     }
     setIsModalVisible(false);
@@ -163,11 +159,11 @@ function Admin() {
     setQuizForm(false);
   };
 
-  function uploadImage(blob) {
-    let formData = new FormData();
-    formData.append("image", blob);
-    console.log(formData);
-  }
+  // function uploadImage(blob) {
+  //   let formData = new FormData();
+  //   formData.append("image", blob);
+  //   console.log(formData);
+  // }
 
   useEffect(() => {
     if (uploadPostImageDone) {
@@ -175,7 +171,7 @@ function Admin() {
         .getInstance()
         .setHtml(
           editorRef.current.getInstance().getHtml() +
-            `<img src="${PostImagePath}" alt="post_image" />`
+            `<img src="${postImagePath}" alt="post_image" />`
         );
     }
   }, [uploadPostImageDone]);
@@ -184,7 +180,7 @@ function Admin() {
     if (addPostDone || editPostDone) {
       message.success("Post added or Edited");
       history.push("/");
-      editorRef.current.getInstance().setHtml("");
+      editorRef?.current?.getInstance().setHtml("");
     }
   }, [addPostDone, editPostDone]);
   return (
@@ -220,11 +216,12 @@ function Admin() {
             </button>
           ) : null}
         </div>
+        {/* [codeSyntaxHighlight, { hljs }] */}
         <Editor
-          plugins={[[codeSyntaxHighlight, { hljs }], colorSyntaxPlugin]}
+          plugins={[codeSyntaxHighlight, colorSyntaxPlugin]}
           placeholder="Welcome Noah!"
           height="600px"
-          initialValue={postEditOn && postEditOn ? post.content : null}
+          initialValue={postEditOn && postEditOn ? post?.content : null}
           initialEditType="markdown"
           useCommandShortcut={true}
           usageStatistics={false}

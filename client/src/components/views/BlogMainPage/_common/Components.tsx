@@ -1,8 +1,9 @@
 import { Col, Divider, Row } from "antd";
-import React from "react";
+import { FC } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import { RootState } from "src/_reducers";
 import styled from "styled-components";
 import { BLUE_COLOR } from "../../../config";
 
@@ -29,6 +30,10 @@ const WelcomeTableWrapper = styled(Col)`
   padding-right: 1rem;
   position: relative;
 `;
+
+interface VisibleProps {
+  visible: Boolean;
+}
 
 export function MainPoster() {
   return (
@@ -80,14 +85,15 @@ export function MainPoster() {
   );
 }
 
-export function RecentTableComment({ visible }) {
+export const RecentTableComment: FC<VisibleProps> = ({ visible }) => {
   const history = useHistory();
-  const { recentCommentPost } = useSelector((state) => state.post);
+  const { recentCommentPost } = useSelector((state: RootState) => state.post);
   return (
     <RecentTable style={{ paddingLeft: "1rem" }} xs={visible ? 24 : 0} sm={8} lg={6}>
       <h2 style={{ textAlign: "center", margin: "1rem 0" }}>Recent Comment 📝</h2>
       <Divider />
-      {recentCommentPost?.Comments.length > 0 ? (
+      {/* length Check */}
+      {recentCommentPost?.Comments ? (
         <div
           onClick={() =>
             history.push(`/${recentCommentPost?.category}/post/${recentCommentPost?.id}`)
@@ -148,10 +154,11 @@ export function RecentTableComment({ visible }) {
       )}
     </RecentTable>
   );
-}
-export function RecentTableView({ visible }) {
+};
+
+export const RecentTableView: FC<VisibleProps> = ({ visible }) => {
   const history = useHistory();
-  const { recentViewPost } = useSelector((state) => state.post);
+  const { recentViewPost } = useSelector((state: RootState) => state.post);
   return (
     <RecentTable style={{ padding: "0 1rem" }} xs={visible ? 24 : 0} sm={8} lg={6}>
       <h2 style={{ textAlign: "center", margin: "1rem 0" }}>Recent View 👁️‍🗨️ </h2>
@@ -203,10 +210,10 @@ export function RecentTableView({ visible }) {
       )}
     </RecentTable>
   );
-}
+};
 
-export function WelcomeTable({ visible }) {
-  const { user } = useSelector((state) => state.user);
+export const WelcomeTable: FC<VisibleProps> = ({ visible }) => {
+  const { user } = useSelector((state: RootState) => state.user);
   return (
     <WelcomeTableWrapper xs={visible ? 24 : 0} sm={8} lg={6}>
       <h2 style={{ margin: "1rem 0" }}>
@@ -241,4 +248,4 @@ export function WelcomeTable({ visible }) {
       )}
     </WelcomeTableWrapper>
   );
-}
+};
