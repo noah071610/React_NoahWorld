@@ -1,12 +1,12 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/_reducers";
 import { ON_SIGN_UP_PAGE } from "../../../../_reducers/blog";
 import BlogLoginSection from "./Section/BlogLoginSection";
 import BlogSignUpSection from "./Section/BlogSingUpSection";
 
 function BlogLoginPage() {
   const dispatch = useDispatch();
-  const { onSignUpPage } = useSelector((state) => state.blog);
+  const { onSignUpPage } = useSelector((state: RootState) => state.blog);
 
   const onClickSignUp = () => {
     dispatch({

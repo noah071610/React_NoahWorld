@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Form, Input, Button, Divider, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { LOG_IN_REQUEST } from "../../../../../_reducers/user";
 import styled from "styled-components";
 import { BLUE_COLOR } from "../../../../config";
+import { RootState } from "src/_reducers";
 
 const GoogleBtn = styled.button`
   box-sizing: border-box;
@@ -57,10 +58,14 @@ const validateMessages = {
   },
 };
 
-function BlogLoginSection({ onClickSignUp }) {
+interface LoginProps {
+  onClickSignUp: () => void;
+}
+
+const BlogLoginSection: FC<LoginProps> = ({ onClickSignUp }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { logInError, logInDone } = useSelector((state) => state.user);
+  const { logInError, logInDone } = useSelector((state: RootState) => state.user);
 
   const onFinish = (values: any) => {
     dispatch({
@@ -133,6 +138,6 @@ function BlogLoginSection({ onClickSignUp }) {
       </GoogleBtn>
     </>
   );
-}
+};
 
 export default BlogLoginSection;

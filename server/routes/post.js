@@ -142,7 +142,7 @@ router.get("/category/:category", async (req, res) => {
   }
 });
 
-router.get("/onePost/:postId/:UserId", async (req, res) => {
+router.get("/onePost/:postId/:UserId/:category", async (req, res) => {
   try {
     const post = await Post.findOne({
       where: { id: req.params.postId },
@@ -185,6 +185,17 @@ router.get("/onePost/:postId/:UserId", async (req, res) => {
         },
       ],
     });
+    const prevPost = await Post.findAll({
+      order: [["id", "DESC"]],
+      where: { id: { [Op.lt]: req.params.postId }, category: req.params.category },
+      attributes: ["id", "title", "createdAt", "category"],
+      limit: 5,
+    });
+    const nextPost = await Post.findAll({
+      where: { id: { [Op.gt]: req.params.postId }, category: req.params.category },
+      attributes: ["id", "title", "createdAt", "category"],
+      limit: 5,
+    });
     await post.increment("hit", { by: 1 });
     if (req.params.UserId) {
       User.update(
@@ -194,31 +205,10 @@ router.get("/onePost/:postId/:UserId", async (req, res) => {
         { where: { id: parseInt(req.params.UserId, 10) } }
       );
     }
-
     if (!post) {
       return res.status(404).send("Not Found, please check PostId TT");
     }
-    res.status(200).json({ post });
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-
-router.get("/sidePosts/:id/:category", async (req, res) => {
-  try {
-    const prevPost = await Post.findAll({
-      order: [["id", "DESC"]],
-      where: { id: { [Op.lt]: req.params.id }, category: req.params.category },
-      attributes: ["id", "title"],
-      limit: 5,
-    });
-    const nextPost = await Post.findAll({
-      where: { id: { [Op.gt]: req.params.id }, category: req.params.category },
-      attributes: ["id", "title"],
-      limit: 5,
-    });
-    res.status(200).json({ prevPost, nextPost });
+    res.status(200).json({ post, prevPost, nextPost });
   } catch (error) {
     console.error(error);
     next(error);

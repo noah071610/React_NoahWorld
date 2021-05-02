@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Form, Input, Button, Divider, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { SIGN_UP_REQUEST } from "../../../../../_reducers/user";
 import { ON_SIGN_UP_PAGE } from "../../../../../_reducers/blog";
+import { RootState } from "src/_reducers";
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
   required: "${name} is required!",
@@ -14,9 +15,13 @@ const validateMessages = {
   },
 };
 
-function BlogSignUpSection({ onClickLogin }) {
+interface SignUpProps {
+  onClickLogin: () => void;
+}
+
+const BlogSignUpSection: FC<SignUpProps> = ({ onClickLogin }) => {
   const dispatch = useDispatch();
-  const { signUpError, signUpDone } = useSelector((state) => state.user);
+  const { signUpError, signUpDone } = useSelector((state: RootState) => state.user);
 
   const onFinish = (values: any) => {
     dispatch({
@@ -105,6 +110,6 @@ function BlogSignUpSection({ onClickLogin }) {
       </Form>
     </>
   );
-}
+};
 
 export default BlogSignUpSection;

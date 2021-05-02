@@ -35,8 +35,8 @@ function Footer() {
   } = useSelector((state: RootState) => state.user);
   const history = useHistory();
   const userName: string = user?.name!;
-  const [password, onChangePassword] = useInput(null);
-  const [newPassword] = useInput(null);
+  const [password, onChangePassword] = useInput("");
+  const [newPassword, onChangeNewPassword] = useInput("");
   const [newName, onChangeNewName] = useInput(userName);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [changePassword, setChangePassword] = useState<boolean>(false);
@@ -263,14 +263,12 @@ function Footer() {
               <p>Please write your new password.</p>
               <br />
               <Form.Item name="Password" rules={[{ required: true }]}>
-                <Input.Password />
+                <Input.Password value={newPassword} onChange={onChangeNewPassword} />
               </Form.Item>
               <Form.Item
                 name="Confirm"
                 dependencies={["Password"]}
                 hasFeedback
-                // value={newPassword}
-                // onChange={onChangeNewPassword}
                 rules={[
                   {
                     required: true,

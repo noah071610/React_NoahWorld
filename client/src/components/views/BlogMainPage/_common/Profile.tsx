@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { CameraFilled } from "@ant-design/icons";
 import { useCallback, useEffect, useRef, useState } from "react";
-import ReactCrop from "react-image-crop";
+import ReactCrop, { Crop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -47,37 +47,35 @@ const Close = styled(FontAwesomeIcon)`
 `;
 
 function HeaderProfile() {
-  const { user, addIconDone, addIconUrlDone, removeIconDone } = useSelector(
-    (state: RootState) => state.user
-  );
+  const { user, addIconDone, removeIconDone } = useSelector((state: RootState) => state.user);
   const history = useHistory();
   const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [url, onChangeUrl, setUrl] = useInput("");
-  const [upImg, setUpImg] = useState("");
+  const [upImg, setUpImg] = useState<ArrayBuffer | string | null>(null);
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
-  const [completedCrop, setCompletedCrop] = useState(null);
-  const [blob, setBlob] = useState(null);
-  const [crop, setCrop] = useState({ unit: "px", width: 200, aspect: 1 / 1 });
+  const [completedCrop, setCompletedCrop] = useState<any>(null);
+  const [blob, setBlob] = useState<Blob | null>(null);
+  const [crop, setCrop] = useState<Crop>({ unit: "px", width: 200, aspect: 1 / 1 });
 
   useEffect(() => {
-    if (addIconDone || addIconUrlDone) {
+    if (addIconDone) {
       message.success("Successfully added your own icon 👍");
     }
     if (removeIconDone) {
       message.success("Successfully removed your icon.");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addIconDone, addIconUrlDone, removeIconDone]);
+  }, [addIconDone, removeIconDone]);
 
   const handleOk = () => {
-    const dd = new FormData();
-    dd.append("image", blob);
-    dd.append("id", user?.id);
+    const form = new FormData();
+    form.append("image", blob!);
+    form.append("id", String(user?.id));
     dispatch({
       type: ADD_ICON_REQUEST,
-      data: dd,
+      data: form,
     });
     setIsModalVisible(false);
     setUrl("");
@@ -108,11 +106,11 @@ function HeaderProfile() {
     slidesToScroll: 1,
   };
 
-  const handleImgError = (e) => {
-    e.target.src = "/images/blog/default-user.png";
+  const handleImgError = (e: React.SyntheticEvent) => {
+    (e.target as HTMLImageElement).src = "/images/blog/default-user.png";
   };
 
-  const onSelectFile = (e) => {
+  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
       reader.addEventListener("load", () => setUpImg(reader.result));
@@ -129,9 +127,9 @@ function HeaderProfile() {
       return;
     }
 
-    const image = imgRef.current;
-    const canvas = previewCanvasRef.current;
-    const crop = completedCrop;
+    const image: any = imgRef.current;
+    const canvas: any = previewCanvasRef.current;
+    const crop: any = completedCrop;
 
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
@@ -155,9 +153,9 @@ function HeaderProfile() {
       crop.width,
       crop.height
     );
-    return new Promise((resolve, reject) => {
+    new Promise(() => {
       canvas.toBlob(
-        (blob) => {
+        (blob: Blob) => {
           setBlob(blob);
         },
         "image/png",

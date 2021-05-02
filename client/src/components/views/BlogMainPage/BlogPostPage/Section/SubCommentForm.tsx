@@ -1,11 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { message } from "antd";
-import React, { useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/_reducers";
 import styled from "styled-components";
 import useInput from "../../../../../_hooks/useInput";
 import { ADD_SUB_COMMENT_REQUEST } from "../../../../../_reducers/post";
+import { SubCommentProps } from "../../types";
 
 const CommentFormWrapper = styled.div`
   width: 100%;
@@ -24,9 +26,10 @@ const CommentFormWrapper = styled.div`
     }
   }
 `;
-function SubCommentForm({ CommentId }) {
-  const { user } = useSelector((state) => state.user);
-  const { post } = useSelector((state) => state.post);
+
+const SubCommentForm: FC<SubCommentProps> = ({ CommentId }) => {
+  const { user } = useSelector((state: RootState) => state.user);
+  const { post } = useSelector((state: RootState) => state.post);
   const dispatch = useDispatch();
   const [content, onChangeContent, setContent] = useInput("");
   const onClickAddComment = useCallback(() => {
@@ -40,10 +43,10 @@ function SubCommentForm({ CommentId }) {
     }
     dispatch({
       type: ADD_SUB_COMMENT_REQUEST,
-      data: { PostId: post.id, content, CommentId, UserId: user.id },
+      data: { PostId: post?.id, content, CommentId, UserId: user.id },
     });
     setContent("");
-  }, [CommentId, content, dispatch, post.id, setContent, user]);
+  }, [CommentId, content, dispatch, post?.id, setContent, user]);
   useEffect(() => {
     if (!user) {
       setContent("You can comment when you are logged in!");
@@ -51,8 +54,8 @@ function SubCommentForm({ CommentId }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleImgError = (e) => {
-    e.target.src = `/images/blog/default-user.png`;
+  const handleImgError = (e: React.SyntheticEvent) => {
+    (e.target as HTMLImageElement).src = `/images/blog/default-user.png`;
   };
 
   return (
@@ -95,6 +98,6 @@ function SubCommentForm({ CommentId }) {
       </CommentFormWrapper>
     </>
   );
-}
+};
 
 export default SubCommentForm;

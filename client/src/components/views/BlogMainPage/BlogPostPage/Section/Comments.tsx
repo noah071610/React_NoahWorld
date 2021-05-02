@@ -3,7 +3,7 @@ import { DownCircleOutlined, EditFilled, HeartFilled, HeartOutlined } from "@ant
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Input, message } from "antd";
-import React, { useCallback, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import useInput from "../../../../../_hooks/useInput";
@@ -19,6 +19,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import SubCommentForm from "./SubCommentForm";
 import SubComments from "./SubComments";
+import { RootState } from "src/_reducers";
+import { CommentProps } from "../../types";
 dayjs.locale("kor");
 dayjs.extend(relativeTime);
 
@@ -68,20 +70,20 @@ const MoreComments = styled.div`
   }
 `;
 
-function Comments({ comment }) {
-  const { user } = useSelector((state) => state.user);
-  const { post } = useSelector((state) => state.post);
+const Comments: FC<CommentProps> = ({ comment }) => {
+  const { user } = useSelector((state: RootState) => state.user);
+  const { post } = useSelector((state: RootState) => state.post);
   const dispatch = useDispatch();
   const [removeModal, setRemoveModal] = useState(false);
   const [subCommentForm, setSubCommentForm] = useState(false);
   const [moreSubComments, onClickMoreSubComments, setMoreSubComments] = useToggle(false);
   const [editForm, setEditForm] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const [editText, onChangeEditText, setEditText] = useInput(comment.content);
+  const [editText, onChangeEditText] = useInput(comment.content);
   const CommentId = comment?.id;
   let commentLiked =
     user &&
-    post.Comments?.find((v) => v.id === CommentId).CommentLikers?.find((v) => v.id === user.id);
+    post?.Comments?.find((v) => v.id === CommentId)?.CommentLikers?.find((v) => v.id === user.id);
 
   const onClickRemove = () => {
     if (!user) {
@@ -134,7 +136,7 @@ function Comments({ comment }) {
       if (e.target.className) {
         return;
       }
-      if (comment.SubComments.length >= 3) {
+      if (comment.SubComments && comment.SubComments.length >= 3) {
         setMoreSubComments((prev) => !prev);
       }
       if (moreSubComments && !subCommentForm) {
@@ -149,11 +151,11 @@ function Comments({ comment }) {
       }
       setSubCommentForm((prev) => !prev);
     },
-    [comment.SubComments?.length, moreSubComments, setMoreSubComments, subCommentForm]
+    [comment.SubComments, moreSubComments, setMoreSubComments, subCommentForm]
   );
 
-  const handleImgError = (e) => {
-    e.target.src = "/images/blog/default-user.png";
+  const handleImgError = (e: React.SyntheticEvent) => {
+    (e.target as HTMLImageElement).src = "/images/blog/default-user.png";
   };
 
   return (
@@ -289,7 +291,7 @@ function Comments({ comment }) {
             </div>
           </div>
           {subCommentForm ? <SubCommentForm CommentId={comment?.id} /> : null}
-          {comment.SubComments?.length < 3 ? (
+          {comment.SubComments && comment.SubComments.length < 3 ? (
             comment.SubComments?.map((subComment, i) => {
               return <SubComments key={i} CommentId={comment.id} subComment={subComment} />;
             })
@@ -314,6 +316,6 @@ function Comments({ comment }) {
       )}
     </>
   );
-}
+};
 
 export default Comments;

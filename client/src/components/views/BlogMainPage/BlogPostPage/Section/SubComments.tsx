@@ -3,7 +3,7 @@ import { EditFilled } from "@ant-design/icons";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Input, message } from "antd";
-import React, { useCallback, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import useInput from "../../../../../_hooks/useInput";
@@ -13,6 +13,8 @@ import {
 } from "../../../../../_reducers/post";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { SubCommentProps } from "../../types";
+import { RootState } from "src/_reducers";
 dayjs.locale("kor");
 dayjs.extend(relativeTime);
 
@@ -72,19 +74,19 @@ const SpeechBubble = styled.div`
   }
 `;
 
-function SubComments({ subComment, CommentId }) {
+const SubComments: FC<SubCommentProps> = ({ subComment, CommentId }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state: RootState) => state.user);
   const [removeModal, setRemoveModal] = useState(false);
   const [editForm, setEditForm] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const [editText, onChangeEditText, setEditText] = useInput(subComment.content);
+  const [editText, onChangeEditText] = useInput(subComment?.content);
   const SubCommentId = subComment?.id;
   const onClickRemove = () => {
     if (!user) {
       return;
     }
-    if (user.id !== subComment.UserId) {
+    if (user.id !== subComment?.UserId) {
       message.error("you can not delete another person reply!");
       return;
     }
@@ -105,13 +107,13 @@ function SubComments({ subComment, CommentId }) {
     setEditForm(false);
   }, [dispatch, CommentId, SubCommentId, editText]);
 
-  const handleImgError = (e) => {
-    e.target.src = `/images/blog/default-user.png`;
+  const handleImgError = (e: React.SyntheticEvent) => {
+    (e.target as HTMLImageElement).src = `/images/blog/default-user.png`;
   };
 
   return (
     <>
-      {subComment.User && (
+      {subComment?.User && (
         <CommentWrapper>
           <SpeechBubble>
             <div
@@ -228,6 +230,6 @@ function SubComments({ subComment, CommentId }) {
       )}
     </>
   );
-}
+};
 
 export default SubComments;

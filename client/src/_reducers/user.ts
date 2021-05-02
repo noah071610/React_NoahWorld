@@ -30,10 +30,6 @@ export interface UserState {
   addIconDone: Boolean;
   addIconError: Boolean | Error;
 
-  addIconUrlLoading: Boolean;
-  addIconUrlDone: Boolean;
-  addIconUrlError: Boolean | Error;
-
   removeIconLoading: Boolean;
   removeIconDone: Boolean;
   removeIconError: Boolean | Error;
@@ -84,10 +80,6 @@ const initialState = {
   addIconDone: false,
   addIconError: false,
 
-  addIconUrlLoading: false,
-  addIconUrlDone: false,
-  addIconUrlError: false,
-
   removeIconLoading: false,
   removeIconDone: false,
   removeIconError: false,
@@ -137,11 +129,6 @@ export const ADD_ICON_REQUEST = "ADD_ICON_REQUEST" as const;
 export const ADD_ICON_SUCCESS = "ADD_ICON_SUCCESS" as const;
 export const ADD_ICON_FAILURE = "ADD_ICON_FAILURE" as const;
 export const ADD_ICON_CLEAR = "ADD_ICON_CLEAR" as const;
-
-export const ADD_ICON_URL_REQUEST = "ADD_ICON_URL_REQUEST" as const;
-export const ADD_ICON_URL_SUCCESS = "ADD_ICON_URL_SUCCESS" as const;
-export const ADD_ICON_URL_FAILURE = "ADD_ICON_URL_FAILURE" as const;
-export const ADD_ICON_URL_CLEAR = "ADD_ICON_URL_CLEAR" as const;
 
 export const REMOVE_ICON_REQUEST = "REMOVE_ICON_REQUEST" as const;
 export const REMOVE_ICON_SUCCESS = "REMOVE_ICON_SUCCESS" as const;
@@ -275,25 +262,6 @@ const reducer = (state: UserState = initialState, action: any) =>
         draft.addIconLoading = false;
         draft.addIconDone = false;
         draft.addIconError = false;
-        break;
-      case ADD_ICON_URL_REQUEST:
-        draft.addIconUrlLoading = true;
-        draft.addIconUrlError = false;
-        draft.addIconUrlDone = false;
-        break;
-      case ADD_ICON_URL_SUCCESS:
-        draft.addIconUrlLoading = false;
-        draft.addIconUrlDone = true;
-        draft.user.icon = action.data;
-        break;
-      case ADD_ICON_URL_FAILURE:
-        draft.addIconUrlLoading = false;
-        draft.addIconUrlError = action.error;
-        break;
-      case ADD_ICON_URL_CLEAR:
-        draft.addIconUrlLoading = false;
-        draft.addIconUrlDone = false;
-        draft.addIconUrlError = false;
         break;
       case REMOVE_ICON_REQUEST:
         draft.removeIconLoading = true;

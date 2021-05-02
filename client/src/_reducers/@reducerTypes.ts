@@ -113,6 +113,7 @@ export interface SubCommentsInter {
   UserId: number;
   PostId: number;
   CommentId: number;
+  User: UserInfoInter;
 }
 
 export interface RecentPostInter {

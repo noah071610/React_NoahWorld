@@ -30,17 +30,32 @@ import {
   EDIT_SUB_COMMENT_CLEAR,
   EDIT_SUB_COMMENT_FAILURE,
 } from "../_reducers/post";
+import {
+  AddCommentData,
+  AddCommentInter,
+  AddSubCommentData,
+  AddSubCommentInter,
+  EditCommentData,
+  EditCommentInter,
+  EditSubCommentInter,
+  LikeCommentData,
+  LikeCommentInter,
+  RemoveCommentInter,
+  RemoveSubCommentInter,
+  SubCommentData,
+  UnlikeCommentInter,
+} from "./@sagaTypes";
 
-function addCommentAPI(data) {
+function addCommentAPI(data: AddCommentData) {
   return axios.post(`/api/comment/${data.postId}`, data);
 }
 
-function* addComment(action) {
+function* addComment(action: AddCommentInter) {
   try {
-    const result = yield call(addCommentAPI, action.data);
+    const { data } = yield call(addCommentAPI, action.data);
     yield put({
       type: ADD_COMMENT_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({
@@ -55,16 +70,16 @@ function* addComment(action) {
   }
 }
 
-function removeCommentAPI(data) {
+function removeCommentAPI(data: number) {
   return axios.delete(`/api/comment/${data}`);
 }
 
-function* removeComment(action) {
+function* removeComment(action: RemoveCommentInter) {
   try {
-    const result = yield call(removeCommentAPI, action.data);
+    const { data } = yield call(removeCommentAPI, action.data);
     yield put({
       type: REMOVE_COMMENT_SUCCESS,
-      data: result.data,
+      data,
     });
   } catch (err) {
     console.log(err);
@@ -75,16 +90,16 @@ function* removeComment(action) {
   }
 }
 
-function editCommentAPI(data) {
+function editCommentAPI(data: EditCommentData) {
   return axios.post(`api/comment/edit/${data.CommentId}/`, data);
 }
 
-function* editComment(action) {
+function* editComment(action: EditCommentInter) {
   try {
-    const result = yield call(editCommentAPI, action.data);
+    const { data } = yield call(editCommentAPI, action.data);
     yield put({
       type: EDIT_COMMENT_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({
@@ -97,16 +112,16 @@ function* editComment(action) {
     });
   }
 }
-function likeCommentAPI(data) {
+function likeCommentAPI(data: LikeCommentData) {
   return axios.patch(`/api/comment/like/${data.UserId}/${data.CommentId}`);
 }
 
-function* likeComment(action) {
+function* likeComment(action: LikeCommentInter) {
   try {
-    const result = yield call(likeCommentAPI, action.data);
+    const { data } = yield call(likeCommentAPI, action.data);
     yield put({
       type: LIKE_COMMENT_SUCCESS,
-      data: result.data,
+      data,
     });
   } catch (err) {
     console.error(err);
@@ -117,16 +132,16 @@ function* likeComment(action) {
   }
 }
 
-function unlikeCommentAPI(data) {
+function unlikeCommentAPI(data: LikeCommentData) {
   return axios.delete(`/api/comment/unlike/${data.UserId}/${data.CommentId}`);
 }
 
-function* unlikeComment(action) {
+function* unlikeComment(action: UnlikeCommentInter) {
   try {
-    const result = yield call(unlikeCommentAPI, action.data);
+    const { data } = yield call(unlikeCommentAPI, action.data);
     yield put({
       type: UNLIKE_COMMENT_SUCCESS,
-      data: result.data,
+      data,
     });
   } catch (err) {
     console.error(err);
@@ -137,16 +152,16 @@ function* unlikeComment(action) {
   }
 }
 
-function addSubCommentAPI(data) {
+function addSubCommentAPI(data: AddSubCommentData) {
   return axios.post(`/api/comment/sub/${data.CommentId}`, data);
 }
 
-function* addSubComment(action) {
+function* addSubComment(action: AddSubCommentInter) {
   try {
-    const result = yield call(addSubCommentAPI, action.data);
+    const { data } = yield call(addSubCommentAPI, action.data);
     yield put({
       type: ADD_SUB_COMMENT_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({
@@ -161,16 +176,16 @@ function* addSubComment(action) {
   }
 }
 
-function removeSubCommentAPI(data) {
+function removeSubCommentAPI(data: SubCommentData) {
   return axios.delete(`/api/comment/sub/${data.CommentId}/${data.SubCommentId}`);
 }
 
-function* removeSubComment(action) {
+function* removeSubComment(action: RemoveSubCommentInter) {
   try {
-    const result = yield call(removeSubCommentAPI, action.data);
+    const { data } = yield call(removeSubCommentAPI, action.data);
     yield put({
       type: REMOVE_SUB_COMMENT_SUCCESS,
-      data: result.data,
+      data,
     });
   } catch (err) {
     console.log(err);
@@ -181,16 +196,16 @@ function* removeSubComment(action) {
   }
 }
 
-function editSubCommentAPI(data) {
+function editSubCommentAPI(data: SubCommentData) {
   return axios.post(`api/comment/sub/edit/${data.CommentId}/${data.SubCommentId}`, data);
 }
 
-function* editSubComment(action) {
+function* editSubComment(action: EditSubCommentInter) {
   try {
-    const result = yield call(editSubCommentAPI, action.data);
+    const { data } = yield call(editSubCommentAPI, action.data);
     yield put({
       type: EDIT_SUB_COMMENT_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({

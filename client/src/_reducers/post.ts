@@ -19,8 +19,8 @@ export interface PostState {
   mostViewedPost: PostInter | null;
   mostCommentedPost: PostInter | null;
   post: PostInter | null;
-  prevPost: PostInter | null;
-  nextPost: PostInter | null;
+  prevPost: Array<PostInter>;
+  nextPost: Array<PostInter>;
   countPosts: string[];
   imagePath: string | null;
   postImagePath: string | null;
@@ -126,8 +126,8 @@ const initialState = {
   mostViewedPost: null,
   mostCommentedPost: null,
   post: null,
-  prevPost: null,
-  nextPost: null,
+  prevPost: [],
+  nextPost: [],
   countPosts: [],
   imagePath: null,
   postImagePath: null,
@@ -366,9 +366,9 @@ const reducer = (state: PostState = initialState, action: any) =>
       case LOAD_POST_SUCCESS:
         draft.loadPostsLoading = false;
         draft.loadPostsDone = true;
-        draft.post = action.data.post.data.post;
-        draft.prevPost = action.data.sidePosts.data.prevPost;
-        draft.nextPost = action.data.sidePosts.data.nextPost;
+        draft.post = action.data.post;
+        draft.prevPost = action.data.prevPost;
+        draft.nextPost = action.data.nextPost;
         draft.hasMorePosts = false;
         break;
       case LOAD_POST_FAILURE:

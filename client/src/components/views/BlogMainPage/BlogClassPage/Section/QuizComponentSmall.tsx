@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Input, message } from "antd";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import useInput from "../../../../../_hooks/useInput";
 import { ArrowRightOutlined, EnterOutlined } from "@ant-design/icons";
+import { RootState } from "src/_reducers";
 
 const QuizWrapper = styled.div`
   display: none;
@@ -23,10 +24,15 @@ const QuizWrapper = styled.div`
     }
   }
 `;
-const KakaoContent = styled.div`
+
+interface KakaoContentProps {
+  whiteType: Boolean;
+}
+
+const KakaoContent = styled.div<KakaoContentProps>`
   font-size: 0.9rem;
   padding: 0.5rem;
-  background-color: ${(props) => (props.whiteType ? "rgb(235, 235, 235)" : "#ffe941")};
+  background-color: ${({ whiteType }) => (whiteType ? "rgb(235, 235, 235)" : "#ffe941")};
   border-radius: 3px;
   margin-bottom: 1rem;
   width: 100%;
@@ -75,7 +81,7 @@ const QuizContent = styled.div`
 `;
 
 function QuizComponentSmall() {
-  const { quizzes } = useSelector((state) => state.post);
+  const { quizzes } = useSelector((state: RootState) => state.post);
   const [quizAnswer, onChangeQuizAnswer, setQuizAnswer] = useInput("");
   const [viewQuizAnswer, setViewQuizAnswer] = useState(false);
   const [randomQuiz, setRandomQuiz] = useState(Math.floor(Math.random() * quizzes?.length));

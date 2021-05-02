@@ -28,21 +28,9 @@ export interface BlogState {
   searchHashTagDone: boolean;
   searchHashTagError: boolean | Error;
 
-  addWordLoading: boolean;
-  addWordDone: boolean;
-  addWordError: boolean | Error;
-
   addQuizLoading: boolean;
   addQuizDone: boolean;
   addQuizError: boolean | Error;
-
-  removeWordLoading: boolean;
-  removeWordDone: boolean;
-  removeWordError: boolean | Error;
-
-  removeQuizLoading: boolean;
-  removeQuizDone: boolean;
-  removeQuizError: boolean | Error;
 }
 
 const initialState = {
@@ -71,21 +59,9 @@ const initialState = {
   searchHashTagDone: false,
   searchHashTagError: false,
 
-  addWordLoading: false,
-  addWordDone: false,
-  addWordError: false,
-
   addQuizLoading: false,
   addQuizDone: false,
   addQuizError: false,
-
-  removeWordLoading: false,
-  removeWordDone: false,
-  removeWordError: false,
-
-  removeQuizLoading: false,
-  removeQuizDone: false,
-  removeQuizError: false,
 };
 
 export const MODE_CHANGE = "MODE_CHANGE" as const;
@@ -114,21 +90,6 @@ export const SEARCH_HASH_TAG_REQUEST = "SEARCH_HASH_TAG_REQUEST" as const;
 export const SEARCH_HASH_TAG_SUCCESS = "SEARCH_HASH_TAG_SUCCESS" as const;
 export const SEARCH_HASH_TAG_FAILURE = "SEARCH_HASH_TAG_FAILURE" as const;
 export const SEARCH_HASH_TAG_CLEAR = "SEARCH_HASH_TAG_CLEAR" as const;
-
-export const ADD_WORD_REQUEST = "ADD_WORD_REQUEST" as const;
-export const ADD_WORD_SUCCESS = "ADD_WORD_SUCCESS" as const;
-export const ADD_WORD_FAILURE = "ADD_WORD_FAILURE" as const;
-export const ADD_WORD_CLEAR = "ADD_WORD_CLEAR" as const;
-
-export const REMOVE_WORD_REQUEST = "REMOVE_WORD_REQUEST" as const;
-export const REMOVE_WORD_SUCCESS = "REMOVE_WORD_SUCCESS" as const;
-export const REMOVE_WORD_FAILURE = "REMOVE_WORD_FAILURE" as const;
-export const REMOVE_WORD_CLEAR = "REMOVE_WORD_CLEAR" as const;
-
-export const REMOVE_QUIZ_REQUEST = "REMOVE_QUIZ_REQUEST" as const;
-export const REMOVE_QUIZ_SUCCESS = "REMOVE_QUIZ_SUCCESS" as const;
-export const REMOVE_QUIZ_FAILURE = "REMOVE_QUIZ_FAILURE" as const;
-export const REMOVE_QUIZ_CLEAR = "REMOVE_QUIZ_CLEAR" as const;
 
 export const ADD_QUIZ_REQUEST = "ADD_QUIZ_REQUEST" as const;
 export const ADD_QUIZ_SUCCESS = "ADD_QUIZ_SUCCESS" as const;
@@ -215,60 +176,6 @@ const reducer = (state: BlogState = initialState, action: any) =>
         draft.searchHashTagLoading = false;
         draft.searchHashTagDone = false;
         draft.searchHashTagError = false;
-        break;
-      case ADD_WORD_REQUEST:
-        draft.addWordLoading = true;
-        draft.addWordDone = false;
-        draft.addWordError = false;
-        break;
-      case ADD_WORD_SUCCESS:
-        draft.addWordLoading = false;
-        draft.addWordDone = true;
-        break;
-      case ADD_WORD_FAILURE:
-        draft.addWordLoading = false;
-        draft.addWordError = action.error;
-        break;
-      case ADD_WORD_CLEAR:
-        draft.addWordLoading = false;
-        draft.addWordDone = false;
-        draft.addWordError = false;
-        break;
-      case REMOVE_WORD_REQUEST:
-        draft.removeWordLoading = true;
-        draft.removeWordDone = false;
-        draft.removeWordError = false;
-        break;
-      case REMOVE_WORD_SUCCESS:
-        draft.removeWordLoading = false;
-        draft.removeWordDone = true;
-        break;
-      case REMOVE_WORD_FAILURE:
-        draft.removeWordLoading = false;
-        draft.removeWordError = action.error;
-        break;
-      case REMOVE_WORD_CLEAR:
-        draft.removeWordLoading = false;
-        draft.removeWordDone = false;
-        draft.removeWordError = false;
-        break;
-      case REMOVE_QUIZ_REQUEST:
-        draft.removeQuizLoading = true;
-        draft.removeQuizDone = false;
-        draft.removeQuizError = false;
-        break;
-      case REMOVE_QUIZ_SUCCESS:
-        draft.removeQuizLoading = false;
-        draft.removeQuizDone = true;
-        break;
-      case REMOVE_QUIZ_FAILURE:
-        draft.removeQuizLoading = false;
-        draft.removeQuizError = action.error;
-        break;
-      case REMOVE_QUIZ_CLEAR:
-        draft.removeQuizLoading = false;
-        draft.removeQuizDone = false;
-        draft.removeQuizError = false;
         break;
       case ADD_QUIZ_REQUEST:
         draft.addQuizLoading = true;

@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import parse from "html-react-parser";
 import { Divider, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
+// @ts-ignore
 import MetaTags from "react-meta-tags";
 import hljs from "highlight.js";
 import {
@@ -21,6 +22,7 @@ import { RED_COLOR } from "../../../config";
 import { LOAD_INFO_REQUEST } from "../../../../_reducers/user";
 import ArticlePost from "../_common/ArticlePost";
 import dayjs from "dayjs";
+import { RootState } from "src/_reducers";
 dayjs.locale("kor");
 
 const Heart = styled.a`
@@ -50,6 +52,7 @@ const HeartLiked = styled.a`
 
 function BlogPostPage() {
   const history = useHistory();
+  const match = useRouteMatch<{ category: string }>();
   const dispatch = useDispatch();
   const {
     post,
@@ -65,29 +68,27 @@ function BlogPostPage() {
     editSubCommentDone,
     prevPost,
     nextPost,
-  } = useSelector((state) => state.post);
-  const { user } = useSelector((state) => state.user);
+  } = useSelector((state: RootState) => state.post);
+  const { user } = useSelector((state: RootState) => state.user);
   const [Fullcontent, setFullcontent] = useState("");
 
   useEffect(() => {
-    const tagContent =
-      post &&
-      post.content.split(/(#[^\s#+^<]+)/g).map((v, i) => {
-        if (v.match(/(#.*")/g)) {
-          return v;
-        }
-        if (v.match(/(#youtube:)/g)) {
-          return `<iframe class="youtube" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen src="https://www.youtube.com/embed/${v.slice(
-            9
-          )}"></iframe>`;
-        }
-        if (v.match(/(#[^\s#+^<]+)/g)) {
-          return `<a class="hashtag">${v}</a>`;
-        }
+    const tagContent = post?.content?.split(/(#[^\s#+^<]+)/g).map((v, i) => {
+      if (v.match(/(#.*")/g)) {
         return v;
-      });
-    const fullContentRemoveComma = post && tagContent.join("");
-    setFullcontent(fullContentRemoveComma);
+      }
+      if (v.match(/(#youtube:)/g)) {
+        return `<iframe class="youtube" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen src="https://www.youtube.com/embed/${v.slice(
+          9
+        )}"></iframe>`;
+      }
+      if (v.match(/(#[^\s#+^<]+)/g)) {
+        return `<a class="hashtag">${v}</a>`;
+      }
+      return v;
+    });
+    const fullContentRemoveComma = post && tagContent?.join("");
+    fullContentRemoveComma && setFullcontent(fullContentRemoveComma);
   }, [post]);
   useEffect(() => {
     const postId = history.location.pathname.replace(/[^0-9]/g, "");
@@ -96,7 +97,7 @@ function BlogPostPage() {
     }
     dispatch({
       type: LOAD_POST_REQUEST,
-      data: { postId, UserId: user?.id },
+      data: { postId, UserId: user?.id, category: match.params.category },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -114,8 +115,8 @@ function BlogPostPage() {
   ]);
 
   useEffect(() => {
-    document.querySelectorAll("pre code").forEach((block) => {
-      hljs.highlightElement(block);
+    document.querySelectorAll("pre code").forEach((v: any) => {
+      hljs.highlightBlock(v);
     });
   }, [Fullcontent]);
 
@@ -132,16 +133,16 @@ function BlogPostPage() {
     }
     dispatch({
       type: LIKE_POST_REQUEST,
-      data: { PostId: post.id, UserId: user.id },
+      data: { PostId: post?.id, UserId: user.id },
     });
   };
 
-  const liked = post && user && post.PostLikers.find((v) => v.id === user.id);
+  const liked = user && post?.PostLikers?.find((v) => v.id === user.id);
 
   const onClickUnlike = () => {
     dispatch({
       type: UNLIKE_POST_REQUEST,
-      data: { PostId: post.id, UserId: user.id },
+      data: { PostId: post?.id, UserId: user?.id },
     });
   };
   useEffect(() => {
@@ -151,8 +152,8 @@ function BlogPostPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleImgError = (e) => {
-    e.target.src = "/images/blog/noImage.gif";
+  const handleImgError = (e: React.SyntheticEvent) => {
+    (e.target as HTMLImageElement).src = "/images/blog/noImage.gif";
   };
 
   return (
@@ -186,7 +187,7 @@ function BlogPostPage() {
           >
             <li>{dayjs(post.createdAt).format("YYYY.MM.DD")}</li>
             <li>·&nbsp;{post.hit} views</li>
-            <li>·&nbsp;{post.PostLikers.length} likes</li>
+            <li>·&nbsp;{post.PostLikers?.length} likes</li>
           </ul>
           <div style={{ position: "relative", display: "flex", justifyContent: "space-between" }}>
             <div className="blog_post_article">
@@ -214,7 +215,7 @@ function BlogPostPage() {
                     <HeartOutlined />
                   </Heart>
                 )}
-                <span style={{ fontSize: "1rem" }}>{post.PostLikers.length}</span>
+                <span style={{ fontSize: "1rem" }}>{post.PostLikers?.length}</span>
               </h4>
               <CommentForm />
               <h4 style={{ margin: "5rem 0 1rem 0", fontSize: "1.5rem", fontWeight: "bold" }}>
@@ -239,11 +240,11 @@ function BlogPostPage() {
                   <span>Title</span>
                   <span>Date</span>
                 </div>
-                {prevPost?.map((v, i) => (
-                  <ArticlePost key={i} post={v} />
+                {prevPost?.map((article, i) => (
+                  <ArticlePost key={i} article={article} />
                 ))}
-                {nextPost?.map((v, i) => (
-                  <ArticlePost key={i} post={v} />
+                {nextPost?.map((article, i) => (
+                  <ArticlePost key={i} article={article} />
                 ))}
               </div>
             </div>

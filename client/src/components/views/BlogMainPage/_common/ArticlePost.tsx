@@ -37,17 +37,16 @@ const Title = styled.h3`
   text-overflow: ellipsis;
 `;
 
-const ArticlePost: FC<ArticleInter> = ({ post, active }) => {
+const ArticlePost: FC<ArticleInter> = ({ article }) => {
   const history = useHistory();
   return (
     <Wrapper
       onClick={() => {
-        history.push(`/${post.category}/post/${post.id}`);
+        history.push(`/${article.category}/post/${article.id}`);
         window.scrollTo({ top: 0 });
       }}
-      active={active}
     >
-      <Title>{post.title}</Title>
+      <Title>{article.title}</Title>
       <ul
         style={{
           display: "flex",
@@ -56,7 +55,7 @@ const ArticlePost: FC<ArticleInter> = ({ post, active }) => {
           color: "rgba(0,0,0,0.2)",
         }}
       >
-        <li>{dayjs(post.createdAt).format("YYYY.MM.DD")}</li>
+        <li>{dayjs(article.createdAt).format("YYYY.MM.DD")}</li>
       </ul>
     </Wrapper>
   );

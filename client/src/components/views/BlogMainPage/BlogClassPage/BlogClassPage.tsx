@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Col, Divider, Row } from "antd";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+// @ts-ignore
 import { ReactTitle } from "react-meta-tags";
 import Slider from "react-slick";
 import styled from "styled-components";
@@ -16,6 +17,7 @@ import { SmallPoster } from "../_common/SmallSize";
 import { MainPoster } from "../_common/Components";
 import QuizComponent from "./Section/QuizComponent";
 import QuizComponentSmall from "./Section/QuizComponentSmall";
+import { RootState } from "src/_reducers";
 
 const ClassLists = styled.div`
   -ms-overflow-style: none;
@@ -38,8 +40,8 @@ const NextBtn = styled.button`
 `;
 
 function BlogClassPage() {
-  const { user } = useSelector((state) => state.user);
-  const { culturePosts, classPosts, words } = useSelector((state) => state.post);
+  const { user } = useSelector((state: RootState) => state.user);
+  const { culturePosts, classPosts, words } = useSelector((state: RootState) => state.post);
   const [wordOpen, onClickWord, setwordOpen] = useToggle(false);
   const [randomWord, setRandomWord] = useState(Math.floor(Math.random() * words?.length));
   const dispatch = useDispatch();
@@ -211,11 +213,13 @@ function BlogClassPage() {
           <h2 style={{ paddingLeft: "1rem" }} className="blog_class_title">
             日韓の文化
           </h2>
-          <Slider style={{ marginBottom: "3rem" }} {...settings}>
-            {culturePosts.map((v, i) => (
-              <ArticleColumn key={i} article={v} />
-            ))}
-          </Slider>
+          <div style={{ marginBottom: "3rem" }}>
+            <Slider {...settings}>
+              {culturePosts.map((v, i) => (
+                <ArticleColumn key={i} article={v} />
+              ))}
+            </Slider>
+          </div>
         </Col>
         <Col span={24} style={{ marginTop: "2rem" }}>
           <h2 style={{ paddingLeft: "1rem" }} className="blog_class_title">

@@ -142,7 +142,7 @@ export function BlogSmallHeader() {
         return;
       }
       setHeaderTitle(false);
-      // setSlideTitle(false);
+      setSlideTitle(false);
       setPortfolioTitle(false);
     }
     window.addEventListener("scroll", scrollCallBack);
@@ -260,7 +260,9 @@ export function BlogSmallHeader() {
                   onClick={() => {
                     window.scrollTo({ top: 130 });
                   }}
-                  to={`/portfolio/${portfolio?.id === 1 ? portfolios.length : portfolio?.id - 1}`}
+                  to={`/portfolio/${
+                    portfolio?.id === 1 ? portfolios.length : portfolio && portfolio.id - 1
+                  }`}
                   style={{ display: "flex", alignItems: "center", fontSize: "1rem" }}
                 >
                   <DoubleLeftOutlined />
@@ -273,7 +275,9 @@ export function BlogSmallHeader() {
                   onClick={() => {
                     window.scrollTo({ top: 130 });
                   }}
-                  to={`/portfolio/${portfolio.id === portfolios.length ? 1 : portfolio.id + 1}`}
+                  to={`/portfolio/${
+                    portfolio?.id === portfolios.length ? 1 : portfolio && portfolio.id + 1
+                  }`}
                   style={{ display: "flex", alignItems: "center", fontSize: "1rem" }}
                 >
                   <span className="portfolio_nav_btn">다음 포트폴리오</span>
@@ -335,7 +339,7 @@ export function BlogSmallHeader() {
               {nextPost ? (
                 <Link
                   onClick={() => window.scrollTo({ top: 0 })}
-                  to={`/${post?.category}/post/${nextPost[0].id}`}
+                  to={`/${post?.category}/post/${nextPost[0]?.id}`}
                 >
                   <DoubleLeftOutlined />
                 </Link>
@@ -348,7 +352,7 @@ export function BlogSmallHeader() {
               {prevPost ? (
                 <Link
                   onClick={() => window.scrollTo({ top: 0 })}
-                  to={`/${post?.category}/post/${prevPost[0].id}`}
+                  to={`/${post?.category}/post/${prevPost[0]?.id}`}
                 >
                   <DoubleRightOutlined />
                 </Link>
@@ -629,7 +633,9 @@ export function PortfolioPostHeader() {
             onClick={() => {
               window.scrollTo({ top: 276 });
             }}
-            to={`/portfolio/${portfolio?.id === 1 ? portfolios.length : portfolio?.id - 1}`}
+            to={`/portfolio/${
+              portfolio?.id === 1 ? portfolios.length : portfolio && portfolio.id - 1
+            }`}
             style={{ display: "flex", alignItems: "center", fontSize: "1rem" }}
           >
             <DoubleLeftOutlined />
@@ -642,7 +648,9 @@ export function PortfolioPostHeader() {
             onClick={() => {
               window.scrollTo({ top: 276 });
             }}
-            to={`/portfolio/${portfolio?.id === portfolios.length ? 1 : portfolio?.id + 1}`}
+            to={`/portfolio/${
+              portfolio?.id === portfolios.length ? 1 : portfolio && portfolio.id + 1
+            }`}
             style={{ display: "flex", alignItems: "center", fontSize: "1rem" }}
           >
             <span style={{ fontSize: "0.8rem", margin: "0 0.5rem" }}>다음 포트폴리오</span>

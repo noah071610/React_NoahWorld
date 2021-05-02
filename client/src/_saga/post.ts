@@ -47,17 +47,36 @@ import {
   UPLOAD_POST_IMAGE_FAILURE,
   EDIT_POST_CLEAR,
 } from "../_reducers/post";
+import {
+  AddPostInter,
+  EditPostInter,
+  LikePostData,
+  LikePostInter,
+  LoadCategoryInter,
+  LoadMorePostsData,
+  LoadMorePostsInter,
+  LoadPostData,
+  LoadPostInter,
+  LoadRecentPostInter,
+  NewPostData,
+  RemovePostData,
+  RemovePostInter,
+  UploadImageData,
+  UploadImageInter,
+  UploadPostImageInter,
+} from "./@sagaTypes";
+import { UserInter } from "src/_reducers/@reducerTypes";
 
-function addPostAPI(data) {
+function addPostAPI(data: NewPostData) {
   return axios.post("/api/post", data);
 }
 
-function* addPost(action) {
+function* addPost(action: AddPostInter) {
   try {
-    const result = yield call(addPostAPI, action.data);
+    const { data } = yield call(addPostAPI, action.data);
     yield put({
       type: ADD_POST_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({
@@ -71,16 +90,16 @@ function* addPost(action) {
   }
 }
 
-function loadPostsAPI(data) {
+function loadPostsAPI() {
   return axios.get(`/api/post`);
 }
 
-function* loadPosts(action) {
+function* loadPosts() {
   try {
-    const result = yield call(loadPostsAPI);
+    const { data } = yield call(loadPostsAPI);
     yield put({
       type: LOAD_POSTS_SUCCESS,
-      data: result.data,
+      data,
     });
   } catch (err) {
     yield put({
@@ -90,16 +109,16 @@ function* loadPosts(action) {
   }
 }
 
-function loadCategoryPostsAPI(data) {
+function loadCategoryPostsAPI(data: string) {
   return axios.get(`/api/post/category/${data}`);
 }
 
-function* loadCategoryPosts(action) {
+function* loadCategoryPosts(action: LoadCategoryInter) {
   try {
-    const result = yield call(loadCategoryPostsAPI, action.data);
+    const { data } = yield call(loadCategoryPostsAPI, action.data);
     yield put({
       type: LOAD_CATEGORY_POSTS_SUCCESS,
-      data: result.data,
+      data,
     });
   } catch (err) {
     yield put({
@@ -109,16 +128,16 @@ function* loadCategoryPosts(action) {
   }
 }
 
-function loadMorePostsAPI(data) {
+function loadMorePostsAPI(data: LoadMorePostsData) {
   return axios.get(`/api/post/morepost/${data.category}?lastId=${data.LastId}`);
 }
 
-function* loadMorePosts(action) {
+function* loadMorePosts(action: LoadMorePostsInter) {
   try {
-    const result = yield call(loadMorePostsAPI, action.data);
+    const { data } = yield call(loadMorePostsAPI, action.data);
     yield put({
       type: LOAD_MORE_POSTS_SUCCESS,
-      data: result.data,
+      data,
     });
   } catch (err) {
     yield put({
@@ -134,10 +153,10 @@ function loadClassPostsAPI() {
 
 function* loadClassPosts() {
   try {
-    const result = yield call(loadClassPostsAPI);
+    const { data } = yield call(loadClassPostsAPI);
     yield put({
       type: LOAD_CLASS_POSTS_SUCCESS,
-      data: result.data,
+      data,
     });
   } catch (err) {
     yield put({
@@ -147,20 +166,15 @@ function* loadClassPosts() {
   }
 }
 
-function loadPostAPI(data) {
-  return axios.get(`/api/post/onePost/${data.postId}/${data.UserId}`);
+function loadPostAPI(data: LoadPostData) {
+  return axios.get(`/api/post/onePost/${data.postId}/${data.UserId}/${data.category}`);
 }
-function loadSidePostsAPI(data) {
-  return axios.get(`/api/post/sidePosts/${data.id}/${data.category}`);
-}
-
-function* loadPost(action) {
+function* loadPost(action: LoadPostInter) {
   try {
-    const post = yield call(loadPostAPI, action.data);
-    const sidePosts = yield call(loadSidePostsAPI, post.data.post);
+    const { data } = yield call(loadPostAPI, action.data);
     yield put({
       type: LOAD_POST_SUCCESS,
-      data: { post, sidePosts },
+      data,
     });
   } catch (err) {
     yield put({
@@ -169,15 +183,15 @@ function* loadPost(action) {
     });
   }
 }
-function loadRecentPostsAPI(data) {
+function loadRecentPostsAPI(data: UserInter) {
   return axios.post(`/api/post/recent`, data);
 }
-function* loadRecentPosts(action) {
+function* loadRecentPosts(action: LoadRecentPostInter) {
   try {
-    const result = yield call(loadRecentPostsAPI, action.data);
+    const { data } = yield call(loadRecentPostsAPI, action.data);
     yield put({
       type: LOAD_RECENT_POSTS_SUCCESS,
-      data: result.data,
+      data,
     });
   } catch (err) {
     yield put({
@@ -187,16 +201,16 @@ function* loadRecentPosts(action) {
   }
 }
 
-function likePostAPI(data) {
+function likePostAPI(data: LikePostData) {
   return axios.patch(`/api/post/like/${data.PostId}/${data.UserId}`);
 }
 
-function* likePost(action) {
+function* likePost(action: LikePostInter) {
   try {
-    const result = yield call(likePostAPI, action.data);
+    const { data } = yield call(likePostAPI, action.data);
     yield put({
       type: LIKE_POST_SUCCESS,
-      data: result.data,
+      data,
     });
   } catch (err) {
     console.error(err);
@@ -207,16 +221,16 @@ function* likePost(action) {
   }
 }
 
-function unlikePostAPI(data) {
+function unlikePostAPI(data: LikePostData) {
   return axios.delete(`/api/post/like/${data.PostId}/${data.UserId}`);
 }
 
-function* unlikePost(action) {
+function* unlikePost(action: LikePostInter) {
   try {
-    const result = yield call(unlikePostAPI, action.data);
+    const { data } = yield call(unlikePostAPI, action.data);
     yield put({
       type: UNLIKE_POST_SUCCESS,
-      data: result.data,
+      data,
     });
   } catch (err) {
     console.error(err);
@@ -227,16 +241,16 @@ function* unlikePost(action) {
   }
 }
 
-function uploadImagesAPI(data) {
+function uploadImagesAPI(data: UploadImageData) {
   return axios.post("/api/post/images", data);
 }
 
-function* uploadImages(action) {
+function* uploadImages(action: UploadImageInter) {
   try {
-    const result = yield call(uploadImagesAPI, action.data);
+    const { data } = yield call(uploadImagesAPI, action.data);
     yield put({
       type: UPLOAD_IMAGES_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({
@@ -250,16 +264,16 @@ function* uploadImages(action) {
   }
 }
 
-function uploadPostImageAPI(data) {
+function uploadPostImageAPI(data: UploadImageData) {
   return axios.post("/api/post/image", data);
 }
 
-function* uploadPostImage(action) {
+function* uploadPostImage(action: UploadPostImageInter) {
   try {
-    const result = yield call(uploadPostImageAPI, action.data);
+    const { data } = yield call(uploadPostImageAPI, action.data);
     yield put({
       type: UPLOAD_POST_IMAGE_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({
@@ -277,16 +291,16 @@ function* uploadPostImage(action) {
   }
 }
 
-function removePostAPI(data) {
+function removePostAPI(data: RemovePostData) {
   return axios.post(`api/post/delete`, data);
 }
 
-function* removePost(action) {
+function* removePost(action: RemovePostInter) {
   try {
-    const result = yield call(removePostAPI, action.data);
+    const { data } = yield call(removePostAPI, action.data);
     yield put({
       type: REMOVE_POST_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({
@@ -300,16 +314,16 @@ function* removePost(action) {
   }
 }
 
-function editPostAPI(data) {
+function editPostAPI(data: NewPostData) {
   return axios.post(`api/post/edit`, data);
 }
 
-function* editPost(action) {
+function* editPost(action: EditPostInter) {
   try {
-    const result = yield call(editPostAPI, action.data);
+    const { data } = yield call(editPostAPI, action.data);
     yield put({
       type: EDIT_POST_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({

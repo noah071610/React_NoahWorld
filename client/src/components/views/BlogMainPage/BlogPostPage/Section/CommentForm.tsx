@@ -5,6 +5,7 @@ import TextArea from "antd/lib/input/TextArea";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { RootState } from "src/_reducers";
 import styled from "styled-components";
 import useInput from "../../../../../_hooks/useInput";
 import { ADD_COMMENT_REQUEST } from "../../../../../_reducers/post";
@@ -55,8 +56,8 @@ const CommentFormWrapper = styled.div`
   }
 `;
 function CommentForm() {
-  const { user } = useSelector((state) => state.user);
-  const { post } = useSelector((state) => state.post);
+  const { user } = useSelector((state: RootState) => state.user);
+  const { post } = useSelector((state: RootState) => state.post);
   const dispatch = useDispatch();
   const [content, onChangeContent, setContent] = useInput("");
   const [loginModal, setLoginModal] = useState(false);
@@ -71,10 +72,10 @@ function CommentForm() {
     }
     dispatch({
       type: ADD_COMMENT_REQUEST,
-      data: { content, postId: post.id, userId: user.id },
+      data: { content, postId: post?.id, userId: user.id },
     });
     setContent("");
-  }, [content, dispatch, post.id, setContent, user]);
+  }, [content, dispatch, post?.id, setContent, user]);
   useEffect(() => {
     if (!user) {
       setContent("You can comment when you are logged in!");
@@ -83,22 +84,23 @@ function CommentForm() {
   }, []);
 
   const commentComponent = () => {
-    return post.Comments.map((v, i) => {
+    return post?.Comments?.map((v, i) => {
       return <Comments key={i} comment={v} />;
     });
   };
 
-  const handleImgError = (e) => {
-    e.target.src = `/images/blog/default-user.png`;
+  const handleImgError = (e: React.SyntheticEvent) => {
+    (e.target as HTMLImageElement).src = `/images/blog/default-user.png`;
   };
 
+  const onClickModal = () => {
+    if (!user) {
+      setLoginModal(true);
+    }
+  };
   return (
     <>
-      <CommentFormWrapper
-        onClick={user ? null : () => setLoginModal(true)}
-        className="blog_post_comment"
-        id="comment"
-      >
+      <CommentFormWrapper onClick={onClickModal} className="blog_post_comment" id="comment">
         <div>
           <img
             className="comment_img"
@@ -134,7 +136,7 @@ function CommentForm() {
           </LoginLink>
         </LoginSuggestModal>
       </CommentFormWrapper>
-      {post.Comments.length > 0 ? (
+      {post?.Comments ? (
         commentComponent()
       ) : (
         <div

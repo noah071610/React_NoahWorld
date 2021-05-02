@@ -188,7 +188,7 @@ function BlogMainPage() {
               />
               Most View
             </h3>
-            {mostLikedPost && <ArticleAside type="like" article={mostLikedPost} />}
+            {mostViewedPost && <ArticleAside type="view" article={mostViewedPost} />}
           </div>
           <div style={{ marginBottom: "1rem" }}>
             <h3
@@ -207,7 +207,7 @@ function BlogMainPage() {
               />
               Most Commented
             </h3>
-            {mostLikedPost && <ArticleAside type="like" article={mostLikedPost} />}
+            {mostCommentedPost && <ArticleAside type="comments" article={mostCommentedPost} />}
           </div>
 
           <div style={{ marginBottom: "1rem" }}>

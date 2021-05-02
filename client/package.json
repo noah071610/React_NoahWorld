@@ -15,6 +15,7 @@
     "@types/node": "^15.0.1",
     "@types/react": "^17.0.4",
     "@types/react-dom": "^17.0.3",
+    "@types/redux-saga": "^0.10.5",
     "@types/vanilla-tilt": "^1.6.2",
     "3d-react-carousal": "^3.1.0",
     "animate.css-react": "^1.1.0",
@@ -77,6 +78,7 @@
   },
   "devDependencies": {
     "@types/aos": "^3.0.3",
+    "@types/highlight.js": "^10.1.0",
     "@types/react-copy-to-clipboard": "^5.0.0",
     "@types/react-image-crop": "^8.1.2",
     "@types/react-router-dom": "^5.1.7",

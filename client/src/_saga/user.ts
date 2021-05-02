@@ -5,10 +5,6 @@ import {
   ADD_ICON_FAILURE,
   ADD_ICON_REQUEST,
   ADD_ICON_SUCCESS,
-  ADD_ICON_URL_CLEAR,
-  ADD_ICON_URL_FAILURE,
-  ADD_ICON_URL_REQUEST,
-  ADD_ICON_URL_SUCCESS,
   CHANGE_PASSWORD_CLEAR,
   CHANGE_PASSWORD_FAILURE,
   CHANGE_PASSWORD_REQUEST,
@@ -49,17 +45,32 @@ import {
   WITHDRWAL_REQUEST,
   WITHDRWAL_SUCCESS,
 } from "../_reducers/user";
+import {
+  UserData,
+  LogInInter,
+  SignUpInter,
+  AddIconData,
+  AddIconInter,
+  RemoveIconInter,
+  ComfirmPasswordInter,
+  ComfirmPasswordData,
+  ChangePasswordData,
+  ChangePasswordInter,
+  WithdrwalInter,
+  ChangeNameData,
+  ChangeNameInter,
+} from "./@sagaTypes";
 
-function logInAPI(data) {
+function logInAPI(data: UserData) {
   return axios.post("/api/user/logIn", data);
 }
 
-function* logIn(action) {
+function* logIn(action: LogInInter) {
   try {
-    const result = yield call(logInAPI, action.data);
+    const { data } = yield call(logInAPI, action.data);
     yield put({
       type: LOG_IN_SUCCESS,
-      data: result.data,
+      data: data,
     });
     yield delay(3000);
     yield put({
@@ -81,7 +92,7 @@ function logInGoogleAPI() {
   return axios.get("/auth/google");
 }
 
-function* logInGoogle(action) {
+function* logInGoogle() {
   try {
     yield call(logInGoogleAPI);
     yield put({
@@ -129,16 +140,15 @@ function* logOut() {
   }
 }
 
-function signUpAPI(data) {
+function signUpAPI(data: UserData) {
   return axios.post("/api/user/signUp", data);
 }
 
-function* signUp(action) {
+function* signUp(action: SignUpInter) {
   try {
-    const result = yield call(signUpAPI, action.data);
+    yield call(signUpAPI, action.data);
     yield put({
       type: SIGN_UP_SUCCESS,
-      result,
     });
     yield delay(5000);
     yield put({
@@ -152,16 +162,16 @@ function* signUp(action) {
   }
 }
 
-function addIconAPI(data) {
+function addIconAPI(data: AddIconData) {
   return axios.post("/api/user/icon", data);
 }
 
-function* addIcon(action) {
+function* addIcon(action: AddIconInter) {
   try {
-    const result = yield call(addIconAPI, action.data);
+    const { data } = yield call(addIconAPI, action.data);
     yield put({
       type: ADD_ICON_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({
@@ -175,39 +185,16 @@ function* addIcon(action) {
   }
 }
 
-function addIconUrlAPI(data) {
-  return axios.post("/api/user/icon/url", data);
-}
-
-function* addIconUrl(action) {
-  try {
-    const result = yield call(addIconUrlAPI, action.data);
-    yield put({
-      type: ADD_ICON_URL_SUCCESS,
-      data: result.data,
-    });
-    yield delay(3000);
-    yield put({
-      type: ADD_ICON_URL_CLEAR,
-    });
-  } catch (err) {
-    yield put({
-      type: ADD_ICON_URL_FAILURE,
-      error: err.response.data,
-    });
-  }
-}
-
-function removeIconAPI(data) {
+function removeIconAPI(data: number) {
   return axios.delete(`/api/user/icon/${data}`);
 }
 
-function* removeIcon(action) {
+function* removeIcon(action: RemoveIconInter) {
   try {
-    const result = yield call(removeIconAPI, action.data);
+    const { data } = yield call(removeIconAPI, action.data);
     yield put({
       type: REMOVE_ICON_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({
@@ -225,12 +212,12 @@ function loadInfoAPI() {
   return axios.get("/api/user");
 }
 
-function* loadInfo(action) {
+function* loadInfo() {
   try {
-    const result = yield call(loadInfoAPI);
+    const { data } = yield call(loadInfoAPI);
     yield put({
       type: LOAD_INFO_SUCCESS,
-      data: result.data,
+      data,
     });
   } catch (err) {
     yield put({
@@ -240,16 +227,16 @@ function* loadInfo(action) {
   }
 }
 
-function confirmPasswordAPI(data) {
+function confirmPasswordAPI(data: ComfirmPasswordData) {
   return axios.post(`api/user/confirm`, data);
 }
 
-function* confirmPassword(action) {
+function* confirmPassword(action: ComfirmPasswordInter) {
   try {
-    const result = yield call(confirmPasswordAPI, action.data);
+    const { data } = yield call(confirmPasswordAPI, action.data);
     yield put({
       type: CONFIRM_PASSWORD_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({
@@ -263,16 +250,16 @@ function* confirmPassword(action) {
   }
 }
 
-function changePasswordAPI(data) {
+function changePasswordAPI(data: ChangePasswordData) {
   return axios.post(`api/user/password`, data);
 }
 
-function* changePassword(action) {
+function* changePassword(action: ChangePasswordInter) {
   try {
-    const result = yield call(changePasswordAPI, action.data);
+    const { data } = yield call(changePasswordAPI, action.data);
     yield put({
       type: CHANGE_PASSWORD_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({
@@ -286,16 +273,16 @@ function* changePassword(action) {
   }
 }
 
-function changeNameAPI(data) {
+function changeNameAPI(data: ChangeNameData) {
   return axios.post(`api/user/name`, data);
 }
 
-function* changeName(action) {
+function* changeName(action: ChangeNameInter) {
   try {
-    const result = yield call(changeNameAPI, action.data);
+    const { data } = yield call(changeNameAPI, action.data);
     yield put({
       type: CHANGE_NAME_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({
@@ -309,16 +296,16 @@ function* changeName(action) {
   }
 }
 
-function withdrawalAPI(data) {
+function withdrawalAPI(data: number) {
   return axios.delete(`api/user/${data}`);
 }
 
-function* withdrawal(action) {
+function* withdrawal(action: WithdrwalInter) {
   try {
-    const result = yield call(withdrawalAPI, action.data);
+    const { data } = yield call(withdrawalAPI, action.data);
     yield put({
       type: WITHDRWAL_SUCCESS,
-      data: result.data,
+      data,
     });
     yield delay(3000);
     yield put({
@@ -347,9 +334,6 @@ function* watchSignUp() {
 function* watchAddIcon() {
   yield takeLatest(ADD_ICON_REQUEST, addIcon);
 }
-function* watchAddIconUrl() {
-  yield takeLatest(ADD_ICON_URL_REQUEST, addIconUrl);
-}
 function* watchRemoveIcon() {
   yield takeLatest(REMOVE_ICON_REQUEST, removeIcon);
 }
@@ -375,7 +359,6 @@ export default function* userSaga() {
     fork(watchLogInGoogle),
     fork(watchSignUp),
     fork(watchAddIcon),
-    fork(watchAddIconUrl),
     fork(watchRemoveIcon),
     fork(watchLogOut),
     fork(watchLoadInfo),

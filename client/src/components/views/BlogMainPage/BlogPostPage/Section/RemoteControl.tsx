@@ -11,22 +11,29 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Divider, Input, message, Timeline } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import React, { useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import Scrollspy from "react-scrollspy";
+import { RootState } from "src/_reducers";
 import useInput from "../../../../../_hooks/useInput";
 import { POST_EDIT_ON } from "../../../../../_reducers/blog";
 import { REMOVE_POST_REQUEST } from "../../../../../_reducers/post";
 
-function RemoteControl({ Fullcontent }) {
+interface RemoteProps {
+  Fullcontent: string;
+}
+
+const RemoteControl: FC<RemoteProps> = ({ Fullcontent }) => {
   const dispatch = useDispatch();
-  const { post, prevPost, nextPost, removePostDone } = useSelector((state) => state.post);
-  const { user } = useSelector((state) => state.user);
+  const { post, prevPost, nextPost, removePostDone } = useSelector(
+    (state: RootState) => state.post
+  );
+  const { user } = useSelector((state: RootState) => state.user);
   // eslint-disable-next-line no-unused-vars
-  const [password, onChangePassword, setPassword] = useInput();
+  const [password, onChangePassword] = useInput("");
   const [FixedRemote, setFixedRemote] = useState(false);
-  const [headers, setHeaders] = useState([]);
+  const [headers, setHeaders] = useState<string[]>([]);
   const history = useHistory();
   const [isModalVisible, setIsModalVisible] = useState(false);
   useEffect(() => {
@@ -47,9 +54,9 @@ function RemoteControl({ Fullcontent }) {
     let contentHeaders = document.querySelectorAll(
       ".tui-editor-contents h1, .tui-editor-contents h2"
     );
-    let arr = [];
+    let arr: string[] = [];
     contentHeaders.forEach((v, i) => {
-      v.setAttribute("id", i);
+      v.setAttribute("id", String(i));
       arr.push(v.innerHTML);
     });
     setHeaders(arr);
@@ -71,7 +78,7 @@ function RemoteControl({ Fullcontent }) {
     setIsModalVisible(false);
     dispatch({
       type: REMOVE_POST_REQUEST,
-      data: { PostId: post.id, password, tags: post.Hashtags },
+      data: { PostId: post?.id, password, tags: post?.HashTags },
     });
   };
 
@@ -98,7 +105,7 @@ function RemoteControl({ Fullcontent }) {
         top: "5.375rem",
       }}
     >
-      <h2 style={{ fontSize: "1rem", marginBottom: "1rem", lineHeight: "1.5" }}>{post.title}</h2>
+      <h2 style={{ fontSize: "1rem", marginBottom: "1rem", lineHeight: "1.5" }}>{post?.title}</h2>
       <ul style={{ overflow: "hidden" }}>
         <li style={{ margin: 0 }}>
           <Link to={"/"}>
@@ -109,7 +116,7 @@ function RemoteControl({ Fullcontent }) {
         <li style={{ margin: "0 0 1rem 0" }}>
           <a
             onClick={() =>
-              history.push(`/${post.category === "culture" ? "class" : post.category}`)
+              history.push(`/${post?.category === "culture" ? "class" : post?.category}`)
             }
           >
             <RollbackOutlined />
@@ -120,7 +127,7 @@ function RemoteControl({ Fullcontent }) {
           {prevPost[0] ? (
             <Link
               onClick={() => window.scrollTo({ top: 0 })}
-              to={`/${post.category}/post/${prevPost[0].id}`}
+              to={`/${post?.category}/post/${prevPost[0].id}`}
             >
               <DoubleLeftOutlined />
             </Link>
@@ -133,7 +140,7 @@ function RemoteControl({ Fullcontent }) {
           {nextPost[0] ? (
             <Link
               onClick={() => window.scrollTo({ top: 0 })}
-              to={`/${post.category}/post/${nextPost[0].id}`}
+              to={`/${post?.category}/post/${nextPost[0].id}`}
             >
               <DoubleRightOutlined />
             </Link>
@@ -174,7 +181,7 @@ function RemoteControl({ Fullcontent }) {
       <Divider style={{ margin: "0.5rem 0 3rem 0" }} />
       <Scrollspy
         style={{ margin: 0 }}
-        items={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+        items={["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]}
         currentClassName="blog_post_selected"
         offset={300}
       >
@@ -208,6 +215,6 @@ function RemoteControl({ Fullcontent }) {
       </Modal>
     </div>
   );
-}
+};
 
 export default RemoteControl;

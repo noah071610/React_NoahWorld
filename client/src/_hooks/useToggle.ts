@@ -5,5 +5,5 @@ export default function useToggle(initialValue: Boolean) {
   const handler = useCallback(() => {
     setValue((prev) => !prev);
   }, []);
-  return [Value, handler, setValue];
+  return [Value, handler, setValue] as const;
 }
