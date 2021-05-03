@@ -22,7 +22,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Divider, Input, message } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import Scrollspy from "react-scrollspy";
@@ -43,11 +43,11 @@ const PostTitle = styled.h4`
   text-overflow: ellipsis;
 `;
 
-export function BlogHeader() {
+export const BlogHeader = memo(() => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [keyword, onChangeKeyword, setKeyword] = useInput("");
-  const onSearchContent = () => {
+  const onSearchContent = useCallback(() => {
     if (keyword.length < 2) {
       message.error("Keyword is required to have more then 1 letter");
       return;
@@ -63,7 +63,7 @@ export function BlogHeader() {
     }
     history.push(`/search/${keyword}`);
     setKeyword("");
-  };
+  }, [dispatch, history, keyword, setKeyword]);
   return (
     <>
       <ul className="blog_header_ul">
@@ -110,9 +110,9 @@ export function BlogHeader() {
       />
     </>
   );
-}
+});
 
-export function BlogSmallHeader() {
+export const BlogSmallHeader = memo(() => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -129,6 +129,7 @@ export function BlogSmallHeader() {
   const [slideTitle, onClickSlideTitle, setSlideTitle] = useToggle(false);
   const [headerTitle, setHeaderTitle] = useState(false);
   const [portfolioTitle, setPortfolioTitle] = useState(false);
+
   useEffect(() => {
     function scrollCallBack() {
       let pathname = window.location.pathname.split("/");
@@ -152,7 +153,7 @@ export function BlogSmallHeader() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onSearchContent = () => {
+  const onSearchContent = useCallback(() => {
     if (keyword.length < 2) {
       message.error("Keyword is required to have more then 1 letter");
       return;
@@ -174,7 +175,7 @@ export function BlogSmallHeader() {
     dispatch({
       type: ON_SLIDE_MENU,
     });
-  };
+  }, [dispatch, history, keyword, setKeyword]);
 
   const onClickLogOut = useCallback(() => {
     dispatch({
@@ -185,21 +186,28 @@ export function BlogSmallHeader() {
     });
   }, [dispatch]);
 
-  const showModal = () => {
+  const showModal = useCallback(() => {
     setIsModalVisible(true);
-  };
+  }, []);
 
-  const handleOk = () => {
+  const handleOk = useCallback(() => {
     setIsModalVisible(false);
     dispatch({
       type: REMOVE_POST_REQUEST,
       data: { PostId: post?.id, password, tags: post?.HashTags },
     });
-  };
+  }, [dispatch, password, post?.HashTags, post?.id]);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setIsModalVisible(false);
-  };
+  }, []);
+
+  const onClickSlide = useCallback(() => {
+    dispatch({
+      type: ON_SLIDE_MENU,
+    });
+    setSlideTitle(false);
+  }, [dispatch, setSlideTitle]);
 
   useEffect(() => {
     if (removePostDone) {
@@ -302,15 +310,7 @@ export function BlogSmallHeader() {
             </a>
           )}
         </div>
-        <a
-          onClick={() => {
-            dispatch({
-              type: ON_SLIDE_MENU,
-            });
-            setSlideTitle(false);
-          }}
-          style={{ display: "flex", alignItems: "center" }}
-        >
+        <a onClick={onClickSlide} style={{ display: "flex", alignItems: "center" }}>
           {onSlideMenu ? (
             <FontAwesomeIcon style={{ fontSize: "1.5rem" }} icon={faTimes} />
           ) : (
@@ -383,7 +383,7 @@ export function BlogSmallHeader() {
                 </li>
                 <Divider type="vertical" />
                 <li style={{ margin: 0 }}>
-                  <a onClick={() => showModal()}>
+                  <a onClick={showModal}>
                     <FontAwesomeIcon icon={faTrash} />
                   </a>
                 </li>
@@ -563,7 +563,7 @@ export function BlogSmallHeader() {
       </div>
     </nav>
   );
-}
+});
 
 interface NavInter {
   navContents: Array<NavProps>;
@@ -575,7 +575,7 @@ interface NavProps {
   name: string;
 }
 
-export const PortfolioHeader: FC<NavInter> = ({ navContents }) => {
+export const PortfolioHeader: FC<NavInter> = memo(({ navContents }) => {
   return (
     <>
       <Link
@@ -605,9 +605,9 @@ export const PortfolioHeader: FC<NavInter> = ({ navContents }) => {
       </Scrollspy>
     </>
   );
-};
+});
 
-export function PortfolioPostHeader() {
+export const PortfolioPostHeader = memo(() => {
   const { portfolios, portfolio } = useSelector((state: RootState) => state.blog);
   return (
     <>
@@ -660,4 +660,4 @@ export function PortfolioPostHeader() {
       </div>
     </>
   );
-}
+});

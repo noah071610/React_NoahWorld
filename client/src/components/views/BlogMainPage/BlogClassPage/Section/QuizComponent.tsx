@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Input, message } from "antd";
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import useInput from "../../../../../_hooks/useInput";
@@ -90,7 +90,7 @@ const QuizContent = styled.div`
   bottom: 4.2rem;
 `;
 
-function QuizComponent() {
+const QuizComponent = memo(() => {
   const { quizzes } = useSelector((state: RootState) => state.post);
   const [quizAnswer, onChangeQuizAnswer, setQuizAnswer] = useInput("");
   const [viewQuizAnswer, setViewQuizAnswer] = useState(false);
@@ -176,6 +176,6 @@ function QuizComponent() {
       </QuizWrapper>
     </Quiz>
   );
-}
+});
 
-export default QuizComponent;
+export default memo(QuizComponent);

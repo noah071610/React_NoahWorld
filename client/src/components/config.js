@@ -70,36 +70,37 @@ export const navContents = [
 // Skill page
 export const skills = [
   {
-    name: "Html",
-    src: "https://img.icons8.com/color/144/000000/html-5.png",
-    desc: "웹표준을 준수하며 DOM-tree를 정확하게 파악합니다.",
-    level: true,
-  },
-  {
-    name: "CSS",
-    src: "https://img.icons8.com/color/144/000000/css3.png",
+    name: "Html & CSS",
+    src: "./images/HtmlCss.png",
     desc:
-      "SCSS와 같은 전처리기 사용이 가능하며 다채로운 애니메이션과 더불어 브라우저 렌딩 특성을 파악하고 적용합니다.",
+      "웹표준 , DOM-tree , 반응형웹과 브라우저 렌딩 특성을 파악하며 CSS의 다채로운 애니메이션과 더불어 전치리기 사용이 가능합니다.",
     level: true,
   },
   {
-    name: "Java Script",
-    src: "https://img.icons8.com/color/144/000000/javascript.png",
-    desc: "기본문법부터 ES6 최신문법과 클로저,This,이벤트루프등 독특한 JS특성을 폭넓게 이해합니다.",
+    name: "TypeScript",
+    src: "https://img.icons8.com/color/144/000000/typescript.png",
+    desc:
+      "ES6 최신문법과 실행컨텍스트,클로저,이벤트루프등 독특한 JS특성을 폭넓게 이해하며, 대세인 타입스크립트를 적극 활용합니다.",
     level: true,
   },
   {
     name: "React",
     src: "https://img.icons8.com/color/144/000000/react-native.png",
     desc:
-      "React 와 Hooks 문법, React-Router 적용, Redux와 비동기를 위한 saga 및 dev-tools 그리고 jsx와 SPA 의 특성을 이해합니다.",
+      "Hooks 문법, Router적용, Redux와 비동기를 위한 saga외 여러 라이브러리를 응용하며 생명주기같은 React의 SPA 특성을 이해합니다.",
+    level: true,
+  },
+  {
+    name: "Next.js",
+    src: "https://docs.microsoft.com/ko-kr/windows/images/nextjs-logo.png",
+    desc: "생산성과 검색엔진 효율을 높이는 SRR의 Next.js를 React와 조합합니다.",
     level: true,
   },
   {
     name: "Mysql",
     src: "https://img.icons8.com/ios-filled/100/000000/mysql-logo.png",
     desc:
-      "시퀄라이즈를 적극활용하고 스키마 정의와 데이터베이스관계도를 이해해 데이터를 효율있게 관리합니다.",
+      "시퀄라이즈 & 워크벤치를 사용하며, 스키마 정의와 콘솔명령어, 그리고 데이터베이스 관계도를 이해해 데이터를 효율있게 관리합니다.",
     level: true,
   },
   {
@@ -112,31 +113,19 @@ export const skills = [
 
 export const sub_skills = [
   {
-    name: "Photoshop",
-    src: "https://img.icons8.com/color/144/000000/adobe-photoshop.png",
-  },
-  {
-    name: "Type Script",
-    src: "https://img.icons8.com/color/144/000000/typescript.png",
+    name: "Webpack",
+    src: "https://t1.daumcdn.net/cfile/tistory/999AF54B5B93D78C25",
     level: true,
-  },
-  {
-    name: "Nodejs",
-    src: "https://img.icons8.com/color/144/000000/nodejs.png",
-    level: true,
-  },
-
-  {
-    name: "MongoDB",
-    src: "https://img.icons8.com/color/144/000000/mongodb.png",
-  },
-  {
-    name: "Postman",
-    src: "https://miro.medium.com/max/512/1*fVBL9mtLJmHIH6YpU7WvHQ.png",
   },
   {
     name: "Express",
     src: "https://www.mementotech.in/assets/images/icons/express.png",
+    level: true,
+  },
+  {
+    name: "Passport.js",
+    src:
+      "https://leolanchas.com/wp-content/uploads/2013/07/0d184ee3-fd8d-4b94-acf4-b4e686e57375.png",
     level: true,
   },
   {
@@ -150,20 +139,18 @@ export const sub_skills = [
     level: true,
   },
   {
-    name: "PassportJS",
-    src:
-      "https://leolanchas.com/wp-content/uploads/2013/07/0d184ee3-fd8d-4b94-acf4-b4e686e57375.png",
-    level: true,
-  },
-  {
     name: "AWS",
     src:
       "https://images.squarespace-cdn.com/content/v1/52ca3b73e4b04a45ef2c5cb6/1551884861331-C9U2RHJQLOPL9F332X5O/ke17ZwdGBToddI8pDm48kK6x8IOhzX_rTtQGKY1qp-hZw-zPPgdn4jUwVcJE1ZvWhcwhEtWJXoshNdA9f1qD7XaGPskfQtVutuSA2B-JW6wkqqV024XP-059DP6wRYqYVUGMzsBxTo2UlkZq10GTrg/AWS_blog_01.PNG",
     level: true,
   },
   {
-    name: "Ubuntu",
-    src: "https://findicons.com/files/icons/1008/quiet/256/ubuntu.png",
+    name: "MongoDB",
+    src: "https://img.icons8.com/color/144/000000/mongodb.png",
+  },
+  {
+    name: "Postman",
+    src: "https://miro.medium.com/max/512/1*fVBL9mtLJmHIH6YpU7WvHQ.png",
   },
 ];
 
@@ -203,7 +190,7 @@ export const portfolio2 = {
   id: 2,
   name: "반응형 웹 포트폴리오 사이트",
   date: "2021/2~ 2021/3",
-  tags: ["#Html", "#CSS", "#Javascript", "#React"],
+  tags: ["#Html", "#CSS", "#TypeScript", "#React"],
   desc: `# 반응형으로 모바일과 PC 둘 다 사용이 가능합니다.
   <br />#<span class="marker">간결하고 직관적인</span> 페이지로 가독성을 높였습니다.
   <br />
@@ -218,7 +205,7 @@ export const portfolio1 = {
   id: 1,
   name: "Noah world Blog",
   date: "2021/2~ 2021/4",
-  tags: ["#React", "#Nodejs", "#Mysql", "#AWS"],
+  tags: ["#TypeScript", "#React", "#Next.js", "#Mysql", "#AWS"],
   desc: `<h2 >Noah World - Place to step up 👨‍💻
   </h2><br data-tomark-pass="">
   <h3 data-tomark-pass="">반갑습니다. 신뢰를 주는 장현수(Noah) 입니다. 😸
@@ -327,7 +314,7 @@ export const portfolio3 = {
   id: 3,
   name: "Movie App",
   date: "2020/12~ 2021/1",
-  tags: ["#Javascript", "#React", "#MongoDB"],
+  tags: ["#Javascript", "#React", "#Node.js", "#MongoDB"],
   desc: `# 클론코딩 입니다.
   <br />#<span class="marker">회원가입및 로그인 로그아웃 기능을 포함합니다.</span>
   <br />

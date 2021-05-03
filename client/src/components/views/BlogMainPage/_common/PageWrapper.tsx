@@ -1,5 +1,5 @@
 import { DoubleLeftOutlined } from "@ant-design/icons";
-import { FC, ReactNode } from "react";
+import { FC, memo, ReactNode, useCallback } from "react";
 import styled, { keyframes } from "styled-components";
 import Footer from "../Footer";
 import Header from "../Header";
@@ -27,7 +27,14 @@ interface WrapperProps {
   children: ReactNode;
 }
 
-const PageWrapper: FC<WrapperProps> = ({ children }) => {
+const PageWrapper: FC<WrapperProps> = memo(({ children }) => {
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   return (
     <>
       <div className="pageWrapper">
@@ -36,20 +43,12 @@ const PageWrapper: FC<WrapperProps> = ({ children }) => {
           {children}
         </div>
         <Scroll className="scroll">
-          <DoubleLeftOutlined
-            onClick={() => {
-              window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-              });
-            }}
-            rotate={90}
-          />
+          <DoubleLeftOutlined onClick={scrollToTop} rotate={90} />
         </Scroll>
       </div>
       <Footer />
     </>
   );
-};
+});
 
-export default PageWrapper;
+export default memo(PageWrapper);

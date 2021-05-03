@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { message } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "src/_reducers";
@@ -55,7 +55,7 @@ const CommentFormWrapper = styled.div`
     padding-right: 0;
   }
 `;
-function CommentForm() {
+const CommentForm = memo(() => {
   const { user } = useSelector((state: RootState) => state.user);
   const { post } = useSelector((state: RootState) => state.post);
   const dispatch = useDispatch();
@@ -83,21 +83,21 @@ function CommentForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const commentComponent = () => {
+  const commentComponent = useCallback(() => {
     return post?.Comments?.map((v, i) => {
       return <Comments key={i} comment={v} />;
     });
-  };
+  }, [post?.Comments]);
 
   const handleImgError = (e: React.SyntheticEvent) => {
     (e.target as HTMLImageElement).src = `/images/blog/default-user.png`;
   };
 
-  const onClickModal = () => {
+  const onClickModal = useCallback(() => {
     if (!user) {
       setLoginModal(true);
     }
-  };
+  }, [user]);
   return (
     <>
       <CommentFormWrapper onClick={onClickModal} className="blog_post_comment" id="comment">
@@ -160,6 +160,6 @@ function CommentForm() {
       )}
     </>
   );
-}
+});
 
-export default CommentForm;
+export default memo(CommentForm);

@@ -70,7 +70,7 @@ function Admin() {
     if (!user || !user.admin || user.id !== 1) {
       history.goBack();
     }
-  }, [history, user, content]);
+  }, []);
 
   useEffect(() => {
     dispatch({
@@ -94,12 +94,12 @@ function Admin() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const showModal = () => {
+  const showModal = useCallback(() => {
     setIsModalVisible(true);
     setContent(editorRef.current.getInstance().getHtml());
-  };
+  }, []);
 
-  const handleOk = () => {
+  const handleOk = useCallback(() => {
     if (quizForm) {
       if (question === "") {
         message.info("Please Write down question");
@@ -152,12 +152,12 @@ function Admin() {
     }
     setIsModalVisible(false);
     setQuizForm(false);
-  };
+  }, []);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setIsModalVisible(false);
     setQuizForm(false);
-  };
+  }, []);
 
   // function uploadImage(blob) {
   //   let formData = new FormData();

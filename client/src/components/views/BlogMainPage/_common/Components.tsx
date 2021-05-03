@@ -132,7 +132,7 @@ export const RecentTableComment: FC<VisibleProps> = ({ visible }) => {
               textOverflow: "ellipsis",
             }}
           >
-            {recentCommentPost?.Comments[0].content}
+            {recentCommentPost?.Comments[0]?.content}
           </span>
         </div>
       ) : (

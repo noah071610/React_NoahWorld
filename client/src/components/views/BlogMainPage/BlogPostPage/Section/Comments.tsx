@@ -3,7 +3,7 @@ import { DownCircleOutlined, EditFilled, HeartFilled, HeartOutlined } from "@ant
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Input, message } from "antd";
-import { FC, useCallback, useState } from "react";
+import { FC, memo, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import useInput from "../../../../../_hooks/useInput";
@@ -70,7 +70,7 @@ const MoreComments = styled.div`
   }
 `;
 
-const Comments: FC<CommentProps> = ({ comment }) => {
+const Comments: FC<CommentProps> = memo(({ comment }) => {
   const { user } = useSelector((state: RootState) => state.user);
   const { post } = useSelector((state: RootState) => state.post);
   const dispatch = useDispatch();
@@ -85,7 +85,7 @@ const Comments: FC<CommentProps> = ({ comment }) => {
     user &&
     post?.Comments?.find((v) => v.id === CommentId)?.CommentLikers?.find((v) => v.id === user.id);
 
-  const onClickRemove = () => {
+  const onClickRemove = useCallback(() => {
     if (!user) {
       return;
     }
@@ -99,7 +99,7 @@ const Comments: FC<CommentProps> = ({ comment }) => {
     });
     message.success("Completely Deleted Comment");
     setRemoveModal(false);
-  };
+  }, [CommentId, comment.UserId, dispatch, user]);
   const onClickEditComment = useCallback(() => {
     dispatch({
       type: EDIT_COMMENT_REQUEST,
@@ -109,7 +109,7 @@ const Comments: FC<CommentProps> = ({ comment }) => {
     setEditForm(false);
   }, [dispatch, CommentId, editText]);
 
-  const onClickCommentLike = () => {
+  const onClickCommentLike = useCallback(() => {
     if (!user) {
       message.error("You can thumbs up when you are logged in 😿");
       return;
@@ -118,9 +118,9 @@ const Comments: FC<CommentProps> = ({ comment }) => {
       type: LIKE_COMMENT_REQUEST,
       data: { CommentId, UserId: user.id },
     });
-  };
+  }, [CommentId, dispatch, user]);
 
-  const onClickCommentUnlike = () => {
+  const onClickCommentUnlike = useCallback(() => {
     if (!user) {
       message.error("You can thumbs up when you are logged in 😿");
       return;
@@ -129,7 +129,7 @@ const Comments: FC<CommentProps> = ({ comment }) => {
       type: UNLIKE_COMMENT_REQUEST,
       data: { CommentId, UserId: user.id },
     });
-  };
+  }, [CommentId, dispatch, user]);
 
   const onClickComment = useCallback(
     (e) => {
@@ -316,6 +316,6 @@ const Comments: FC<CommentProps> = ({ comment }) => {
       )}
     </>
   );
-};
+});
 
-export default Comments;
+export default memo(Comments);

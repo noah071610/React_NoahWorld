@@ -8,7 +8,7 @@ import ArticleColumn from "./_common/ArticleColumn";
 import ArticleRow from "./_common/ArticleRow";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CHAGE_HEADER } from "../../../_reducers/blog";
 import Profile from "./_common/Profile";
@@ -20,7 +20,7 @@ import CountUp from "react-countup";
 import ClassCardSection from "./Section/ClassCardSection";
 import { RootState } from "src/_reducers";
 
-function BlogMainPage() {
+const BlogMainPage = memo(() => {
   const { user } = useSelector((state: RootState) => state.user);
   const {
     techPosts,
@@ -98,10 +98,10 @@ function BlogMainPage() {
               <Link to={"/tech"}>Information Technology</Link>
             </Divider>
             <div className="blog_category_big">
-              <ArticleRow article={techPosts[0]} />
+              <ArticleRow article={techPosts && techPosts[0]} />
             </div>
             <div className="blog_category_medium">
-              <ArticleColumn article={techPosts[0]} />
+              <ArticleColumn article={techPosts && techPosts[0]} />
             </div>
             <div className="blog_category_small">
               <Slider {...smallSizeSettings}>
@@ -125,10 +125,10 @@ function BlogMainPage() {
               <Link to={"/daily"}>Daily</Link>
             </Divider>
             <div className="blog_category_big">
-              <ArticleRow article={dailyPosts[0]} />
+              <ArticleRow article={dailyPosts && dailyPosts[0]} />
             </div>
             <div className="blog_category_medium">
-              <ArticleColumn article={dailyPosts[0]} />
+              <ArticleColumn article={dailyPosts && dailyPosts[0]} />
             </div>
             <div className="blog_category_small">
               <Slider {...smallSizeSettings}>
@@ -310,6 +310,6 @@ function BlogMainPage() {
       <ClassCardSection />
     </>
   );
-}
+});
 
-export default BlogMainPage;
+export default memo(BlogMainPage);

@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Divider } from "antd";
+import { memo } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-const ClassCardSection = () => {
+const ClassCardSection = memo(() => {
   const history = useHistory();
   return (
     <section style={{ width: "100%", marginRight: "2rem" }}>
@@ -86,6 +87,6 @@ const ClassCardSection = () => {
       </div>
     </section>
   );
-};
+});
 
-export default ClassCardSection;
+export default memo(ClassCardSection);

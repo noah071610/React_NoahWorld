@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { navContents } from "../../config";
@@ -22,12 +22,14 @@ const LogoMain = styled.img`
   }
 `;
 
-function Header() {
+const Header = memo(() => {
   const [FixedNavbar, setFixedNavbar] = useState(false);
   const { header } = useSelector((state: RootState) => state.blog);
   const { user, logOutDone, logOutError } = useSelector((state: RootState) => state.user);
+
   const dispatch = useDispatch();
   const history = useHistory();
+
   useEffect(() => {
     function scrollCallBack() {
       if (window.scrollY >= 275) {
@@ -70,7 +72,7 @@ function Header() {
     >
       <div className="space_small_on" />
       <div className="header_logo">
-        <Link onClick={() => window.scrollTo({ top: 0 })} to={"/"}>
+        <Link to={"/"}>
           <LogoMain className="logo" src="/images/blog/logo_main.png" />
         </Link>
         {user ? (
@@ -96,6 +98,6 @@ function Header() {
       {FixedNavbar ? <div style={{ height: "70px" }} /> : null}
     </header>
   );
-}
+});
 
-export default Header;
+export default memo(Header);
