@@ -57,9 +57,6 @@
 #### 무리하지않는 깔끔한 디자인을 목표로 개설한 개인 블로그.
 
 <br/>
-
-![jeshoots-com-pUAM5hPaCRI-unsplash](https://user-images.githubusercontent.com/74864925/120084019-e96b7e80-c107-11eb-8e42-d2e4acbc90d2.png)
-
 <br/>
 
 - **페이지 전반**
@@ -78,9 +75,12 @@
 
 관리자만 접근할 수 있는 어드민 페이지를 이용해 관리자만 게시글을 작성 수정 삭제 할 수 있습니다.
 
-<br/><br/>
+<br/>
+<br/>
 
 ## Summary.
+
+![jeshoots-com-pUAM5hPaCRI-unsplash](https://user-images.githubusercontent.com/74864925/120084019-e96b7e80-c107-11eb-8e42-d2e4acbc90d2.png)
 
 - 프로젝트 인원 : 장현수(Noah) 외 0명
 - 프로젝트 기간 : 2021/02 ~ 2021/04
@@ -92,15 +92,154 @@
 
 <br/><br/>
 
-## Code Review & Explain about Noah World.
+## Explain about Noah World.
 
 <br/>
 
-### 📍 &nbsp; 모바일 유저를 위한 역동적인 헤더 변환.
+#### 📍 &nbsp;  회원가입및 로그인아웃, 비밀번호 변경, 탈퇴 외 로그인유지 기능 구현.
 
 <br/>
 
-### 📍 &nbsp; 좋아요, 댓글, 조회수 게시물 그리고 해시태그를 메인페이지에 배치.
+#### 📍 &nbsp;  유저 아이콘을 위한 이미지 업로드와 이미지 Crop 기능을 구현.
+
+```javascript
+📁profile/CropImageModal.tsx
+
+  const handleOk = useCallback(() => {
+    //5. blob 객체와 user id를 서버에 요청하기위해 form을 만듭니다.
+    const form = new FormData();
+    form.append("image", blob!);
+    form.append("id", String(user?.id));
+    dispatch({
+      type: ADD_ICON_REQUEST,
+      data: form,
+    });
+    setIsModalVisible(false);
+    setUrl("");
+    setUpImg(null);
+  }, []);
+
+  ...
+
+  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //1-1. React-crop 공식문서를 참조했습니다. 이미지를 로드해줍니다.
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setUpImg(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const onLoad = useCallback((img) => {
+    imgRef.current = img;
+  }, []);
+
+  useEffect(() => {
+    //3. React-crop 공식문서를 참조했습니다. canvas에 자른 이미지를 표시하는 함수입니다.
+    if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
+      return;
+    }
+    const image: any = imgRef.current;
+    const canvas: any = previewCanvasRef.current;
+
+    ...
+    
+    );
+    new Promise(() => {
+      canvas.toBlob(
+        //4. 자른 이미지를 Blob 객체로 바꿔 state에 저장합니다.
+        (blob: Blob) => {
+          setBlob(blob);
+        },
+        "image/png",
+        1
+      );
+    });
+  }, [completedCrop]);
+
+  return (
+    {/* 0. Icon 수정 (+ Crop Image)는 Modal창에서 일어나며 Modal은 Antd를 사용했습니다. */}
+    <Modal title="Icon Upload 🖼️" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <h3>Set icon from Local storage</h3>
+      {/* 1. Url을 이용해 아이콘을 업로드할지, file을 이용할지 선택합니다. */}
+      <input
+        style={{ marginBottom: "1.5rem" }}
+        type="file"
+        accept="image/*"
+        disabled={url ? true : false}
+        onChange={onSelectFile}
+      />
+      <h3>Set icon by using URL</h3>
+      <Input
+        disabled={upImg ? true : false}
+        value={url}
+        onChange={onChangeUrl}
+        placeholder="https://"
+      />
+
+      {(url || upImg) && (
+        <>
+          {/* 2. 올린 이미지를 활용해 이미지를 자릅니다. */}
+          <h3>Crop the image for icon size.</h3>
+          <ReactCrop
+            crossorigin="anonymous"
+            
+            ...
+
+```
+---
+
+<br/>
+
+#### 📍 &nbsp; multer를 사용해 이미지를 AWS-S3에 저장.
+  
+```javascript
+📁server/routes/user.js
+
+// 아이콘 이미지를 서버에서 업로드하는 과정.
+
+const upload = multer({
+  storage: multerS3({
+    // AWS.S3에 이미지를 저장하는 과정입니다.
+    s3: new AWS.S3(),
+    bucket: "noahworld",
+    key(req, file, cb) {
+      cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
+    },
+  }),
+  limits: { fileSize: 20 * 1024 * 1024 },
+});
+
+router.post("/icon", upload.single("image"), async (req, res, next) => {
+  //유저가 file을 업로드하는 방식으로 아이콘을 업데이트한 경우
+  User.update(
+    { icon: req.file.location.replace(/\/original\//, "/thumb/") },
+    { where: { id: req.body.id } }
+  );
+  res.json(req.file.location.replace(/\/original\//, "/thumb/"));
+});
+
+router.post("/icon/url", async (req, res, next) => {
+  //유저가 url을 이용하는 방식으로 아이콘을 업데이트한 경우
+  User.update({ icon: req.body.url }, { where: { id: req.body.UserId } });
+  res.json(req.body.url);
+});
+
+router.delete("/icon/:UserId", async (req, res, next) => {
+  //유저가 아이콘을 삭제하는경우, 미리 저장되어있는 default 값으로 변경합니다.
+  User.update(
+    { icon: "/images/blog/default-user.png" },
+    { where: { id: parseInt(req.params.UserId, 10) } }
+  );
+  res.send({ success: true });
+});
+
+```
+---
+
+<br/>
+
+#### 📍 &nbsp; TOP 좋아요, 댓글, 조회수 게시물 그리고 해시태그를 메인페이지에 배치.
 
 ```javascript
 📁server/routes/post.js
@@ -198,11 +337,15 @@
 
 <br/>
 
-### 📍 &nbsp;  WYSIWYG의 Markdown을 이용한 풍성한 포스팅 구현.
+#### 📍 &nbsp;  WYSIWYG의 Markdown을 이용한 풍성한 포스팅 구현.
 
 <br/>
 
-### 📍 &nbsp;  게시글안 텍스트로 이루어진 키워드를 정규식으로 파악해 링크로 변환.
+#### 📍 &nbsp;  리모콘 또는 헤더를 사용한 간편한 게시물 인터페이스.
+
+<br/>
+
+#### 📍 &nbsp;  게시글안 텍스트로된 키워드들을 정규식으로 파악해 링크로 변환.
 
 ```javascript
 📁post/[id].tsx
@@ -241,11 +384,11 @@
 
 <br/>
 
-### 📍 &nbsp;  댓글 대댓글 그리고 좋아요 구현.
+#### 📍 &nbsp;  댓글 및 좋아요 구현.
 
 <br/>
 
-### 📍 &nbsp;  Infinite Scroll을 구현.
+#### 📍 &nbsp;  Infinite Scroll을 구현.
 
 ```javascript
 📁pages/[category]/index.tsx
@@ -347,7 +490,11 @@ router.get("/morepost/:category", async (req, res) => {
 
 <br/>
 
-### 📍 &nbsp;  랜덤 퀴즈 구현.
+#### 📍 &nbsp; 일본인을 위한 한국어 강의 페이지 구현.
+
+<br/>
+
+#### 📍 &nbsp; 랜덤 퀴즈 구현.
 
 ```javascript
 📁class/QuizForm.tsx
@@ -389,147 +536,13 @@ router.get("/morepost/:category", async (req, res) => {
  
 ```
 ---
+<br/>
+
+#### 📍 &nbsp;  포트폴리오 페이지 구현.
 
 <br/>
 
-### 📍 &nbsp;  유저 아이콘을 위한 이미지 업로드와 이미지 Crop 기능을 구현.
-
-```javascript
-📁profile/CropImageModal.tsx
-
-  const handleOk = useCallback(() => {
-    //5. blob 객체와 user id를 서버에 요청하기위해 form을 만듭니다.
-    const form = new FormData();
-    form.append("image", blob!);
-    form.append("id", String(user?.id));
-    dispatch({
-      type: ADD_ICON_REQUEST,
-      data: form,
-    });
-    setIsModalVisible(false);
-    setUrl("");
-    setUpImg(null);
-  }, []);
-
-  ...
-
-  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //1-1. React-crop 공식문서를 참조했습니다. 이미지를 로드해줍니다.
-    if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => setUpImg(reader.result));
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
-
-  const onLoad = useCallback((img) => {
-    imgRef.current = img;
-  }, []);
-
-  useEffect(() => {
-    //3. React-crop 공식문서를 참조했습니다. canvas에 자른 이미지를 표시하는 함수입니다.
-    if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
-      return;
-    }
-    const image: any = imgRef.current;
-    const canvas: any = previewCanvasRef.current;
-
-    ...
-    
-    );
-    new Promise(() => {
-      canvas.toBlob(
-        //4. 자른 이미지를 Blob 객체로 바꿔 state에 저장합니다.
-        (blob: Blob) => {
-          setBlob(blob);
-        },
-        "image/png",
-        1
-      );
-    });
-  }, [completedCrop]);
-
-  return (
-    {/* 0. Icon 수정 (+ Crop Image)는 Modal창에서 일어나며 Modal은 Antd를 사용했습니다. */}
-    <Modal title="Icon Upload 🖼️" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-      <h3>Set icon from Local storage</h3>
-      {/* 1. Url을 이용해 아이콘을 업로드할지, file을 이용할지 선택합니다. */}
-      <input
-        style={{ marginBottom: "1.5rem" }}
-        type="file"
-        accept="image/*"
-        disabled={url ? true : false}
-        onChange={onSelectFile}
-      />
-      <h3>Set icon by using URL</h3>
-      <Input
-        disabled={upImg ? true : false}
-        value={url}
-        onChange={onChangeUrl}
-        placeholder="https://"
-      />
-
-      {(url || upImg) && (
-        <>
-          {/* 2. 올린 이미지를 활용해 이미지를 자릅니다. */}
-          <h3>Crop the image for icon size.</h3>
-          <ReactCrop
-            crossorigin="anonymous"
-            
-            ...
-
-```
----
-
-<br/>
-
-### 📍 &nbsp;  이미지는 multer를 사용해 AWS-S3에 저장.
-  
-```javascript
-📁server/routes/user.js
-
-// 아이콘 이미지를 서버에서 업로드하는 과정.
-
-const upload = multer({
-  storage: multerS3({
-    // AWS.S3에 이미지를 저장하는 과정입니다.
-    s3: new AWS.S3(),
-    bucket: "noahworld",
-    key(req, file, cb) {
-      cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
-    },
-  }),
-  limits: { fileSize: 20 * 1024 * 1024 },
-});
-
-router.post("/icon", upload.single("image"), async (req, res, next) => {
-  //유저가 file을 업로드하는 방식으로 아이콘을 업데이트한 경우
-  User.update(
-    { icon: req.file.location.replace(/\/original\//, "/thumb/") },
-    { where: { id: req.body.id } }
-  );
-  res.json(req.file.location.replace(/\/original\//, "/thumb/"));
-});
-
-router.post("/icon/url", async (req, res, next) => {
-  //유저가 url을 이용하는 방식으로 아이콘을 업데이트한 경우
-  User.update({ icon: req.body.url }, { where: { id: req.body.UserId } });
-  res.json(req.body.url);
-});
-
-router.delete("/icon/:UserId", async (req, res, next) => {
-  //유저가 아이콘을 삭제하는경우, 미리 저장되어있는 default 값으로 변경합니다.
-  User.update(
-    { icon: "/images/blog/default-user.png" },
-    { where: { id: parseInt(req.params.UserId, 10) } }
-  );
-  res.send({ success: true });
-});
-
-```
----
-
-### 📍 &nbsp; 그외...
+#### 📍 &nbsp; 그외...
 
 - Redux에 Redux Saga를 추가해 비동기를 구현하고 immer를 적용해 불변성 준수의 불편함을 해소.
 - cors 미들웨어를 사용해 기본적인 브라우저-프론트서버-백서버간 cors 문제를 해결.
@@ -538,7 +551,7 @@ router.delete("/icon/:UserId", async (req, res, next) => {
 
 <br/>
 
-## Retrospective & Feedback 
+## Retrospective
 
 <br/>
 
@@ -548,11 +561,11 @@ router.delete("/icon/:UserId", async (req, res, next) => {
 
 3. HTTP 지식이 많이 부족하다고 느꼈고 정보처리기사 시험 및 강의를 통해 보충했습니다.
 
-4. **여기에 적기엔 턱없이 부족할만큼 넘었던 산이 많았던 무리한 프로젝트였지만 그렇기에 공부가 정말 잘된.. 한마디로 맨땅에 해딩해서 나름 성공한 프로젝트였습니다.**
+4. **글으로 적기엔 부족할만큼 넘었던 산이 많았던 무리한 프로젝트였지만 그렇기에 공부가 정말 잘된.. 맨땅에 해딩해서 나름 성공한 프로젝트였다고 생각합니다.**
 
 <br/><br/>
 
-## Thank you for taking your time.
+## Thank you for taking your time
 
 <br/>
 
